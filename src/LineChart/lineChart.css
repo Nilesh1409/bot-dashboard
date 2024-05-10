@@ -1,0 +1,54 @@
+/* Add this to your CSS file or within a <style> tag in your React component */
+
+.slider-container {
+  margin: 20px 0;
+}
+
+.slider-label {
+  display: block;
+  margin-bottom: 10px;
+  color: #333;
+  font-weight: bold;
+}
+
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 70%;
+  height: 8px;
+  border-radius: 5px;
+  background: #ddd;
+  outline: none;
+  padding: 0;
+  margin: 0;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #555;
+  cursor: pointer;
+}
+
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #555;
+  cursor: pointer;
+}
+
+.legend text {
+  font-size: 12px;
+  font-family: Arial, sans-serif;
+}
+
+.legend rect {
+  stroke: #fff;
+  stroke-width: 2px;
+}
+.filter_range > span {
+  margin: 0 10px;
+}
