@@ -5,3 +5,60 @@
 .link:hover {
   stroke-opacity: 0.5;
 }
+/* .column-name {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid red;
+  padding: 10px;
+} */
+/* .column-name > span {
+  font-size: 18px;
+  font-weight: 500;
+} */
+
+/* .column-name {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border: 2px solid red;
+  border-radius: 8px;
+  background: linear-gradient(145deg, #f5f5f5, #e0e0e0);
+  box-shadow: 3px 3px 8px #aaaaaa, -3px -3px 8px #ffffff;
+}
+
+.column-name span {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  margin: 0 10px;
+}
+
+.column-name:hover {
+  background: linear-gradient(145deg, #e0e0e0, #f5f5f5);
+  box-shadow: 2px 2px 5px #aaaaaa, -2px -2px 5px #ffffff;
+} */
+
+.column-name {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin-bottom: 10px;
+  /* border: 1px solid red; */
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.column-name span {
+  font-family: "Arial", sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  color: rgb(42, 41, 41);
+  text-align: center;
+  margin: 0 10px;
+}
+
+.column-name span:hover {
+  color: #000;
+}

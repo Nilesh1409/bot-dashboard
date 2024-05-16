@@ -1,6 +1,6 @@
 .App {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto;
   justify-content: space-around;
   padding: 20px;
 }
@@ -11,15 +11,19 @@
 }
 
 .chart-title {
-  text-align: center;
-  font-size: 20px;
+  text-align: left;
+  font-size: 24px;
+}
+.chart-description {
+  font-size: 16px;
+  color: rgb(115, 115, 115);
 }
 
 .chart {
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 10px;
-  height: 400px;
+  height: 600px;
 }
 .tooltip {
   opacity: 0.9;

@@ -24,8 +24,8 @@ const ChartComponent = ({ data }) => {
     const tooltip = d3.select(tooltipRef.current);
     svg.selectAll("*").remove(); // Clear svg content before adding new elements
 
-    const width = 800;
-    const height = 350;
+    const width = 1000;
+    const height = 450;
     const margin = { top: 20, right: 120, bottom: 30, left: 40 };
 
     // Filtering data
@@ -241,7 +241,7 @@ const ChartComponent = ({ data }) => {
 
   return (
     <>
-      <svg ref={ref} className="line-chart" width={800} height={"90%"}></svg>
+      <svg ref={ref} className="line-chart" width={1000} height={"90%"}></svg>
       <div
         ref={tooltipRef}
         className="tooltip"
