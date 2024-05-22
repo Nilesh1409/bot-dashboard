@@ -3,7 +3,7 @@ import * as d3 from "d3";
 import "./lineChart.css";
 import style from "./style.module.css";
 
-const AnsweredChart = ({ data }) => {
+const DenialOfServiceChart = ({ data }) => {
   const ref = useRef();
   const tooltipRef = useRef();
   const [selectedMonth, setSelectedMonth] = useState(1);
@@ -30,8 +30,14 @@ const AnsweredChart = ({ data }) => {
 
   const colorMap = {
     Answered: "#198219",
+    Unanswered: "#6B007B",
+    "In Context": "#799A6B",
+    "Out Of Context": "#C1824A",
+    "In Collection": "#22877f",
+    "Out of Collection": "#872247",
+    // Answered: "#198219",
 
-    "Not answered": "#971919",
+    // "Not answered": "#971919",
     // Change_crop: "#6B007B",
     // Exit: "#799A6B",
     // Referring_back: "#C1824A",
@@ -74,7 +80,16 @@ const AnsweredChart = ({ data }) => {
     const height = 450;
     const margin = { top: 20, right: 120, bottom: 30, left: 60 };
 
-    const stack = d3.stack().keys(["Answered", "Not answered"]);
+    const stack = d3
+      .stack()
+      .keys([
+        "Answered",
+        "Unanswered",
+        "In Context",
+        "Out Of Context",
+        "In Collection",
+        "Out of Collection",
+      ]);
     const stackedData = stack(filteredData);
 
     const xExtent = d3.extent(
@@ -264,4 +279,4 @@ const AnsweredChart = ({ data }) => {
   );
 };
 
-export default AnsweredChart;
+export default DenialOfServiceChart;

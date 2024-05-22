@@ -11,6 +11,10 @@ import AnsweredChart from "./LineChart/AnsweredChart";
 import StackedBarChart from "./StackGraph/Faithfulness";
 import RelevanceStackedBarChart from "./StackGraph/Relevance";
 import DifficultyStackedBarChart from "./StackGraph/Difficulty";
+import TopicChart from "./LineChart/Topic";
+import IntentFeedbackStackedBarChart from "./StackGraph/IntentFeedbackStack";
+import DenialOfServiceChart from "./LineChart/DenialOfService";
+import ClassificationsStackedBarChart from "./StackGraph/Classifications";
 
 function App() {
   const generateData = () => {
@@ -1594,6 +1598,198 @@ function App() {
     },
   ];
 
+  const topicData = [
+    {
+      year: 2023,
+      month: "November",
+      Sowing: 171,
+      Unclear: 118,
+      Harvesting: 55,
+      Marketing: 43,
+      "Not related to agriculture": 292,
+      Varieties: 238,
+      Fertilizers: 297,
+      "Soil Management": 126,
+      "Pests and Diseases": 508,
+      "Pruning Techniques": 1,
+      Storage: 10,
+      // "1. Soil Management\n2. Soil Management\n3. Varieties": 1,
+      // "1. Not related to agriculture\n2. Marketing": 1,
+    },
+    {
+      year: 2023,
+      month: "December",
+      Unclear: 71,
+      "Pests and Diseases": 260,
+      Sowing: 79,
+      Fertilizers: 140,
+      Varieties: 106,
+      "Not related to agriculture": 146,
+      "Soil Management": 52,
+      Harvesting: 43,
+      Marketing: 57,
+      Storage: 8,
+      // "1. Unclear\n2. Not related to agriculture\n3. Not related to agriculture": 1,
+      // "Pests and Diseases\nSoil Management\nMarketing": 1,
+    },
+    {
+      year: 2024,
+      month: "January",
+      Fertilizers: 147,
+      "Pests and Diseases": 298,
+      Sowing: 176,
+      "Soil Management": 111,
+      "Not related to agriculture": 161,
+      Harvesting: 51,
+      Varieties: 166,
+      Unclear: 93,
+      Marketing: 79,
+      Storage: 21,
+      "1. Fertilizers\n2. Varieties\n3. Sowing": 1,
+    },
+    {
+      year: 2024,
+      month: "February",
+      Harvesting: 80,
+      Unclear: 140,
+      Varieties: 359,
+      "Not related to agriculture": 438,
+      "Pests and Diseases": 894,
+      Sowing: 276,
+      "Soil Management": 346,
+      Fertilizers: 327,
+      Pruning: 2,
+      Marketing: 379,
+      Storage: 30,
+      "Pruning Techniques": 1,
+      "1) Soil Management\n2) Soil Management\n3) Soil Management": 1,
+    },
+    {
+      year: 2024,
+      month: "March",
+      Varieties: 790,
+      "Pests and Diseases": 1555,
+      "Soil Management": 874,
+      "Not related to agriculture": 566,
+      Fertilizers: 488,
+      Sowing: 368,
+      Marketing: 643,
+      Storage: 120,
+      Unclear: 148,
+      Harvesting: 115,
+      "Climate Change": 4,
+      Pruning: 1,
+      "Climate Impact": 1,
+    },
+    {
+      year: 2024,
+      month: "April",
+      Varieties: 495,
+      "Not related to agriculture": 345,
+      Fertilizers: 564,
+      Unclear: 101,
+      "Soil Management": 513,
+      "Pests and Diseases": 1098,
+      Marketing: 287,
+      Sowing: 289,
+      Harvesting: 89,
+      Storage: 60,
+      Pruning: 1,
+      Processing: 1,
+    },
+    {
+      year: 2024,
+      month: "May",
+      Unclear: 35,
+      "Not related to agriculture": 159,
+      "Pests and Diseases": 418,
+      Fertilizers: 114,
+      "Soil Management": 140,
+      Varieties: 153,
+      Harvesting: 33,
+      Marketing: 165,
+      Sowing: 56,
+      Pruning: 1,
+      Storage: 16,
+      "Climate Change": 1,
+    },
+  ];
+
+  const denialOfService = [
+    {
+      year: 2023,
+      month: "November",
+      Answered: 1466,
+      Unanswered: 863,
+      "In Context": 1933,
+      "Out Of Context": 396,
+      "In Collection": 2159,
+      "Out of Collection": 170,
+    },
+    {
+      year: 2023,
+      month: "December",
+      Answered: 756,
+      Unanswered: 553,
+      "In Context": 1021,
+      "Out Of Context": 288,
+      "In Collection": 1177,
+      "Out of Collection": 132,
+    },
+    {
+      year: 2024,
+      month: "January",
+      Answered: 1163,
+      Unanswered: 510,
+      "In Context": 1397,
+      "Out Of Context": 276,
+      "In Collection": 1535,
+      "Out of Collection": 138,
+    },
+    {
+      year: 2024,
+      month: "February",
+      Answered: 2031,
+      Unanswered: 1873,
+      "In Context": 3442,
+      "Out Of Context": 462,
+      "In Collection": 3692,
+      "Out of Collection": 212,
+    },
+    {
+      year: 2024,
+      month: "March",
+      Answered: 3531,
+      Unanswered: 2806,
+      "In Context": 5901,
+      "Out Of Context": 436,
+      "In Collection": 6118,
+      "Out of Collection": 219,
+    },
+    {
+      year: 2024,
+      month: "April",
+      Answered: 2240,
+      Unanswered: 1994,
+      "In Context": 3963,
+      "Out Of Context": 271,
+      "In Collection": 4109,
+      "Out of Collection": 125,
+    },
+    {
+      year: 2024,
+      month: "May",
+      Answered: 1016,
+      Unanswered: 415,
+      "In Context": 1337,
+      "Out Of Context": 94,
+      "In Collection": 1395,
+      "Out of Collection": 36,
+    },
+  ];
+
+  // console.log("farmingRelatedData", farmingRelatedData);
+
   return (
     <div className="App">
       {/* <div className="chart-container">
@@ -1667,10 +1863,40 @@ function App() {
             {/* <h2 className="chart-description">
             Source: Kenya dataset, Coffee, 09 APR 2024 - 08 MAY 2024, Kenya{" "}
           </h2> */}
-            <div className="chart">
+            {/* <div className="chart">
               <DifficultyStackedBarChart data={difficultyData} />
-            </div>
+            </div> */}
           </div>
+        </div>
+      </div>
+
+      <div className="chart-container">
+        {/* <h1 className="chart-title">
+            Aggregate Prompt-Based Feedback Analysis{" "}
+          </h1>
+          <h2 className="chart-description">
+            Source: Kenya dataset, Coffee, 09 APR 2024 - 08 MAY 2024, Kenya{" "}
+          </h2> */}
+        <div className="chart">
+          <IntentFeedbackStackedBarChart />
+        </div>
+      </div>
+      <div className="chart-container">
+        {/* <h1 className="chart-title">
+            Aggregate Prompt-Based Feedback Analysis{" "}
+          </h1>
+          <h2 className="chart-description">
+            Source: Kenya dataset, Coffee, 09 APR 2024 - 08 MAY 2024, Kenya{" "}
+          </h2> */}
+        <div className="chart">
+          <ClassificationsStackedBarChart />
+        </div>
+      </div>
+
+      <div className="chart-container">
+        <h1 className="chart-title">Denial Of Service</h1>
+        <div className="chart">
+          <DenialOfServiceChart data={denialOfService} />
         </div>
       </div>
 
@@ -1692,6 +1918,14 @@ function App() {
           <FeedbackChart data={feedbackData} />
         </div>
       </div>
+
+      <div className="chart-container">
+        <h1 className="chart-title">Topic Claasification Month-wise</h1>
+        <div className="chart">
+          <TopicChart data={topicData} />
+        </div>
+      </div>
+
       {/* <div className="chart-container">
         <h1 className="chart-title">Feedback Claasification</h1>
         <div className="chart">

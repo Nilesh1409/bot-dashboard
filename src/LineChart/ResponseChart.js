@@ -56,7 +56,7 @@ const ResponseChart = ({ data }) => {
     const tooltip = d3.select(tooltipRef.current);
     svg.selectAll("*").remove(); // Clear svg content before adding new elements
 
-    const width = 1000;
+    const width = 1050;
     const height = 450;
     const margin = { top: 20, right: 120, bottom: 30, left: 60 };
 
@@ -222,7 +222,7 @@ const ResponseChart = ({ data }) => {
 
   return (
     <>
-      <svg ref={ref} className="line-chart" width={1000} height={450}></svg>
+      <svg ref={ref} className="line-chart" width={1200} height={450}></svg>
       <div
         ref={tooltipRef}
         className="tooltip"
