@@ -4,6 +4,9 @@
   justify-content: space-around;
   padding: 20px;
 }
+* {
+  font-family: sans-serif;
+}
 
 .chart-container {
   flex: 1;
@@ -61,4 +64,15 @@
   background: #ccc;
   flex-grow: 1;
   margin: 0 15px;
+}
+.filter_range {
+  margin-top: 50px;
+}
+.chart-main-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  /* border: 1px solid black; */
+}
+.chart-main-container .chart {
+  height: 500px;
 }

@@ -1,0 +1,100 @@
+/* src/components/StackedBarChart.css */
+.chart-container {
+  position: relative;
+  /* display: flex; */
+  justify-content: center;
+}
+
+svg {
+  font-family: "Arial, sans-serif";
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  font-size: 14px;
+}
+
+.legend-container {
+  font-family: Arial, sans-serif;
+}
+
+.legend-item {
+  cursor: pointer;
+}
+
+.legend-rect {
+  transition: fill 0.3s ease;
+}
+
+.bar {
+  transition: opacity 0.3s ease;
+}
+
+.bar-High {
+  fill: #158a32;
+}
+
+.bar-Medium {
+  fill: #ffb347;
+}
+
+.bar-Low {
+  fill: #87cefa;
+}
+
+.bar-Undetermined {
+  fill: #929693;
+}
+
+.legend-item:hover .legend-rect {
+  fill: #ccc;
+}
+/* .bar-0 {
+  fill: #158a32;
+}
+.bar-1 {
+  fill: #ffb347;
+}
+.bar-2 {
+  fill: #87cefa;
+}
+.bar-3 {
+  fill: #929693;
+}
+.bar-4 {
+  fill: #ff6347;
+}
+.bar-5 {
+  fill: #4682b4;
+}
+.bar-6 {
+  fill: #32cd32;
+} */
+
+.legend-item:hover text {
+  font-weight: bold;
+}
+
+.tooltip-bar {
+  position: absolute;
+  text-align: left;
+  /* top: 299px;
+  left: 156px; */
+  width: auto;
+  height: auto;
+  padding: 5px;
+  font: 14px sans-serif;
+  background: rgb(224, 224, 224);
+  border: 0;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border: 1px solid black;
+}

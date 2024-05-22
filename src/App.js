@@ -5,6 +5,12 @@ import LineChart from "./LineChart/LineChart";
 import BubbleGraph from "./WordGraph/WordGraph";
 import SankeyChart from "./SankyChart/SankyChart";
 import SankeyDiagram from "./SankyChart/Sankey";
+import FeedbackChart from "./LineChart/FeedbackChart";
+import ResponseChart from "./LineChart/ResponseChart";
+import AnsweredChart from "./LineChart/AnsweredChart";
+import StackedBarChart from "./StackGraph/Faithfulness";
+import RelevanceStackedBarChart from "./StackGraph/Relevance";
+import DifficultyStackedBarChart from "./StackGraph/Difficulty";
 
 function App() {
   const generateData = () => {
@@ -20,134 +26,317 @@ function App() {
   };
 
   const data = generateData();
-  const chartData = [
+  // const chartData = [
+  //   {
+  //     year: 1990,
+  //     "Under-5": 0.97,
+  //     "5-14 years": 1.03,
+  //     "15-49 years": 14.87,
+  //     "50-69 years": 40.65,
+  //     "70+ years": 42.48,
+  //   },
+  //   {
+  //     year: 1991,
+  //     "Under-5": 0.95,
+  //     "5-14 years": 1.02,
+  //     "15-49 years": 15.0,
+  //     "50-69 years": 40.0,
+  //     "70+ years": 43.03,
+  //   },
+  //   {
+  //     year: 1992,
+  //     "Under-5": 0.2,
+  //     "5-14 years": 0.03,
+  //     "15-49 years": 14.87,
+  //     "50-69 years": 40.65,
+  //     "70+ years": 40.48,
+  //   },
+  //   {
+  //     year: 1993,
+  //     "Under-5": 0.95,
+  //     "5-14 years": 1.02,
+  //     "15-49 years": 15.0,
+  //     "50-69 years": 40.0,
+  //     "70+ years": 40.03,
+  //   },
+  //   {
+  //     year: 1994,
+  //     "Under-5": 0.97,
+  //     "5-14 years": 1.03,
+  //     "15-49 years": 14.87,
+  //     "50-69 years": 40.65,
+  //     "70+ years": 30.48,
+  //   },
+  //   {
+  //     year: 1995,
+  //     "Under-5": 0.95,
+  //     "5-14 years": 1.02,
+  //     "15-49 years": 15.0,
+  //     "50-69 years": 40.0,
+  //     "70+ years": 40.03,
+  //   },
+  //   {
+  //     year: 1996,
+  //     "Under-5": 0.97,
+  //     "5-14 years": 1.03,
+  //     "15-49 years": 14.87,
+  //     "50-69 years": 40.65,
+  //     "70+ years": 40.48,
+  //   },
+  //   {
+  //     year: 1997,
+  //     "Under-5": 0.95,
+  //     "5-14 years": 1.02,
+  //     "15-49 years": 15.0,
+  //     "50-69 years": 40.0,
+  //     "70+ years": 40.03,
+  //   },
+  //   {
+  //     year: 1998,
+  //     "Under-5": 0.97,
+  //     "5-14 years": 1.03,
+  //     "15-49 years": 14.87,
+  //     "50-69 years": 40.65,
+  //     "70+ years": 42.48,
+  //   },
+  //   {
+  //     year: 1999,
+  //     "Under-5": 0.95,
+  //     "5-14 years": 1.02,
+  //     "15-49 years": 15.0,
+  //     "50-69 years": 40.0,
+  //     "70+ years": 43.03,
+  //   },
+  //   {
+  //     year: 2000,
+  //     "Under-5": 0.2,
+  //     "5-14 years": 0.03,
+  //     "15-49 years": 14.87,
+  //     "50-69 years": 40.65,
+  //     "70+ years": 40.48,
+  //   },
+  //   {
+  //     year: 2001,
+  //     "Under-5": 0.95,
+  //     "5-14 years": 1.02,
+  //     "15-49 years": 15.0,
+  //     "50-69 years": 40.0,
+  //     "70+ years": 40.03,
+  //   },
+  //   {
+  //     year: 2002,
+  //     "Under-5": 0.97,
+  //     "5-14 years": 1.03,
+  //     "15-49 years": 15,
+  //     "50-69 years": 40,
+  //     "70+ years": 40.03,
+  //   },
+  //   {
+  //     year: 2002,
+  //     "Under-5": 0.97,
+  //     "5-14 years": 1.03,
+  //     "15-49 years": 15,
+  //     "50-69 years": 40,
+  //     "70+ years": 40.03,
+  //   },
+  //   {
+  //     year: 2003,
+  //     "Under-5": 0.97,
+  //     "5-14 years": 1.03,
+  //     "15-49 years": 14.87,
+  //     "50-69 years": 39,
+  //     "70+ years": 40.038,
+  //   },
+  //   {
+  //     year: 2004,
+  //     "Under-5": 0.95,
+  //     "5-14 years": 1.02,
+  //     "15-49 years": 15.0,
+  //     "50-69 years": 39.0,
+  //     "70+ years": 40.03,
+  //   },
+  // ];
+  const intentData = [
     {
-      year: 1990,
-      "Under-5": 0.97,
-      "5-14 years": 1.03,
-      "15-49 years": 14.87,
-      "50-69 years": 40.65,
-      "70+ years": 42.48,
+      // index: 1,
+      year: 2023,
+      month: "November",
+      monthInt: 11,
+      Unclear: 192,
+      Farming_related: 1852,
+      Change_crop: 170,
+      Exit: 18,
+      Referring_back: 72,
+      Disappointment: 6,
+      Greeting: 9,
     },
     {
-      year: 1991,
-      "Under-5": 0.95,
-      "5-14 years": 1.02,
-      "15-49 years": 15.0,
-      "50-69 years": 40.0,
-      "70+ years": 43.03,
+      // index: 2,
+      year: 2023,
+      month: "December",
+      monthInt: 12,
+      Unclear: 131,
+      Farming_related: 973,
+      Change_crop: 132,
+      Disappointment: 6,
+      Referring_back: 55,
+      Exit: 13,
+      Greeting: 7,
     },
     {
-      year: 1992,
-      "Under-5": 0.2,
-      "5-14 years": 0.03,
-      "15-49 years": 14.87,
-      "50-69 years": 40.65,
-      "70+ years": 40.48,
+      // index: 3,
+      year: 2024,
+      month: "January",
+      monthInt: 1,
+      Farming_related: 1304,
+      Change_crop: 138,
+      Disappointment: 0,
+      Referring_back: 93,
+      Unclear: 116,
+      Exit: 14,
+      Greeting: 7,
     },
     {
-      year: 1993,
-      "Under-5": 0.95,
-      "5-14 years": 1.02,
-      "15-49 years": 15.0,
-      "50-69 years": 40.0,
-      "70+ years": 40.03,
+      // index: 4,
+      year: 2024,
+      month: "February",
+      monthInt: 2,
+      Unclear: 213,
+      Change_crop: 212,
+      Farming_related: 3258,
+      Referring_back: 169,
+      Greeting: 19,
+      Exit: 17,
+      Disappointment: 2,
     },
     {
-      year: 1994,
-      "Under-5": 0.97,
-      "5-14 years": 1.03,
-      "15-49 years": 14.87,
-      "50-69 years": 40.65,
-      "70+ years": 30.48,
+      // index: 5,
+      year: 2024,
+      month: "March",
+      monthInt: 3,
+      Farming_related: 5677,
+      Unclear: 190,
+      Change_crop: 219,
+      Exit: 13,
+      Referring_back: 228,
+      Greeting: 12,
+      Disappointment: 2,
     },
     {
-      year: 1995,
-      "Under-5": 0.95,
-      "5-14 years": 1.02,
-      "15-49 years": 15.0,
-      "50-69 years": 40.0,
-      "70+ years": 40.03,
+      // index: 6,
+      year: 2024,
+      monthInt: 4,
+      month: "April",
+      Farming_related: 3842,
+      Change_crop: 125,
+      Unclear: 127,
+      Referring_back: 120,
+      Greeting: 11,
+      Exit: 7,
+      Disappointment: 1,
     },
     {
-      year: 1996,
-      "Under-5": 0.97,
-      "5-14 years": 1.03,
-      "15-49 years": 14.87,
-      "50-69 years": 40.65,
-      "70+ years": 40.48,
+      // index: 7,
+      year: 2024,
+      month: "May",
+      monthInt: 5,
+      Farming_related: 1303,
+      Change_crop: 36,
+      Referring_back: 46,
+      Exit: 3,
+      Unclear: 54,
+      Greeting: 1,
+      Disappointment: 0,
+    },
+  ];
+
+  const feedbackData = [
+    {
+      year: 2023,
+      month: "November",
+      GoodFeedback: 697,
+      BadFeedback: 116,
     },
     {
-      year: 1997,
-      "Under-5": 0.95,
-      "5-14 years": 1.02,
-      "15-49 years": 15.0,
-      "50-69 years": 40.0,
-      "70+ years": 40.03,
+      year: 2023,
+      month: "December",
+      GoodFeedback: 254,
+      BadFeedback: 41,
     },
     {
-      year: 1998,
-      "Under-5": 0.97,
-      "5-14 years": 1.03,
-      "15-49 years": 14.87,
-      "50-69 years": 40.65,
-      "70+ years": 42.48,
+      year: 2024,
+      month: "January",
+      GoodFeedback: 289,
+      BadFeedback: 56,
     },
     {
-      year: 1999,
-      "Under-5": 0.95,
-      "5-14 years": 1.02,
-      "15-49 years": 15.0,
-      "50-69 years": 40.0,
-      "70+ years": 43.03,
+      year: 2024,
+      month: "February",
+      GoodFeedback: 663,
+      BadFeedback: 99,
     },
     {
-      year: 2000,
-      "Under-5": 0.2,
-      "5-14 years": 0.03,
-      "15-49 years": 14.87,
-      "50-69 years": 40.65,
-      "70+ years": 40.48,
+      year: 2024,
+      month: "March",
+      GoodFeedback: 731,
+      BadFeedback: 162,
     },
     {
-      year: 2001,
-      "Under-5": 0.95,
-      "5-14 years": 1.02,
-      "15-49 years": 15.0,
-      "50-69 years": 40.0,
-      "70+ years": 40.03,
+      year: 2024,
+      month: "April",
+      GoodFeedback: 505,
+      BadFeedback: 169,
     },
     {
-      year: 2002,
-      "Under-5": 0.97,
-      "5-14 years": 1.03,
-      "15-49 years": 15,
-      "50-69 years": 40,
-      "70+ years": 40.03,
+      year: 2024,
+      month: "May",
+      GoodFeedback: 110,
+      BadFeedback: 37,
+    },
+  ];
+
+  const answeredData = [
+    {
+      year: 2023,
+      month: "November",
+      Answered: 1466,
+      "Not answered": 863,
     },
     {
-      year: 2002,
-      "Under-5": 0.97,
-      "5-14 years": 1.03,
-      "15-49 years": 15,
-      "50-69 years": 40,
-      "70+ years": 40.03,
+      year: 2023,
+      month: "December",
+      Answered: 756,
+      "Not answered": 553,
     },
     {
-      year: 2003,
-      "Under-5": 0.97,
-      "5-14 years": 1.03,
-      "15-49 years": 14.87,
-      "50-69 years": 39,
-      "70+ years": 40.038,
+      year: 2024,
+      month: "January",
+      Answered: 1163,
+      "Not answered": 510,
     },
     {
-      year: 2004,
-      "Under-5": 0.95,
-      "5-14 years": 1.02,
-      "15-49 years": 15.0,
-      "50-69 years": 39.0,
-      "70+ years": 40.03,
+      year: 2024,
+      month: "February",
+      Answered: 2031,
+      "Not answered": 1873,
+    },
+    {
+      year: 2024,
+      month: "March",
+      Answered: 3531,
+      "Not answered": 2806,
+    },
+    {
+      year: 2024,
+      month: "April",
+      Answered: 2240,
+      "Not answered": 1994,
+    },
+    {
+      year: 2024,
+      month: "May",
+      Answered: 1016,
+      "Not answered": 415,
     },
   ];
 
@@ -230,359 +419,1180 @@ function App() {
     ],
   };
 
+  let masterData = [
+    {
+      intent: "Change_crop",
+      count: 27,
+      faithfulness: [
+        {
+          intent: "Change_crop",
+          faithfulness_classification: "High Faithfulness",
+          feedback: "No Feedback",
+          count: 22,
+        },
+        {
+          intent: "Change_crop",
+          faithfulness_classification: "High Faithfulness",
+          feedback: "bad",
+          count: 2,
+        },
+        {
+          intent: "Change_crop",
+          faithfulness_classification: "High Faithfulness",
+          feedback: "good",
+          count: 3,
+        },
+      ],
+      relevace: [
+        {
+          intent: "Change_crop",
+          relevance_classification: "Undetermined",
+          feedback: "No Feedback",
+          count: 22,
+        },
+        {
+          intent: "Change_crop",
+          relevance_classification: "Undetermined",
+          feedback: "bad",
+          count: 2,
+        },
+        {
+          intent: "Change_crop",
+          relevance_classification: "Undetermined",
+          feedback: "good",
+          count: 3,
+        },
+      ],
+      difficulty: [
+        {
+          intent: "Change_crop",
+          difficulty: "Difficult",
+          feedback: "No Feedback",
+          count: 1,
+        },
+        {
+          intent: "Change_crop",
+          difficulty: "Easy",
+          feedback: "No Feedback",
+          count: 8,
+        },
+        {
+          intent: "Change_crop",
+          difficulty: "Fairly Difficult",
+          feedback: "No Feedback",
+          count: 1,
+        },
+        {
+          intent: "Change_crop",
+          difficulty: "Fairly Difficult",
+          feedback: "good",
+          count: 1,
+        },
+        {
+          intent: "Change_crop",
+          difficulty: "Fairly Easy",
+          feedback: "No Feedback",
+          count: 6,
+        },
+        {
+          intent: "Change_crop",
+          difficulty: "Fairly Easy",
+          feedback: "bad",
+          count: 1,
+        },
+        {
+          intent: "Change_crop",
+          difficulty: "Standard",
+          feedback: "No Feedback",
+          count: 6,
+        },
+        {
+          intent: "Change_crop",
+          difficulty: "Standard",
+          feedback: "bad",
+          count: 1,
+        },
+        {
+          intent: "Change_crop",
+          difficulty: "Standard",
+          feedback: "good",
+          count: 2,
+        },
+      ],
+      performance: [
+        {
+          intent: "Change_crop",
+          performance_classification: "Fast",
+          feedback: "No Feedback",
+          count: 22,
+        },
+        {
+          intent: "Change_crop",
+          performance_classification: "Fast",
+          feedback: "bad",
+          count: 2,
+        },
+        {
+          intent: "Change_crop",
+          performance_classification: "Fast",
+          feedback: "good",
+          count: 3,
+        },
+      ],
+    },
+    {
+      intent: "Exit",
+      count: 3,
+      faithfulness: [
+        {
+          intent: "Exit",
+          faithfulness_classification: "High Faithfulness",
+          feedback: "No Feedback",
+          count: 3,
+        },
+      ],
+      relevace: [
+        {
+          intent: "Exit",
+          relevance_classification: "Undetermined",
+          feedback: "No Feedback",
+          count: 3,
+        },
+      ],
+      difficulty: [
+        {
+          intent: "Exit",
+          difficulty: "Easy",
+          feedback: "No Feedback",
+          count: 1,
+        },
+        {
+          intent: "Exit",
+          difficulty: "Fairly Easy",
+          feedback: "No Feedback",
+          count: 2,
+        },
+      ],
+      performance: [
+        {
+          intent: "Exit",
+          performance_classification: "Fast",
+          feedback: "No Feedback",
+          count: 3,
+        },
+      ],
+    },
+    {
+      intent: "Farming_related",
+      count: 733,
+      faithfulness: [
+        {
+          intent: "Farming_related",
+          faithfulness_classification: "High Faithfulness",
+          feedback: "No Feedback",
+          count: 497,
+        },
+        {
+          intent: "Farming_related",
+          faithfulness_classification: "High Faithfulness",
+          feedback: "bad",
+          count: 10,
+        },
+        {
+          intent: "Farming_related",
+          faithfulness_classification: "High Faithfulness",
+          feedback: "good",
+          count: 36,
+        },
+        {
+          intent: "Farming_related",
+          faithfulness_classification: "Low Faithfulness",
+          feedback: "No Feedback",
+          count: 32,
+        },
+        {
+          intent: "Farming_related",
+          faithfulness_classification: "Low Faithfulness",
+          feedback: "bad",
+          count: 1,
+        },
+        {
+          intent: "Farming_related",
+          faithfulness_classification: "Medium Faithfulness",
+          feedback: "No Feedback",
+          count: 31,
+        },
+        {
+          intent: "Farming_related",
+          faithfulness_classification: "Medium Faithfulness",
+          feedback: "bad",
+          count: 1,
+        },
+        {
+          intent: "Farming_related",
+          faithfulness_classification: "Medium Faithfulness",
+          feedback: "good",
+          count: 2,
+        },
+      ],
+      relevace: [
+        {
+          intent: "Farming_related",
+          relevance_classification: "High Relevance",
+          feedback: "No Feedback",
+          count: 315,
+        },
+        {
+          intent: "Farming_related",
+          relevance_classification: "High Relevance",
+          feedback: "bad",
+          count: 6,
+        },
+        {
+          intent: "Farming_related",
+          relevance_classification: "High Relevance",
+          feedback: "good",
+          count: 22,
+        },
+        {
+          intent: "Farming_related",
+          relevance_classification: "Low Relevance",
+          feedback: "No Feedback",
+          count: 65,
+        },
+        {
+          intent: "Farming_related",
+          relevance_classification: "Low Relevance",
+          feedback: "good",
+          count: 3,
+        },
+        {
+          intent: "Farming_related",
+          relevance_classification: "Medium Relevance",
+          feedback: "No Feedback",
+          count: 74,
+        },
+        {
+          intent: "Farming_related",
+          relevance_classification: "Medium Relevance",
+          feedback: "bad",
+          count: 2,
+        },
+        {
+          intent: "Farming_related",
+          relevance_classification: "Medium Relevance",
+          feedback: "good",
+          count: 4,
+        },
+        {
+          intent: "Farming_related",
+          relevance_classification: "Undetermined",
+          feedback: "No Feedback",
+          count: 106,
+        },
+        {
+          intent: "Farming_related",
+          relevance_classification: "Undetermined",
+          feedback: "bad",
+          count: 4,
+        },
+        {
+          intent: "Farming_related",
+          relevance_classification: "Undetermined",
+          feedback: "good",
+          count: 9,
+        },
+      ],
+      difficulty: [
+        {
+          intent: "Farming_related",
+          difficulty: "Difficult",
+          feedback: "No Feedback",
+          count: 181,
+        },
+        {
+          intent: "Farming_related",
+          difficulty: "Difficult",
+          feedback: "bad",
+          count: 1,
+        },
+        {
+          intent: "Farming_related",
+          difficulty: "Difficult",
+          feedback: "good",
+          count: 10,
+        },
+        {
+          intent: "Farming_related",
+          difficulty: "Easy",
+          feedback: "No Feedback",
+          count: 80,
+        },
+        {
+          intent: "Farming_related",
+          difficulty: "Easy",
+          feedback: "bad",
+          count: 3,
+        },
+        {
+          intent: "Farming_related",
+          difficulty: "Easy",
+          feedback: "good",
+          count: 7,
+        },
+        {
+          intent: "Farming_related",
+          difficulty: "Fairly Difficult",
+          feedback: "No Feedback",
+          count: 173,
+        },
+        {
+          intent: "Farming_related",
+          difficulty: "Fairly Difficult",
+          feedback: "bad",
+          count: 4,
+        },
+        {
+          intent: "Farming_related",
+          difficulty: "Fairly Difficult",
+          feedback: "good",
+          count: 6,
+        },
+        {
+          intent: "Farming_related",
+          difficulty: "Fairly Easy",
+          feedback: "No Feedback",
+          count: 80,
+        },
+        {
+          intent: "Farming_related",
+          difficulty: "Fairly Easy",
+          feedback: "bad",
+          count: 5,
+        },
+        {
+          intent: "Farming_related",
+          difficulty: "Fairly Easy",
+          feedback: "good",
+          count: 4,
+        },
+        {
+          intent: "Farming_related",
+          difficulty: "Standard",
+          feedback: "No Feedback",
+          count: 127,
+        },
+        {
+          intent: "Farming_related",
+          difficulty: "Standard",
+          feedback: "bad",
+          count: 2,
+        },
+        {
+          intent: "Farming_related",
+          difficulty: "Standard",
+          feedback: "good",
+          count: 13,
+        },
+        {
+          intent: "Farming_related",
+          difficulty: "Very Confusing",
+          feedback: "No Feedback",
+          count: 31,
+        },
+        {
+          intent: "Farming_related",
+          difficulty: "Very Confusing",
+          feedback: "good",
+          count: 4,
+        },
+        {
+          intent: "Farming_related",
+          difficulty: "Very Easy",
+          feedback: "No Feedback",
+          count: 2,
+        },
+      ],
+      performance: [
+        {
+          intent: "Farming_related",
+          performance_classification: "Fast",
+          feedback: "No Feedback",
+          count: 260,
+        },
+        {
+          intent: "Farming_related",
+          performance_classification: "Fast",
+          feedback: "bad",
+          count: 7,
+        },
+        {
+          intent: "Farming_related",
+          performance_classification: "Fast",
+          feedback: "good",
+          count: 16,
+        },
+        {
+          intent: "Farming_related",
+          performance_classification: "Medium",
+          feedback: "No Feedback",
+          count: 390,
+        },
+        {
+          intent: "Farming_related",
+          performance_classification: "Medium",
+          feedback: "bad",
+          count: 8,
+        },
+        {
+          intent: "Farming_related",
+          performance_classification: "Medium",
+          feedback: "good",
+          count: 28,
+        },
+        {
+          intent: "Farming_related",
+          performance_classification: "Slow",
+          feedback: "No Feedback",
+          count: 24,
+        },
+      ],
+    },
+    {
+      intent: "Greeting",
+      count: 2,
+      faithfulness: [
+        {
+          intent: "Greeting",
+          faithfulness_classification: "High Faithfulness",
+          feedback: "No Feedback",
+          count: 1,
+        },
+      ],
+      relevace: [
+        {
+          intent: "Greeting",
+          relevance_classification: "Undetermined",
+          feedback: "No Feedback",
+          count: 1,
+        },
+      ],
+      difficulty: [
+        {
+          intent: "Greeting",
+          difficulty: "Fairly Easy",
+          feedback: "No Feedback",
+          count: 1,
+        },
+        {
+          intent: "Greeting",
+          difficulty: "Very Easy",
+          feedback: "No Feedback",
+          count: 1,
+        },
+      ],
+      performance: [
+        {
+          intent: "Greeting",
+          performance_classification: "Fast",
+          feedback: "No Feedback",
+          count: 2,
+        },
+      ],
+    },
+    {
+      intent: "Referring_back",
+      count: 20,
+      faithfulness: [
+        {
+          intent: "Referring_back",
+          faithfulness_classification: "High Faithfulness",
+          feedback: "No Feedback",
+          count: 18,
+        },
+        {
+          intent: "Referring_back",
+          faithfulness_classification: "Medium Faithfulness",
+          feedback: "No Feedback",
+          count: 1,
+        },
+      ],
+      relevace: [
+        {
+          intent: "Referring_back",
+          relevance_classification: "High Relevance",
+          feedback: "No Feedback",
+          count: 11,
+        },
+        {
+          intent: "Referring_back",
+          relevance_classification: "Low Relevance",
+          feedback: "No Feedback",
+          count: 2,
+        },
+        {
+          intent: "Referring_back",
+          relevance_classification: "Medium Relevance",
+          feedback: "No Feedback",
+          count: 3,
+        },
+        {
+          intent: "Referring_back",
+          relevance_classification: "Undetermined",
+          feedback: "No Feedback",
+          count: 3,
+        },
+      ],
+      difficulty: [
+        {
+          intent: "Referring_back",
+          difficulty: "Difficult",
+          feedback: "No Feedback",
+          count: 4,
+        },
+        {
+          intent: "Referring_back",
+          difficulty: "Easy",
+          feedback: "No Feedback",
+          count: 2,
+        },
+        {
+          intent: "Referring_back",
+          difficulty: "Fairly Difficult",
+          feedback: "No Feedback",
+          count: 4,
+        },
+        {
+          intent: "Referring_back",
+          difficulty: "Fairly Easy",
+          feedback: "No Feedback",
+          count: 3,
+        },
+        {
+          intent: "Referring_back",
+          difficulty: "Standard",
+          feedback: "No Feedback",
+          count: 5,
+        },
+        {
+          intent: "Referring_back",
+          difficulty: "Very Confusing",
+          feedback: "No Feedback",
+          count: 2,
+        },
+      ],
+      performance: [
+        {
+          intent: "Referring_back",
+          performance_classification: "Fast",
+          feedback: "No Feedback",
+          count: 4,
+        },
+        {
+          intent: "Referring_back",
+          performance_classification: "Medium",
+          feedback: "No Feedback",
+          count: 14,
+        },
+        {
+          intent: "Referring_back",
+          performance_classification: "Slow",
+          feedback: "No Feedback",
+          count: 2,
+        },
+      ],
+    },
+    {
+      intent: "Unclear",
+      count: 31,
+      faithfulness: [
+        {
+          intent: "Unclear",
+          faithfulness_classification: "High Faithfulness",
+          feedback: "No Feedback",
+          count: 28,
+        },
+      ],
+      relevace: [
+        {
+          intent: "Unclear",
+          relevance_classification: "High Relevance",
+          feedback: "No Feedback",
+          count: 2,
+        },
+        {
+          intent: "Unclear",
+          relevance_classification: "Medium Relevance",
+          feedback: "No Feedback",
+          count: 2,
+        },
+        {
+          intent: "Unclear",
+          relevance_classification: "Undetermined",
+          feedback: "No Feedback",
+          count: 24,
+        },
+      ],
+      difficulty: [
+        {
+          intent: "Unclear",
+          difficulty: "Difficult",
+          feedback: "No Feedback",
+          count: 1,
+        },
+        {
+          intent: "Unclear",
+          difficulty: "Easy",
+          feedback: "No Feedback",
+          count: 10,
+        },
+        {
+          intent: "Unclear",
+          difficulty: "Fairly Difficult",
+          feedback: "No Feedback",
+          count: 3,
+        },
+        {
+          intent: "Unclear",
+          difficulty: "Fairly Easy",
+          feedback: "No Feedback",
+          count: 5,
+        },
+        {
+          intent: "Unclear",
+          difficulty: "Standard",
+          feedback: "No Feedback",
+          count: 3,
+        },
+        {
+          intent: "Unclear",
+          difficulty: "Very Confusing",
+          feedback: "No Feedback",
+          count: 1,
+        },
+        {
+          intent: "Unclear",
+          difficulty: "Very Easy",
+          feedback: "No Feedback",
+          count: 8,
+        },
+      ],
+      performance: [
+        {
+          intent: "Unclear",
+          performance_classification: "Fast",
+          feedback: "No Feedback",
+          count: 27,
+        },
+        {
+          intent: "Unclear",
+          performance_classification: "Medium",
+          feedback: "No Feedback",
+          count: 4,
+        },
+      ],
+    },
+  ];
+
   const sankyData = {
     nodes: [
       // Intents
-      { name: "Change_crop" }, // 0
-      { name: "Exit" }, // 1
-      { name: "Farming_related" }, // 2
-      { name: "Greeting" }, // 3
-      { name: "Referring_back" }, //4
-      { name: "Unclear" }, //5
+      { name: "Change_crop", count: 27 }, // 0
+      { name: "Exit", count: 3 }, // 1
+      { name: "Farming_related", count: 733 }, // 2
+      { name: "Greeting", count: 2 }, // 3
+      { name: "Referring_back", count: 20 }, // 4
+      { name: "Unclear", count: 31 }, // 5
 
       // Faithfulness Classifications
-      { name: "High Faithfulness" }, //6
-      { name: "Low Faithfulness" }, //7
-      { name: "Medium Faithfulness" }, //8
-      { name: "" }, //9 Undetermined Faithfulness
+      { name: "High Faithfulness" }, // 6
+      { name: "High Relevance" }, // 7
+      { name: "Very Confusing" }, // 8
 
       // Relevance Classifications
-      { name: "High Relevance" }, //10
-      { name: "Low Relevance" }, //11
-      { name: "Medium Relevance" }, //12
-      { name: "" }, //13 Undetermined Relevance
+      { name: "Medium Faithfulness" }, // 9
+      { name: "Medium Relevance" }, // 10
+      { name: "Difficult" }, //11
 
       // Feedback
-      { name: "" }, //No Feedback
-      { name: "bad" },
-      { name: "good" },
+      { name: "bad" }, // 12
+      { name: "good" }, // 13
 
       // Difficulty Levels
-      { name: "Difficult" },
-      { name: "Easy" },
-      { name: "Fairly Difficult" },
-      { name: "Fairly Easy" },
-      { name: "Standard" },
-      { name: "Very Confusing" },
-      { name: "Very Easy" },
+      { name: "Low Faithfulness" }, // 14
+      { name: "Low Relevance" }, //15
+      { name: "Easy" }, // 16
+
+      { name: "Fairly Difficult" }, //17
+      { name: "Fairly Easy" }, //18
+      { name: "Standard" }, // 19
     ],
     links: [
-      // Existing links from Intents to Faithfulness and Relevance, and from those to Feedback
-      { source: 0, target: 6, value: 27 },
-      { source: 1, target: 6, value: 3 },
-      { source: 2, target: 6, value: 543 },
-      { source: 2, target: 7, value: 33 },
-      { source: 2, target: 8, value: 34 },
-      // { source: 2, target: 9, value: 123 },
-      { source: 3, target: 6, value: 1 },
-      // { source: 3, target: 9, value: 1 },
-      { source: 4, target: 6, value: 18 },
-      { source: 4, target: 8, value: 1 },
-      // { source: 4, target: 9, value: 1 },
-      { source: 5, target: 6, value: 28 },
-      // { source: 5, target: 9, value: 3 },
-      // { source: 0, target: 13, value: 27 },
-      // { source: 1, target: 13, value: 3 },
-      { source: 2, target: 10, value: 393 },
-      { source: 2, target: 11, value: 73 },
-      { source: 2, target: 12, value: 91 },
-      // { source: 2, target: 13, value: 176 },
-      // { source: 3, target: 13, value: 2 },
-      { source: 4, target: 10, value: 12 },
-      { source: 4, target: 11, value: 2 },
-      { source: 4, target: 12, value: 3 },
-      // { source: 4, target: 13, value: 3 },
-      { source: 5, target: 10, value: 2 },
-      { source: 5, target: 12, value: 2 },
-      // { source: 5, target: 13, value: 27 },
-      // { source: 6, target: 14, value: 569 },
-      // { source: 7, target: 14, value: 32 },
-      // { source: 8, target: 14, value: 32 },
-      // { source: 9, target: 14, value: 119 },
-      { source: 6, target: 15, value: 12 },
-      { source: 7, target: 15, value: 1 },
-      { source: 8, target: 15, value: 1 },
-      // { source: 9, target: 15, value: 3 },
-      { source: 6, target: 16, value: 39 },
-      { source: 8, target: 16, value: 2 },
-      // { source: 9, target: 16, value: 6 },
-      // { source: 10, target: 14, value: 375 },
-      // { source: 11, target: 14, value: 72 },
-      // { source: 12, target: 14, value: 89 },
-      // { source: 13, target: 14, value: 216 },
-      { source: 10, target: 15, value: 7 },
-      { source: 12, target: 15, value: 2 },
-      // { source: 13, target: 15, value: 8 },
-      { source: 10, target: 16, value: 25 },
-      { source: 11, target: 16, value: 3 },
-      { source: 12, target: 16, value: 5 },
-      // { source: 13, target: 16, value: 14 },
+      //High
+      { source: 2, target: 6, value: 543 }, // High Faithfulness
+      { source: 2, target: 7, value: 343 }, // High Relevance:
+      { source: 2, target: 8, value: 35 }, // Very Confusing":
+      // Mid
+      { source: 2, target: 9, value: 34 }, // Medium Faithfulness
+      { source: 2, target: 10, value: 80 }, // Medium Relevance
+      { source: 2, target: 11, value: 192 }, // Difficultss
+      // low
+      { source: 2, target: 14, value: 33 }, // Low Faithfulness
+      { source: 2, target: 15, value: 68 }, // Low Relevance
+      { source: 2, target: 16, value: 90 }, // Easy
+      { source: 2, target: 17, value: 183 }, // Fairly Difficult
+      { source: 2, target: 18, value: 89 }, //Fairly Easy"
+      { source: 2, target: 19, value: 142 }, // Standard
+      // Change crop
+      //High
+      { source: 0, target: 6, value: 27 }, // High Faithfulness
 
-      // New links from Intents to Difficulty Levels
-      // New links from Intents to Difficulty Levels
-      { source: 0, target: 17, value: 1 },
-      { source: 0, target: 18, value: 8 },
-      { source: 0, target: 19, value: 2 },
-      { source: 0, target: 20, value: 7 },
-      { source: 0, target: 21, value: 9 },
-      { source: 1, target: 18, value: 1 },
-      { source: 1, target: 20, value: 2 },
-      { source: 2, target: 17, value: 192 },
-      { source: 2, target: 18, value: 90 },
-      { source: 2, target: 19, value: 183 },
-      { source: 2, target: 20, value: 89 },
-      { source: 2, target: 21, value: 142 },
-      { source: 2, target: 22, value: 35 },
-      { source: 2, target: 23, value: 2 },
-      { source: 3, target: 20, value: 1 },
-      { source: 3, target: 23, value: 1 },
-      { source: 4, target: 17, value: 4 },
-      { source: 4, target: 18, value: 2 },
-      { source: 4, target: 19, value: 4 },
-      { source: 4, target: 20, value: 3 },
-      { source: 4, target: 21, value: 5 },
-      { source: 4, target: 22, value: 2 },
-      { source: 5, target: 17, value: 1 },
-      { source: 5, target: 18, value: 10 },
-      { source: 5, target: 19, value: 3 },
-      { source: 5, target: 20, value: 5 },
-      { source: 5, target: 21, value: 3 },
-      { source: 5, target: 22, value: 1 },
-      { source: 5, target: 23, value: 8 },
+      // Mid
+      { source: 0, target: 17, value: 1 }, // Fairly Difficult-> good: 2
+      { source: 0, target: 18, value: 1 }, // Fairly Easy -> good: 2
+      { source: 0, target: 19, value: 3 }, //Standard
+      // Low
+      { source: 0, target: 11, value: 1 }, // Difficult
 
-      // New links from Difficulty Levels to Feedback
-      // Corrected links from Difficulty Levels to Feedback
-      // { source: 17, target: 14, value: 187 },
-      // { source: 18, target: 14, value: 101 },
-      // { source: 19, target: 14, value: 181 },
-      // { source: 20, target: 14, value: 97 },
-      // { source: 21, target: 14, value: 141 },
-      // { source: 22, target: 14, value: 34 },
-      // { source: 23, target: 14, value: 11 },
-      { source: 17, target: 15, value: 1 },
-      { source: 18, target: 15, value: 3 },
-      { source: 19, target: 15, value: 4 },
-      { source: 20, target: 15, value: 6 },
-      { source: 21, target: 15, value: 3 },
-      { source: 17, target: 16, value: 10 },
-      { source: 18, target: 16, value: 7 },
-      { source: 19, target: 16, value: 7 },
-      { source: 20, target: 16, value: 4 },
-      { source: 21, target: 16, value: 15 },
-      { source: 22, target: 16, value: 4 },
+      { source: 0, target: 16, value: 8 }, // Easy
+      { source: 0, target: 17, value: 2 }, // Fairly Difficult
+      { source: 0, target: 18, value: 7 }, //Fairly Easy"
+      { source: 0, target: 19, value: 9 }, // Standard
+      // Exit
+      //High
+      { source: 1, target: 6, value: 3 }, // High Faithfulness
+
+      { source: 1, target: 16, value: 1 }, // Easy
+      { source: 1, target: 18, value: 2 }, //Fairly Easy"
+      // Greeting
+      { source: 3, target: 6, value: 1 }, // High Faithfulness
+      { source: 3, target: 16, value: 1 }, // Easy
+      { source: 3, target: 18, value: 1 }, //Fairly Easy"
+      // Referring_back
+      { source: 4, target: 16, value: 18 }, // Easy
+      // { source: 4, target: 7, value: 0 }, // High Relevance:
+      { source: 4, target: 8, value: 2 }, // Very Confusing":
+      // Mid
+      { source: 4, target: 9, value: 1 }, // Medium Faithfulness
+      { source: 4, target: 10, value: 3 }, // Medium Relevance
+      { source: 4, target: 11, value: 4 }, // Difficult
+      // low
+      { source: 4, target: 15, value: 2 }, // Low Relevance
+      { source: 4, target: 16, value: 2 }, // Easy
+      { source: 4, target: 17, value: 4 }, // Fairly Difficult
+      { source: 4, target: 18, value: 3 }, //Fairly Easy"
+      { source: 4, target: 19, value: 5 }, // Standard
+      // Unclear
+      //High
+      { source: 5, target: 6, value: 28 }, // High Faithfulness
+      { source: 5, target: 7, value: 2 }, // High Relevance:
+      { source: 5, target: 8, value: 1 }, // Very Confusing":
+      // Mid
+      { source: 5, target: 10, value: 2 }, // Medium Relevance
+      { source: 5, target: 11, value: 1 }, // Difficult
+      // low
+      { source: 5, target: 16, value: 10 }, // Easy
+      { source: 5, target: 17, value: 3 }, // Fairly Difficult
+      { source: 5, target: 18, value: 5 }, //Fairly Easy"
+      { source: 5, target: 19, value: 3 }, // Standard
+
+      // Feedback
+      { source: 6, target: 13, value: 39 }, //good: Change_crop + High faithfulness
+      { source: 6, target: 12, value: 12 }, //bad: Change_crop + High faithfulness
+
+      { source: 7, target: 13, value: 22 }, //good:  High relevance
+      { source: 7, target: 12, value: 6 }, //bad:   High relevance
+      // Very Confusing
+      { source: 8, target: 13, value: 4 }, //good
+      // Medium Faithfulness
+      { source: 9, target: 13, value: 2 }, //good
+      { source: 9, target: 12, value: 1 }, //bad
+      // Medium Relevance
+      { source: 10, target: 13, value: 4 }, //good
+      { source: 10, target: 12, value: 2 }, //bad
+      //Difficult
+      { source: 11, target: 13, value: 10 }, //good
+      { source: 11, target: 12, value: 1 }, //bad
+      //Low Faithfulness
+      // { source: 14, target: 13, value: 10 }, //good
+      { source: 14, target: 12, value: 1 }, //bad
+      //Low Relevance
+      // { source: 15, target: 13, value: 10 }, //good
+      { source: 15, target: 12, value: 3 }, //bad
+      //Easy
+      { source: 16, target: 13, value: 7 }, //good
+      { source: 16, target: 12, value: 3 }, //bad
+      //Fairly Difficult
+      { source: 17, target: 13, value: 7 }, //good
+      { source: 17, target: 12, value: 4 }, //bad
+      //Fairly Easy
+      { source: 18, target: 13, value: 4 }, //good
+      { source: 18, target: 12, value: 6 }, //bad
+      //Standard
+      { source: 19, target: 13, value: 15 }, //good
+      { source: 19, target: 12, value: 3 }, //bad
+      // Direct
+      // { source: 2, target: 13, value: 154 }, //bad
     ],
   };
-  const test = {
-    Intents: [
-      {
-        name: "farming_related",
-        count: 100,
-        Details: [
-          {
-            faithfulness: [
-              { name: "high", count: 10, feedback: "good" },
-              { name: "high", count: 10, feedback: "bad" },
-              { name: "mid", count: 10, feedback: "good" },
-              { name: "mid", count: 10, feedback: "bad" },
-              { name: "low", count: 10, feedback: "good" },
-              { name: "low", count: 10, feedback: "bad" },
-            ],
-          },
-          {
-            relevance: [
-              { name: "high", count: 10, feedback: "good" },
-              { name: "high", count: 10, feedback: "bad" },
-              { name: "mid", count: 10, feedback: "good" },
-              { name: "mid", count: 10, feedback: "bad" },
-              { name: "low", count: 10, feedback: "good" },
-              { name: "low", count: 10, feedback: "bad" },
-            ],
-          },
-          {
-            difficulty: [
-              { name: "high", count: 10, feedback: "good" },
-              { name: "high", count: 10, feedback: "bad" },
-              { name: "mid", count: 10, feedback: "good" },
-              { name: "mid", count: 10, feedback: "bad" },
-              { name: "low", count: 10, feedback: "good" },
-              { name: "low", count: 10, feedback: "bad" },
-            ],
-          },
-          {
-            performance: [
-              { name: "high", count: 10, feedback: "good" },
-              { name: "high", count: 10, feedback: "bad" },
-              { name: "mid", count: 10, feedback: "good" },
-              { name: "mid", count: 10, feedback: "bad" },
-              { name: "low", count: 10, feedback: "good" },
-              { name: "low", count: 10, feedback: "bad" },
-            ],
-          },
-        ],
-      },
-      {
-        name: "change_crop",
-        count: 50,
-        Details: [
-          {
-            faithfulness: [
-              { name: "high", count: 5, feedback: "good" },
-              { name: "high", count: 5, feedback: "bad" },
-              { name: "mid", count: 5, feedback: "good" },
-              { name: "mid", count: 5, feedback: "bad" },
-              { name: "low", count: 5, feedback: "good" },
-              { name: "low", count: 5, feedback: "bad" },
-            ],
-          },
-          {
-            relevance: [
-              { name: "high", count: 5, feedback: "good" },
-              { name: "high", count: 5, feedback: "bad" },
-              { name: "mid", count: 5, feedback: "good" },
-              { name: "mid", count: 5, feedback: "bad" },
-              { name: "low", count: 5, feedback: "good" },
-              { name: "low", count: 5, feedback: "bad" },
-            ],
-          },
-          {
-            difficulty: [
-              { name: "high", count: 5, feedback: "good" },
-              { name: "high", count: 5, feedback: "bad" },
-              { name: "mid", count: 5, feedback: "good" },
-              { name: "mid", count: 5, feedback: "bad" },
-              { name: "low", count: 5, feedback: "good" },
-              { name: "low", count: 5, feedback: "bad" },
-            ],
-          },
-          {
-            performance: [
-              { name: "high", count: 5, feedback: "good" },
-              { name: "high", count: 5, feedback: "bad" },
-              { name: "mid", count: 5, feedback: "good" },
-              { name: "mid", count: 5, feedback: "bad" },
-              { name: "low", count: 5, feedback: "good" },
-              { name: "low", count: 5, feedback: "bad" },
-            ],
-          },
-        ],
-      },
-      {
-        name: "exit",
-        count: 30,
-        Details: [
-          {
-            faithfulness: [
-              { name: "high", count: 5, feedback: "good" },
-              { name: "high", count: 5, feedback: "bad" },
-              { name: "mid", count: 5, feedback: "good" },
-              { name: "mid", count: 5, feedback: "bad" },
-              { name: "low", count: 5, feedback: "good" },
-              { name: "low", count: 5, feedback: "bad" },
-            ],
-          },
-          {
-            relevance: [
-              { name: "high", count: 5, feedback: "good" },
-              { name: "high", count: 5, feedback: "bad" },
-              { name: "mid", count: 5, feedback: "good" },
-              { name: "mid", count: 5, feedback: "bad" },
-              { name: "low", count: 5, feedback: "good" },
-              { name: "low", count: 5, feedback: "bad" },
-            ],
-          },
-        ],
-      },
-      {
-        name: "referring_back",
-        count: 40,
-        Details: [
-          {
-            faithfulness: [
-              { name: "high", count: 10, feedback: "good" },
-              { name: "high", count: 10, feedback: "bad" },
-              { name: "mid", count: 10, feedback: "good" },
-              { name: "mid", count: 10, feedback: "bad" },
-            ],
-          },
-          {
-            relevance: [
-              { name: "high", count: 10, feedback: "good" },
-              { name: "high", count: 10, feedback: "bad" },
-              { name: "mid", count: 10, feedback: "good" },
-              { name: "mid", count: 10, feedback: "bad" },
-            ],
-          },
-        ],
-      },
-      {
-        name: "greeting",
-        count: 20,
-        Details: [
-          {
-            faithfulness: [
-              { name: "high", count: 5, feedback: "good" },
-              { name: "high", count: 5, feedback: "bad" },
-              { name: "mid", count: 5, feedback: "good" },
-              { name: "mid", count: 5, feedback: "bad" },
-            ],
-          },
-          {
-            relevance: [
-              { name: "high", count: 5, feedback: "good" },
-              { name: "high", count: 5, feedback: "bad" },
-              { name: "mid", count: 5, feedback: "good" },
-              { name: "mid", count: 5, feedback: "bad" },
-            ],
-          },
-        ],
-      },
+  const feedbackRaw = [
+    {
+      intent: "Farming_related",
+      "good feedback": 44,
+      "bad feedback": 15,
+      "no feedback": 674,
+    },
+    {
+      intent: "Greeting",
+      "good feedback": 0,
+      "bad feedback": 0,
+      "no feedback": 2,
+    },
+    {
+      intent: "Unclear",
+      "good feedback": 0,
+      "bad feedback": 0,
+      "no feedback": 31,
+    },
+    {
+      intent: "Referring_back",
+      "good feedback": 0,
+      "bad feedback": 0,
+      "no feedback": 20,
+    },
+    {
+      intent: "Change_crop",
+      "good feedback": 3,
+      "bad feedback": 2,
+      "no feedback": 22,
+    },
+    {
+      intent: "Exit",
+      "good feedback": 0,
+      "bad feedback": 0,
+      "no feedback": 3,
+    },
+  ];
+  const sankyFeedback = {
+    nodes: [
+      { name: "Change_crop" },
+      { name: "" }, //Exit
+      { name: "Farming_related" },
+      { name: "" }, //Greeting
+      { name: "" }, //Referring_back
+      { name: "" }, //Unclear
+      { name: "bad" }, //bad
+      { name: "good" },
+      // { name: "No Feedback" },//No Feedback
+    ],
+    links: [
+      { source: 2, target: 7, value: 44 },
+      { source: 2, target: 6, value: 15 },
+      // { source: 2, target: 8, value: 674 },
+      // { source: 3, target: 8, value: 2 },
+      // { source: 5, target: 8, value: 31 },
+      // { source: 4, target: 8, value: 20 },
+      { source: 0, target: 7, value: 3 },
+      { source: 0, target: 6, value: 2 },
+      // { source: 0, target: 8, value: 22 },
+      // { source: 1, target: 8, value: 3 },
     ],
   };
-  function transformData(rawData) {
-    const nodes = [];
-    const links = [];
-    const nodeMap = new Map();
 
-    // Helper function to get or create node index
-    function getNode(name) {
-      if (!nodeMap.has(name)) {
-        nodeMap.set(name, nodes.length);
-        nodes.push({ name });
-      }
-      return nodeMap.get(name);
-    }
+  const responseData = [
+    {
+      year: 2024,
+      month: "April",
+      GotResponse: 167,
+      "Didn'tGet": 1,
+    },
+    {
+      year: 2024,
+      month: "May",
+      GotResponse: 618,
+      "Didn'tGet": 30,
+    },
+  ];
 
-    rawData.Intents.forEach((intent) => {
-      const intentIndex = getNode(intent.name);
+  const updatedSankyData = {
+    intents: {
+      Farming_related: {
+        faithfulness_classification: {
+          "medium faithfulness": 34,
+          undetermined: 123,
+          "high faithfulness": 543,
+          "low faithfulness": 33,
+        },
+      },
+      Greeting: {
+        faithfulness_classification: {
+          undetermined: 1,
+          "high faithfulness": 1,
+        },
+      },
+      Unclear: {
+        faithfulness_classification: {
+          undetermined: 3,
+          "high faithfulness": 28,
+        },
+      },
+      Referring_back: {
+        faithfulness_classification: {
+          "high faithfulness": 18,
+          "medium faithfulness": 1,
+          undetermined: 1,
+        },
+      },
+      Change_crop: {
+        faithfulness_classification: {
+          "high faithfulness": 27,
+        },
+      },
+      Exit: {
+        faithfulness_classification: {
+          "high faithfulness": 3,
+        },
+      },
+    },
+    faithfulness: {
+      "medium faithfulness": {
+        relevance_classification: 35,
+        difficulty: 35,
+      },
+      undetermined: {
+        relevance_classification: 128,
+        difficulty: 128,
+      },
+      "high faithfulness": {
+        relevance_classification: 620,
+        difficulty: 620,
+      },
+      "low faithfulness": {
+        relevance_classification: 33,
+        difficulty: 33,
+      },
+    },
+    relevance: {
+      "high relevance": {
+        faithfulness_classification: 407,
+        difficulty: 407,
+      },
+      undetermined: {
+        faithfulness_classification: 238,
+        difficulty: 238,
+      },
+      "low relevance": {
+        faithfulness_classification: 75,
+        difficulty: 75,
+      },
+      "medium relevance": {
+        faithfulness_classification: 96,
+        difficulty: 96,
+      },
+    },
+    difficulty: {
+      difficult: 198,
+      "fairly easy": 107,
+      easy: 111,
+      "fairly difficult": 192,
+      standard: 159,
+      "very confusing": 38,
+      "very easy": 11,
+    },
+    feedback: {
+      null: 752,
+      bad: 17,
+      good: 47,
+    },
+  };
 
-      intent.Details.forEach((detail) => {
-        Object.keys(detail).forEach((key) => {
-          detail[key].forEach((item) => {
-            const categoryIndex = getNode(`${key}:${item.name}`);
-            const feedbackIndex = getNode(item.feedback);
+  const faithfulnessData = [
+    {
+      intent: "Farming_related",
+      faithfulness: {
+        High: 543,
+        Medium: 34,
+        Low: 33,
+        Undetermined: 123,
+      },
+    },
+    {
+      intent: "Greeting",
+      faithfulness: {
+        High: 1,
+        Medium: 0,
+        Low: 0,
+        Undetermined: 1,
+      },
+    },
+    {
+      intent: "Unclear",
+      faithfulness: {
+        High: 28,
+        Medium: 0,
+        Low: 0,
+        Undetermined: 3,
+      },
+    },
+    {
+      intent: "Referring_back",
+      faithfulness: {
+        High: 18,
+        Medium: 1,
+        Low: 0,
+        Undetermined: 1,
+      },
+    },
+    {
+      intent: "Change_crop",
+      faithfulness: {
+        High: 27,
+        Medium: 0,
+        Low: 0,
+        Undetermined: 0,
+      },
+    },
+    {
+      intent: "Exit",
+      faithfulness: {
+        High: 3,
+        Medium: 0,
+        Low: 0,
+        Undetermined: 0,
+      },
+    },
+  ];
 
-            // Create link from intent to category
-            links.push({
-              source: intentIndex,
-              target: categoryIndex,
-              value: item.count,
-            });
-
-            // Create link from category to feedback
-            links.push({
-              source: categoryIndex,
-              target: feedbackIndex,
-              value: item.count,
-            });
-          });
-        });
-      });
-    });
-
-    return { nodes, links };
-  }
-  const sankeyTest = transformData(test);
-  console.log("🚀 ~ App ~ sankeyTest:", sankeyTest);
+  const relevanceData = [
+    {
+      intent: "Farming_related",
+      relevance: {
+        High: 393,
+        Medium: 91,
+        Low: 73,
+        Undetermined: 176,
+      },
+    },
+    {
+      intent: "Greeting",
+      relevance: {
+        High: 0,
+        Medium: 0,
+        Low: 0,
+        Undetermined: 2,
+      },
+    },
+    {
+      intent: "Unclear",
+      relevance: {
+        High: 2,
+        Medium: 2,
+        Low: 0,
+        Undetermined: 27,
+      },
+    },
+    {
+      intent: "Referring_back",
+      relevance: {
+        High: 12,
+        Medium: 3,
+        Low: 2,
+        Undetermined: 3,
+      },
+    },
+    {
+      intent: "Change_crop",
+      relevance: {
+        High: 0,
+        Medium: 0,
+        Low: 0,
+        Undetermined: 27,
+      },
+    },
+    {
+      intent: "Exit",
+      relevance: {
+        High: 0,
+        Medium: 0,
+        Low: 0,
+        Undetermined: 3,
+      },
+    },
+  ];
+  const difficultyData = [
+    {
+      intent: "Farming_related",
+      difficulty: {
+        "Very Confusing": 35,
+        Difficult: 192,
+        Easy: 90,
+        "Fairly Difficult": 183,
+        "Fairly Easy": 89,
+        Standard: 142,
+        Undetermined: 2,
+      },
+    },
+    {
+      intent: "Greeting",
+      difficulty: {
+        "Very Confusing": 0,
+        Difficult: 0,
+        Easy: 0,
+        "Fairly Difficult": 0,
+        "Fairly Easy": 1,
+        Standard: 0,
+        Undetermined: 1,
+      },
+    },
+    {
+      intent: "Unclear",
+      difficulty: {
+        "Very Confusing": 1,
+        Difficult: 1,
+        Easy: 10,
+        "Fairly Difficult": 3,
+        "Fairly Easy": 5,
+        Standard: 3,
+        Undetermined: 8,
+      },
+    },
+    {
+      intent: "Referring_back",
+      difficulty: {
+        "Very Confusing": 2,
+        Difficult: 4,
+        Easy: 2,
+        "Fairly Difficult": 4,
+        "Fairly Easy": 3,
+        Standard: 5,
+        Undetermined: 0,
+      },
+    },
+    {
+      intent: "Change_crop",
+      difficulty: {
+        "Very Confusing": 0,
+        Difficult: 1,
+        Easy: 8,
+        "Fairly Difficult": 2,
+        "Fairly Easy": 7,
+        Standard: 9,
+        Undetermined: 0,
+      },
+    },
+    {
+      intent: "Exit",
+      difficulty: {
+        "Very Confusing": 0,
+        Difficult: 0,
+        Easy: 1,
+        "Fairly Difficult": 0,
+        "Fairly Easy": 2,
+        Standard: 0,
+        Undetermined: 0,
+      },
+    },
+  ];
 
   return (
     <div className="App">
@@ -601,6 +1611,10 @@ function App() {
           <SankeyDiagram data={sankeyTest} />
         </div>
       </div> */}
+      {/* <div>
+        <h1>Sankey Diagram Example</h1>
+        <SankeyDiagram />
+      </div> */}
       <div className="chart-container">
         <h1 className="chart-title">
           Aggregate Prompt Responses User Feedback Analysis{" "}
@@ -614,14 +1628,76 @@ function App() {
       </div>
 
       <div className="chart-container">
-        <h1 className="chart-title">Response Claasification</h1>
-        <div
-          // style={{ width: "1100px", border: "1px solid red" }}
-          className="chart"
-        >
-          <LineChart data={chartData} />
+        <h1 className="chart-title">
+          Aggregate Prompt-Based Feedback Analysis{" "}
+        </h1>
+        <h2 className="chart-description">
+          Source: Kenya dataset, Coffee, 09 APR 2024 - 08 MAY 2024, Kenya{" "}
+        </h2>
+        <div className="chart">
+          <SankeyChart feedback={true} data={sankyFeedback} />
         </div>
       </div>
+      <div className="chart-container">
+        <h1 className="chart-title">
+          Aggregate Prompt-Based Feedback Analysis{" "}
+        </h1>
+        <h2 className="chart-description">
+          Source: Kenya dataset, Coffee, 09 APR 2024 - 08 MAY 2024, Kenya{" "}
+        </h2>
+        <div className="chart-main-container">
+          <div className="chart-container">
+            <div className="chart">
+              <StackedBarChart data={faithfulnessData} />
+            </div>
+          </div>
+          <div className="chart-container">
+            {/* <h1 className="chart-title">
+            Aggregate Prompt-Based Feedback Analysis{" "}
+          </h1>
+          <h2 className="chart-description">
+            Source: Kenya dataset, Coffee, 09 APR 2024 - 08 MAY 2024, Kenya{" "}
+          </h2> */}
+            <div className="chart">
+              <RelevanceStackedBarChart data={relevanceData} />
+            </div>
+          </div>
+          <div className="chart-container">
+            {/* <h1 className="chart-title">Difficulty </h1> */}
+            {/* <h2 className="chart-description">
+            Source: Kenya dataset, Coffee, 09 APR 2024 - 08 MAY 2024, Kenya{" "}
+          </h2> */}
+            <div className="chart">
+              <DifficultyStackedBarChart data={difficultyData} />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="chart-container">
+        <h1 className="chart-title">Intent Claasification</h1>
+        <div className="chart">
+          <LineChart data={intentData} />
+        </div>
+      </div>
+      <div className="chart-container">
+        <h1 className="chart-title">Answered & Unanswered Questions</h1>
+        <div className="chart">
+          <AnsweredChart data={answeredData} />
+        </div>
+      </div>
+      <div className="chart-container">
+        <h1 className="chart-title">Feedback Claasification</h1>
+        <div className="chart">
+          <FeedbackChart data={feedbackData} />
+        </div>
+      </div>
+      {/* <div className="chart-container">
+        <h1 className="chart-title">Feedback Claasification</h1>
+        <div className="chart">
+          <ResponseChart data={responseData} />
+        </div>
+      </div> */}
 
       <div className="chart-container">
         <h1 className="chart-title">Topic Classifications </h1>

@@ -1,60 +1,54 @@
+// SankeyDiagram.js
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
-import { sankey, sankeyLeft, sankeyLinkHorizontal } from "d3-sankey";
-import "./style.css";
-import { uniqueId } from "lodash-es";
+import { sankey, sankeyLinkHorizontal, sankeyJustify } from "d3-sankey";
 
-const SankeyDiagram = ({ data }) => {
-  const svgRef = useRef(null);
+const SankeyDiagram = () => {
+  const svgRef = useRef();
 
   useEffect(() => {
-    const valueFormat = d3.format(",.0f");
-    const format = (d) => `${valueFormat(d)}`;
-    const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
-    const color = (name) => colorScale(name.replace(/ .*/, ""));
+    const data = {
+      nodes: [
+        { name: "Question 1" },
+        { name: "Classification X" },
+        { name: "Classification Y" },
+      ],
+      links: [
+        { source: 0, target: 1, value: 1 },
+        { source: 0, target: 2, value: 1 },
+      ],
+    };
 
-    const width = 975;
-    const height = 600;
+    const width = 600;
+    const height = 400;
+
     const svg = d3
       .select(svgRef.current)
-      .attr("viewBox", `0 0 ${width} ${height}`)
-      .attr("width", "100%")
-      .attr("height", "90%");
+      .attr("width", width)
+      .attr("height", height);
 
-    const sankeyLayout = sankey()
-      .nodeAlign(sankeyLeft)
-      .nodeWidth(10)
-      .nodePadding(10)
+    const sankeyGenerator = sankey()
+      .nodeAlign(sankeyJustify)
+      .nodeWidth(20)
+      .nodePadding(20)
       .extent([
-        [1, 5],
-        [width - 1, height - 5],
+        [1, 1],
+        [width - 1, height - 6],
       ]);
 
-    const { nodes, links } = sankeyLayout({
-      nodes: data.nodes.map((d) => ({ ...d })),
-      links: data.links.map((d) => ({ ...d })),
+    const { nodes, links } = sankeyGenerator(data);
+
+    // Manually adjust node heights and positions
+    nodes.forEach((node) => {
+      node.y1 = node.y0 + 100; // Set node height to 100px
     });
 
-    const link = svg
-      .append("g")
-      .attr("fill", "none")
-      .attr("stroke-opacity", 0.5)
-      .selectAll("path")
-      .data(links)
-      .enter()
-      .append("path")
-      .attr("class", "link")
-      .style("mix-blend-mode", "multiply")
-      .attr("d", sankeyLinkHorizontal())
-      .attr("stroke", (d) => {
-        d.uid = uniqueId("gradient-");
-        return `url(#${d.uid})`;
-      })
-      .attr("stroke-width", (d) => Math.max(1, d.width))
-      .append("title")
-      .text((d) => `${d.source.name} → ${d.target.name}\n${format(d.value)}`);
+    // Set the starting y-position of links from Question 1 to be the same
+    links.forEach((link) => {
+      link.sy = nodes[0].y0 + (nodes[0].y1 - nodes[0].y0) / 2;
+    });
 
-    const node = svg
+    svg
       .append("g")
       .selectAll("rect")
       .data(nodes)
@@ -64,71 +58,24 @@ const SankeyDiagram = ({ data }) => {
       .attr("y", (d) => d.y0)
       .attr("height", (d) => d.y1 - d.y0)
       .attr("width", (d) => d.x1 - d.x0)
-      .attr("fill", (d) => color(d.name))
-      .on("mouseover", (event, d) => {
-        svg
-          .selectAll(".link")
-          .transition()
-          .duration(400)
-          .style("opacity", 0.1)
-          .attr("stroke-width", (d) => Math.max(1, d.width));
-
-        svg
-          .selectAll(".link")
-          .filter(
-            (link) => link.source.name === d.name || link.target.name === d.name
-          )
-          .transition()
-          .duration(400)
-          .style("opacity", 1)
-          .attr("stroke-width", (link) => Math.max(1, link.width * 2));
-
-        node
-          .transition()
-          .duration(400)
-          .style("opacity", (n) =>
-            links.some(
-              (link) =>
-                link.source.name === n.name || link.target.name === n.name
-            )
-              ? 1
-              : 0.1
-          );
-      })
-      .on("mouseout", () => {
-        svg
-          .selectAll(".link")
-          .transition()
-          .duration(400)
-          .style("opacity", 1)
-          .attr("stroke-width", (d) => Math.max(1, d.width));
-
-        node.transition().duration(400).style("opacity", 1);
-      })
-      .append("title")
-      .text((d) => `${d.name}\n${format(d.value)}`);
-
-    svg
-      .append("defs")
-      .selectAll("linearGradient")
-      .data(links, (d) => d.uid)
-      .enter()
-      .append("linearGradient")
-      .attr("id", (d) => d.uid)
-      .attr("gradientUnits", "userSpaceOnUse")
-      .attr("x1", (d) => d.source.x1)
-      .attr("x2", (d) => d.target.x0)
-      .append("stop")
-      .attr("offset", "0%")
-      .attr("stop-color", (d) => color(d.source.name))
-      .enter()
-      .append("stop")
-      .attr("offset", "100%")
-      .attr("stop-color", (d) => color(d.target.name));
+      .attr("fill", "#1f77b4")
+      .attr("stroke", "#000");
 
     svg
       .append("g")
-      .attr("font", "10px sans-serif")
+      .attr("fill", "none")
+      .attr("stroke-opacity", 0.5)
+      .selectAll("path")
+      .data(links)
+      .enter()
+      .append("path")
+      .attr("d", sankeyLinkHorizontal())
+      .attr("stroke", (d) => d3.interpolateCool(d.value))
+      .attr("stroke-width", (d) => Math.max(1, d.width));
+
+    svg
+      .append("g")
+      .style("font", "10px sans-serif")
       .selectAll("text")
       .data(nodes)
       .enter()
@@ -138,18 +85,9 @@ const SankeyDiagram = ({ data }) => {
       .attr("dy", "0.35em")
       .attr("text-anchor", (d) => (d.x0 < width / 2 ? "start" : "end"))
       .text((d) => d.name);
-  }, [data]);
+  }, []);
 
-  return (
-    <>
-      <div className="column-name">
-        <span>Intent</span>
-        <span>Response Classification</span>
-        <span>Feedback</span>
-      </div>
-      <svg ref={svgRef} />
-    </>
-  );
+  return <svg ref={svgRef}></svg>;
 };
 
 export default SankeyDiagram;
