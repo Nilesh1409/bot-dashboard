@@ -12,17 +12,17 @@ const BubbleGraph = ({ data }) => {
       .attr("width", width)
       .attr("height", height);
 
-    const forceStrength = -30;
+    const forceStrength = 100;
     const simulation = d3
       .forceSimulation(data.nodes)
       .force(
         "charge",
         d3.forceManyBody().strength((d) => forceStrength * (d.count / 1000))
       )
-      .force("center", d3.forceCenter(width / 2, height / 1.5))
+      .force("center", d3.forceCenter(width / 2, height / 2))
       .force(
         "collision",
-        d3.forceCollide().radius((d) => d.count / 15)
+        d3.forceCollide().radius((d) => (d.count / 15) * 0.5)
       )
       .force("y", d3.forceY(height / 10).strength(0.05))
       .force("x", d3.forceX(width / 10).strength(0.05));
@@ -36,7 +36,7 @@ const BubbleGraph = ({ data }) => {
 
     const circles = node
       .append("circle")
-      .attr("r", (d) => d.count / 20)
+      .attr("r", (d) => d.count / 50)
       .attr("fill", "#e06767");
 
     const labels = node
@@ -44,7 +44,7 @@ const BubbleGraph = ({ data }) => {
       .text((d) => d.topic)
       .attr("text-anchor", "middle") // Center the text horizontally
       .attr("dy", ".35em") // Center the text vertically
-      .attr("font-size", (d) => Math.max(10, d.count / 50)) // Adjust font size based on bubble size
+      .attr("font-size", (d) => Math.max(10, d.count / 250)) // Adjust font size based on bubble size
       .attr("fill", "black"); // Text color
 
     simulation.on("tick", () => {
