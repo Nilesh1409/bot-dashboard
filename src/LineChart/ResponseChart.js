@@ -3,7 +3,7 @@ import * as d3 from "d3";
 import "./lineChart.css";
 import style from "./style.module.css";
 
-const ChartComponent = ({ data }) => {
+const ResponseChart = ({ data }) => {
   const ref = useRef();
   const tooltipRef = useRef();
   const [selectedMonth, setSelectedMonth] = useState(1);
@@ -16,27 +16,12 @@ const ChartComponent = ({ data }) => {
     { value: 5, name: "March 2024" },
     { value: 6, name: "April 2024" },
     { value: 7, name: "May 2024" },
+    { value: 8, name: "June 2024" },
   ];
 
-  // const colorMap = {
-  //   Unclear: "#7087B0",
-  //   Farming_related: "#C15F43",
-  //   Change_crop: "#7a0177",
-  //   Exit: "#799A6B",
-  //   Referring_back: "#C1824A",
-  //   Disappointment: "#22877f",
-  //   Greeting: "#872247",
-  // };
-
   const colorMap = {
-    Unclear: "#101c73",
-
-    Farming_related: "#198219",
-    Change_crop: "#6B007B",
-    Exit: "#799A6B",
-    Referring_back: "#C1824A",
-    Disappointment: "#22877f",
-    Greeting: "#872247",
+    GotResponse: "#198219",
+    "Didn'tGet": "#22877f",
   };
 
   const allMonth = {
@@ -64,6 +49,7 @@ const ChartComponent = ({ data }) => {
 
     return dataDate >= startDate;
   });
+  console.log("🚀 ~ filteredData ~ filteredData:", filteredData);
 
   useEffect(() => {
     const svg = d3.select(ref.current);
@@ -74,17 +60,7 @@ const ChartComponent = ({ data }) => {
     const height = 450;
     const margin = { top: 20, right: 120, bottom: 30, left: 60 };
 
-    const stack = d3
-      .stack()
-      .keys([
-        "Unclear",
-        "Farming_related",
-        "Change_crop",
-        "Exit",
-        "Referring_back",
-        "Disappointment",
-        "Greeting",
-      ]);
+    const stack = d3.stack().keys(["GotResponse", "Didn'tGet"]);
     const stackedData = stack(filteredData);
 
     const xExtent = d3.extent(
@@ -151,6 +127,11 @@ const ChartComponent = ({ data }) => {
       .on("mousemove", (event, d) => {
         const mouseX = d3.pointer(event, svg.node())[0];
         const hoveredDate = xScale.invert(mouseX);
+        console.log(
+          "🚀 ~ .on ~ hoveredDate:",
+          hoveredDate,
+          hoveredDate.getMonth() + 1
+        );
 
         const hoveredYear = hoveredDate.getFullYear();
         const hoveredMonthIndex = hoveredDate.getMonth() + 1;
@@ -205,8 +186,8 @@ const ChartComponent = ({ data }) => {
               </div>
             `;
           })
-          .style("left", event.offsetX + 10 + "px")
-          .style("top", event.offsetY + 10 + "px");
+          .style("left", event.pageX + 10 + "px")
+          .style("top", event.pageY + 10 + "px");
       })
       .on("mouseout", () => {
         d3.selectAll("path").style("opacity", 1);
@@ -261,7 +242,7 @@ const ChartComponent = ({ data }) => {
           <input
             type="range"
             min="1"
-            max="7"
+            max="6"
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(Number(e.target.value))}
           />
@@ -274,4 +255,4 @@ const ChartComponent = ({ data }) => {
   );
 };
 
-export default ChartComponent;
+export default ResponseChart;

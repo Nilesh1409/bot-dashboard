@@ -3,7 +3,7 @@ import * as d3 from "d3";
 import "./lineChart.css";
 import style from "./style.module.css";
 
-const ChartComponent = ({ data }) => {
+const DenialOfServiceChart = ({ data }) => {
   const ref = useRef();
   const tooltipRef = useRef();
   const [selectedMonth, setSelectedMonth] = useState(1);
@@ -29,14 +29,20 @@ const ChartComponent = ({ data }) => {
   // };
 
   const colorMap = {
-    Unclear: "#101c73",
+    Answered: "#198219",
+    Unanswered: "#6B007B",
+    "In Context": "#799A6B",
+    "Out Of Context": "#C1824A",
+    "In Collection": "#22877f",
+    "Out of Collection": "#872247",
+    // Answered: "#198219",
 
-    Farming_related: "#198219",
-    Change_crop: "#6B007B",
-    Exit: "#799A6B",
-    Referring_back: "#C1824A",
-    Disappointment: "#22877f",
-    Greeting: "#872247",
+    // "Not answered": "#971919",
+    // Change_crop: "#6B007B",
+    // Exit: "#799A6B",
+    // Referring_back: "#C1824A",
+    // Disappointment: "#22877f",
+    // Greeting: "#872247",
   };
 
   const allMonth = {
@@ -77,13 +83,12 @@ const ChartComponent = ({ data }) => {
     const stack = d3
       .stack()
       .keys([
-        "Unclear",
-        "Farming_related",
-        "Change_crop",
-        "Exit",
-        "Referring_back",
-        "Disappointment",
-        "Greeting",
+        "Answered",
+        "Unanswered",
+        "In Context",
+        "Out Of Context",
+        "In Collection",
+        "Out of Collection",
       ]);
     const stackedData = stack(filteredData);
 
@@ -274,4 +279,4 @@ const ChartComponent = ({ data }) => {
   );
 };
 
-export default ChartComponent;
+export default DenialOfServiceChart;

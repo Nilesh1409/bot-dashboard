@@ -3,7 +3,7 @@ import * as d3 from "d3";
 import "./lineChart.css";
 import style from "./style.module.css";
 
-const ChartComponent = ({ data }) => {
+const TopicChart = ({ data }) => {
   const ref = useRef();
   const tooltipRef = useRef();
   const [selectedMonth, setSelectedMonth] = useState(1);
@@ -16,27 +16,22 @@ const ChartComponent = ({ data }) => {
     { value: 5, name: "March 2024" },
     { value: 6, name: "April 2024" },
     { value: 7, name: "May 2024" },
+    { value: 8, name: "June 2024" },
   ];
 
-  // const colorMap = {
-  //   Unclear: "#7087B0",
-  //   Farming_related: "#C15F43",
-  //   Change_crop: "#7a0177",
-  //   Exit: "#799A6B",
-  //   Referring_back: "#C1824A",
-  //   Disappointment: "#22877f",
-  //   Greeting: "#872247",
-  // };
-
   const colorMap = {
-    Unclear: "#101c73",
-
-    Farming_related: "#198219",
-    Change_crop: "#6B007B",
-    Exit: "#799A6B",
-    Referring_back: "#C1824A",
-    Disappointment: "#22877f",
-    Greeting: "#872247",
+    Unclear: "#606060", // Dark gray for unclear
+    "Not related to agriculture": "#B22222", // Firebrick for not related
+    "Pests and Diseases": "#5B0000", // Darker red for pests and diseases
+    Fertilizers: "#228B22", // Forest green for fertilizers
+    "Soil Management": "#6B4226", // Dark brown for soil management
+    Varieties: "#4169E1", // Royal blue for varieties
+    Harvesting: "#B8860B", // Dark goldenrod for harvesting
+    Marketing: "#D2691E", // Chocolate for marketing
+    Sowing: "#006400", // Dark green for sowing
+    Pruning: "#4B0082", // Indigo for pruning
+    Storage: "#104E8B", // Dark dodger blue for storage
+    "Climate Change": "#008B8B", // Dark cyan for climate change
   };
 
   const allMonth = {
@@ -78,12 +73,17 @@ const ChartComponent = ({ data }) => {
       .stack()
       .keys([
         "Unclear",
-        "Farming_related",
-        "Change_crop",
-        "Exit",
-        "Referring_back",
-        "Disappointment",
-        "Greeting",
+        "Not related to agriculture",
+        "Pests and Diseases",
+        "Fertilizers",
+        "Soil Management",
+        "Varieties",
+        "Harvesting",
+        "Marketing",
+        "Sowing",
+        "Pruning",
+        "Storage",
+        "Climate Change",
       ]);
     const stackedData = stack(filteredData);
 
@@ -146,7 +146,7 @@ const ChartComponent = ({ data }) => {
       .on("mouseover", (event, d) => {
         d3.selectAll("path").style("opacity", 0.5);
         d3.select(event.currentTarget).style("opacity", 1);
-        tooltip.style("display", "block");
+        // tooltip.style("display", "block");
       })
       .on("mousemove", (event, d) => {
         const mouseX = d3.pointer(event, svg.node())[0];
@@ -161,6 +161,7 @@ const ChartComponent = ({ data }) => {
         const hoveredData = filteredData.find(
           (data) => data.year === hoveredYear && data.month === hoveredMonth
         );
+
         const total = d3.sum(Object.values(hoveredData || {}).slice(2));
         const percentage = (value) => ((value / total) * 100).toFixed(2) + "%";
 
@@ -168,11 +169,14 @@ const ChartComponent = ({ data }) => {
           .style("display", "block")
           .html(() => {
             let keys = Object.keys(hoveredData || {});
-            keys = keys?.filter(
-              (key) => key != "monthInt" && key != "year" && key != "month"
-            );
+            keys = keys?.filter((key) => key !== "year" && key !== "month");
+            console.log("🚀 ~ .html ~ keys:", keys);
             return `
               <div style="
+              top: 0
+              left: 0
+              width: 100px
+              height: 100px
                 background: white;
                 padding: 10px;
                 border-radius: 8px;
@@ -253,6 +257,13 @@ const ChartComponent = ({ data }) => {
           border: "1px solid black",
           display: "none",
           pointerEvents: "none",
+          padding: "10px",
+          fontFamily: "'Arial', sans-serif",
+          boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
+          textAlign: "left",
+          lineHeight: "1.4",
+          fontSize: "14px",
+          maxWidth: "220px",
         }}
       ></div>
       <div className="filter_range">
@@ -261,7 +272,7 @@ const ChartComponent = ({ data }) => {
           <input
             type="range"
             min="1"
-            max="7"
+            max="6"
             value={selectedMonth}
             onChange={(e) => setSelectedMonth(Number(e.target.value))}
           />
@@ -274,4 +285,4 @@ const ChartComponent = ({ data }) => {
   );
 };
 
-export default ChartComponent;
+export default TopicChart;
