@@ -346,80 +346,22 @@ function App() {
 
   const wordData = {
     nodes: [
-      {
-        id: "Fertilizers",
-        value: 502,
-        title: "Total interactions for Fertilizers",
-      },
-      {
-        id: "Flowering",
-        value: 17,
-        title: "Total interactions for Flowering",
-      },
-      {
-        id: "Harvesting",
-        value: 3354,
-        title: "Total interactions for Harvesting",
-      },
-      {
-        id: "Marketing",
-        value: 79,
-        title: "Total interactions for Marketing",
-      },
-      {
-        id: "Not related to Coffee",
-        value: 699,
-        title: "Total interactions for Not_related_to_Coffee_farming",
-      },
-      {
-        id: "Pests and Diseases",
-        value: 1316,
-        title: "Total interactions for Pests_and_Diseases",
-      },
-      {
-        //  id: "Please_provide_the_query_you_would_like_to_have_classified",
-        id: "Not available",
-
-        value: 116,
-        title:
-          "Total interactions for Please_provide_the_query_you_would_like_to_have_classified",
-      },
-      {
-        id: "Processing",
-        value: 4,
-        title: "Processing",
-      },
-      {
-        id: "Pruning",
-        value: 2,
-        title: "Pruning",
-      },
-      {
-        id: "Soil_Management",
-        value: 720,
-        title: "Total interactions for Soil_Management",
-      },
-      {
-        id: "Sowing",
-        value: 257,
-        title: "Total interactions for Sowing",
-      },
-      {
-        id: "Storage",
-        value: 34,
-        title: "Total interactions for Storage",
-      },
-      {
-        id: "Varieties",
-        value: 459,
-        title: "Total interactions for Varieties",
-      },
-      // {
-      //   id: "You_have_not_provided_a_query_Please_provide_a_specific_question_about_coffee_farming_for_classification",
-      //   value: 2,
-      //   title:
-      //     "Total interactions for You_have_not_provided_a_query_Please_provide_a_specific_question_about_coffee_farming_for_classification",
-      // },
+      { topic: "Climate Change", count: 5 },
+      { topic: "Climate Impact", count: 1 },
+      { topic: "Fertilizers", count: 2077 },
+      { topic: "Harvesting", count: 466 },
+      { topic: "Marketing", count: 1653 },
+      { topic: "Not related to agriculture", count: 2107 },
+      { topic: "Pests and Diseases", count: 5031 },
+      { topic: "Pests and Diseases\nSoil Management\nMarketing", count: 1 },
+      { topic: "Processing", count: 1 },
+      { topic: "Pruning", count: 5 },
+      { topic: "Pruning Techniques", count: 2 },
+      { topic: "Soil Management", count: 2162 },
+      { topic: "Sowing", count: 1415 },
+      { topic: "Storage", count: 265 },
+      { topic: "Unclear", count: 706 },
+      { topic: "Varieties", count: 2307 },
     ],
   };
 
@@ -1901,7 +1843,7 @@ function App() {
       </div>
 
       <div className="chart-container">
-        <h1 className="chart-title">Intent Claasification</h1>
+        <h1 className="chart-title">Intent Classification</h1>
         <div className="chart">
           <LineChart data={intentData} />
         </div>
@@ -1913,21 +1855,21 @@ function App() {
         </div>
       </div>
       <div className="chart-container">
-        <h1 className="chart-title">Feedback Claasification</h1>
+        <h1 className="chart-title">Feedback Classification</h1>
         <div className="chart">
           <FeedbackChart data={feedbackData} />
         </div>
       </div>
 
       <div className="chart-container">
-        <h1 className="chart-title">Topic Claasification Month-wise</h1>
+        <h1 className="chart-title">Topic Classification Month-wise</h1>
         <div className="chart">
           <TopicChart data={topicData} />
         </div>
       </div>
 
       {/* <div className="chart-container">
-        <h1 className="chart-title">Feedback Claasification</h1>
+        <h1 className="chart-title">Feedback Classification</h1>
         <div className="chart">
           <ResponseChart data={responseData} />
         </div>

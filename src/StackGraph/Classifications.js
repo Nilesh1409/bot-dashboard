@@ -335,7 +335,7 @@ const ClassificationsStackedBarChart = () => {
       .attr("text-anchor", "middle")
       .style("font-size", "24px")
       // .style("text-decoration", "underline")
-      .text("Classification Feedback");
+      .text("Accuracy vs Feedback");
 
     // Legend container
     const legend = svg
@@ -389,7 +389,7 @@ const ClassificationsStackedBarChart = () => {
       <svg ref={svgRef}></svg>
       <span style={{ width: "170px" }}>
         <span style={{ marginBottom: "10px", display: "inline-block" }}>
-          <b>Select Claasifications:</b>
+          <b>Select Classifications:</b>
         </span>
         <select
           style={{

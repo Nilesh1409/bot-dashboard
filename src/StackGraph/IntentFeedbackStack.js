@@ -230,7 +230,7 @@ const IntentFeedbackStackedBarChart = () => {
       .attr("text-anchor", "middle")
       .style("font-size", "24px")
       // .style("text-decoration", "underline")
-      .text("Indent Feedback");
+      .text("User Intent vs Feedback");
 
     // Legend container
     const legend = svg
