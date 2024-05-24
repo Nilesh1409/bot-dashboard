@@ -1,31 +1,10 @@
-// src/components/StackedBarChart.js
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import "./StackedBarChart.css";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 
 const IntentFeedbackStackedBarChart = () => {
   const svgRef = useRef();
   const tooltipRef = useRef();
-
-  const [intent, setIntent] = useState("Farming_related");
-
-  const focusStyle = {
-    borderColor: "#3f51b5",
-    boxShadow: "0 0 0 0.2rem rgba(63, 81, 181, 0.25)",
-  };
-
-  const blurStyle = {
-    borderColor: "rgba(0, 0, 0, 0.23)",
-    boxShadow: "none",
-  };
-
-  const [style, setStyle] = React.useState({});
-
   const masterData = [
     {
       year: 2023,
@@ -94,19 +73,37 @@ const IntentFeedbackStackedBarChart = () => {
     },
   ];
 
+  const [intent, setIntent] = useState("Farming_related");
+
+  const focusStyle = {
+    borderColor: "#3f51b5",
+    boxShadow: "0 0 0 0.2rem rgba(63, 81, 181, 0.25)",
+  };
+
+  const blurStyle = {
+    borderColor: "rgba(0, 0, 0, 0.23)",
+    boxShadow: "none",
+  };
+
+  const [style, setStyle] = React.useState({});
+
   function getIntentFeedback(intentName) {
-    return masterData.map((entry) => ({
-      month: entry.month,
-      data: {
-        Good: entry[intentName] ? entry[intentName].good : 0,
-        Bad: entry[intentName] ? entry[intentName].bad : 0,
-      },
-    }));
+    return masterData.map((entry) => {
+      const total = entry[intentName]
+        ? entry[intentName].good + entry[intentName].bad
+        : 0;
+      return {
+        month: entry.month,
+        data: {
+          Good: total > 0 ? (entry[intentName].good / total) * 100 : 0,
+          Bad: total > 0 ? (entry[intentName].bad / total) * 100 : 0,
+          counts: entry[intentName], // add counts
+        },
+      };
+    });
   }
 
-  // Example usage:
   let data = getIntentFeedback(intent);
-  console.log("🚀 ~ IntentFeedbackStackedBarChart ~ data:", data);
 
   useEffect(() => {
     const svg = d3.select(svgRef.current);
@@ -115,7 +112,7 @@ const IntentFeedbackStackedBarChart = () => {
     const height = 600;
     const margin = { top: 60, right: 150, bottom: 150, left: 50 };
 
-    svg.selectAll("*").remove(); // Clear previous contents
+    svg.selectAll("*").remove();
 
     svg.attr("width", width).attr("height", height);
 
@@ -127,24 +124,18 @@ const IntentFeedbackStackedBarChart = () => {
 
     const y = d3
       .scaleLinear()
-      .domain([0, d3.max(data, (d) => d3.sum(Object.values(d.data)))])
+      .domain([0, 100])
       .nice()
       .range([height - margin.bottom, margin.top]);
 
-    const color = d3.scaleOrdinal().domain(Object.keys(data[0].data)).range([
-      // "#4682b4",
-      "#32cd32",
-      "rgb(151, 25, 25)",
-
-      // "#158a32",
-      // "#ffb347",
-      // "#87cefa",
-      // "#929693",
-    ]); // Modern color palette
+    const color = d3
+      .scaleOrdinal()
+      .domain(Object.keys(data[0].data).filter((key) => key !== "counts"))
+      .range(["#32cd32", "rgb(151, 25, 25)"]);
 
     const stack = d3
       .stack()
-      .keys(Object.keys(data[0].data))
+      .keys(Object.keys(data[0].data).filter((key) => key !== "counts"))
       .order(d3.stackOrderNone)
       .offset(d3.stackOffsetNone);
 
@@ -167,34 +158,20 @@ const IntentFeedbackStackedBarChart = () => {
       .attr("width", x.bandwidth())
       .attr("class", (d) => `bar bar-${d.key}`)
       .on("mouseover", function (event, d) {
-        const total = Object.values(d.data).reduce(
-          (sum, value) => sum + value,
-          0
-        );
-        const dataEntries = Object.entries(d.data);
-        const colorScale = d3.scaleOrdinal().domain(Object.keys(d.data)).range([
-          // "#4682b4",
-          "#32cd32",
-          "rgb(151, 25, 25)",
-          // "#158a32",
-          // "#ffb347",
-          // "#87cefa",
-          // "#929693",
-        ]);
-
-        const tooltipContent = dataEntries
-          .map(([key, value]) => {
-            const percentage = ((value / total) * 100).toFixed(2);
-            const color = colorScale(key);
-            return `<span ><strong>${key}</strong>: ${value} (${percentage}%)</span>`;
-          })
-          .join("<br/>");
+        console.log("🚀 ~ d:11", d, data);
+        // const counts = data.find((entry) => entry.month === d.data.month).data
+        // .counts;
+        const tooltipContent = `<span><strong>Good</strong>: ${
+          d.data.counts.good
+        } (${d.data.Good.toFixed(2)}%)</span><br/><span><strong>Bad</strong>: ${
+          d.data.counts.bad
+        } (${d.data.Bad.toFixed(2)}%)</span>`;
 
         tooltip
           .style("opacity", 1)
           .html(tooltipContent)
-          .style("left", event.pageX + 5 + "px")
-          .style("top", event.pageY - 28 + "px");
+          .style("left", event.offsetX + 5 + "px")
+          .style("top", event.offsetY - 28 + "px");
       })
       .on("mousemove", function (event) {
         tooltip
@@ -210,7 +187,7 @@ const IntentFeedbackStackedBarChart = () => {
       .attr("transform", `translate(0,${height - margin.bottom})`)
       .call(d3.axisBottom(x).tickSizeOuter(0))
       .selectAll("text")
-      .style("font-size", "16px") // Change x-axis font size
+      .style("font-size", "16px")
       .attr("transform", "rotate(30)")
       .attr("text-anchor", "start")
       .attr("x", 10)
@@ -221,7 +198,7 @@ const IntentFeedbackStackedBarChart = () => {
       .attr("transform", `translate(${margin.left},0)`)
       .call(d3.axisLeft(y))
       .selectAll("text")
-      .style("font-size", "16px"); // Change y-axis font size
+      .style("font-size", "16px");
 
     svg
       .append("text")
@@ -229,10 +206,8 @@ const IntentFeedbackStackedBarChart = () => {
       .attr("y", margin.top / 2)
       .attr("text-anchor", "middle")
       .style("font-size", "24px")
-      // .style("text-decoration", "underline")
       .text("User Intent vs Feedback");
 
-    // Legend container
     const legend = svg
       .append("g")
       .attr(
@@ -241,7 +216,6 @@ const IntentFeedbackStackedBarChart = () => {
       )
       .attr("class", "legend-container");
 
-    // Legend items
     legend
       .selectAll("legend-item")
       .data(color.domain())
@@ -267,7 +241,6 @@ const IntentFeedbackStackedBarChart = () => {
           .style("font-family", "Arial, sans-serif");
       });
 
-    // Add hover interaction
     d3.selectAll(".legend-item")
       .on("mouseover", function (event, d) {
         d3.selectAll(".bar").style("opacity", 0.2);
@@ -276,7 +249,6 @@ const IntentFeedbackStackedBarChart = () => {
       .on("mouseout", function () {
         d3.selectAll(".bar").style("opacity", 1);
       });
-    console.log("intent", intent);
   }, [data, intent]);
 
   return (
@@ -307,13 +279,6 @@ const IntentFeedbackStackedBarChart = () => {
           onBlur={() => setStyle(blurStyle)}
           onChange={(e) => setIntent(e.target.value)}
         >
-          {/* Unclear: { good: 25, bad: 168 },
-      Farming_related: { good: 634, bad: 1227 },
-      Change_crop: { good: 34, bad: 136 },
-      Exit: { good: 0, bad: 18 },
-      Referring_back: { good: 2, bad: 70 },
-      Disappointment: { good: 2, bad: 4 },
-      Greeting: { good: 1, bad: 8 }, */}
           <option value="Farming_related">Farming related</option>
           <option value="Unclear">Unclear</option>
           <option value="Exit">Exit</option>

@@ -1,4 +1,3 @@
-// src/components/StackedBarChart.js
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import "./StackedBarChart.css";
@@ -26,7 +25,7 @@ const RelevanceStackedBarChart = ({ data }) => {
 
     const y = d3
       .scaleLinear()
-      .domain([0, d3.max(data, (d) => d3.sum(Object.values(d.relevance)))])
+      .domain([0, 100])
       .nice()
       .range([height - margin.bottom, margin.top]);
 
@@ -48,7 +47,22 @@ const RelevanceStackedBarChart = ({ data }) => {
       .order(d3.stackOrderNone)
       .offset(d3.stackOffsetNone);
 
-    const series = stack(data.map((d) => d.relevance));
+    const series = stack(
+      data.map((d) => {
+        const total = Object.values(d.relevance).reduce((a, b) => a + b, 0);
+        return {
+          High: (d.relevance.High / total) * 100,
+          Medium: (d.relevance.Medium / total) * 100,
+          Low: (d.relevance.Low / total) * 100,
+          // Undetermined: (d.relevance.Undetermined / total) * 100,
+          count: {
+            High: d.relevance.High,
+            Medium: d.relevance.Medium,
+            Low: d.relevance.Low,
+          },
+        };
+      })
+    );
 
     const bars = svg
       .append("g")
@@ -67,28 +81,14 @@ const RelevanceStackedBarChart = ({ data }) => {
       .attr("width", x.bandwidth())
       .attr("class", (d) => `bar bar-${d.key}`)
       .on("mouseover", function (event, d) {
-        const total = Object.values(d.data).reduce(
-          (sum, value) => sum + value,
-          0
-        );
         const dataEntries = Object.entries(d.data);
-        const colorScale = d3
-          .scaleOrdinal()
-          .domain(Object.keys(d.data))
-          .range([
-            "#4682b4",
-            "#32cd32",
-            "#158a32",
-            "#ffb347",
-            "#87cefa",
-            "#929693",
-          ]);
-
+        dataEntries.pop();
+        console.log("🚀 ~ dataEntries:", dataEntries);
         const tooltipContent = dataEntries
           .map(([key, value]) => {
-            const percentage = ((value / total) * 100).toFixed(2);
-            const color = colorScale(key);
-            return `<span ><strong>${key}</strong>: ${value} (${percentage}%)</span>`;
+            return `<span><strong>${key}</strong>: ${
+              d.data.count[key]
+            } (${value.toFixed(2)}%)</span>`;
           })
           .join("<br/>");
 
@@ -131,7 +131,6 @@ const RelevanceStackedBarChart = ({ data }) => {
       .attr("y", margin.top / 2)
       .attr("text-anchor", "middle")
       .style("font-size", "24px")
-      // .style("text-decoration", "underline")
       .text("Relevance");
 
     // Legend container

@@ -15,6 +15,7 @@ import TopicChart from "./LineChart/Topic";
 import IntentFeedbackStackedBarChart from "./StackGraph/IntentFeedbackStack";
 import DenialOfServiceChart from "./LineChart/DenialOfService";
 import ClassificationsStackedBarChart from "./StackGraph/Classifications";
+import DifficultyFeedbackStackedBarChart from "./StackGraph/DifficultyFeedback";
 
 function App() {
   const generateData = () => {
@@ -1359,7 +1360,7 @@ function App() {
         High: 543,
         Medium: 34,
         Low: 33,
-        Undetermined: 123,
+        // Undetermined: 123,
       },
     },
     {
@@ -1368,7 +1369,7 @@ function App() {
         High: 1,
         Medium: 0,
         Low: 0,
-        Undetermined: 1,
+        // Undetermined: 1,
       },
     },
     {
@@ -1377,7 +1378,7 @@ function App() {
         High: 28,
         Medium: 0,
         Low: 0,
-        Undetermined: 3,
+        // Undetermined: 3,
       },
     },
     {
@@ -1386,7 +1387,7 @@ function App() {
         High: 18,
         Medium: 1,
         Low: 0,
-        Undetermined: 1,
+        // Undetermined: 1,
       },
     },
     {
@@ -1395,7 +1396,7 @@ function App() {
         High: 27,
         Medium: 0,
         Low: 0,
-        Undetermined: 0,
+        // Undetermined: 0,
       },
     },
     {
@@ -1404,7 +1405,7 @@ function App() {
         High: 3,
         Medium: 0,
         Low: 0,
-        Undetermined: 0,
+        // Undetermined: 0,
       },
     },
   ];
@@ -1416,7 +1417,7 @@ function App() {
         High: 393,
         Medium: 91,
         Low: 73,
-        Undetermined: 176,
+        // Undetermined: 176,
       },
     },
     {
@@ -1425,7 +1426,7 @@ function App() {
         High: 0,
         Medium: 0,
         Low: 0,
-        Undetermined: 2,
+        // Undetermined: 2,
       },
     },
     {
@@ -1434,7 +1435,7 @@ function App() {
         High: 2,
         Medium: 2,
         Low: 0,
-        Undetermined: 27,
+        // Undetermined: 27,
       },
     },
     {
@@ -1443,7 +1444,7 @@ function App() {
         High: 12,
         Medium: 3,
         Low: 2,
-        Undetermined: 3,
+        // Undetermined: 3,
       },
     },
     {
@@ -1452,7 +1453,7 @@ function App() {
         High: 0,
         Medium: 0,
         Low: 0,
-        Undetermined: 27,
+        // Undetermined: 27,
       },
     },
     {
@@ -1461,7 +1462,7 @@ function App() {
         High: 0,
         Medium: 0,
         Low: 0,
-        Undetermined: 3,
+        // Undetermined: 3,
       },
     },
   ];
@@ -1661,8 +1662,8 @@ function App() {
     {
       year: 2023,
       month: "November",
-      Answered: 1466,
-      Unanswered: 863,
+      "In Content": 1834,
+      "Not In Content": 495,
       "In Context": 1933,
       "Out Of Context": 396,
       "In Collection": 2159,
@@ -1671,8 +1672,8 @@ function App() {
     {
       year: 2023,
       month: "December",
-      Answered: 756,
-      Unanswered: 553,
+      "In Content": 1033,
+      "Not In Content": 276,
       "In Context": 1021,
       "Out Of Context": 288,
       "In Collection": 1177,
@@ -1681,8 +1682,8 @@ function App() {
     {
       year: 2024,
       month: "January",
-      Answered: 1163,
-      Unanswered: 510,
+      "In Content": 1450,
+      "Not In Content": 223,
       "In Context": 1397,
       "Out Of Context": 276,
       "In Collection": 1535,
@@ -1691,8 +1692,8 @@ function App() {
     {
       year: 2024,
       month: "February",
-      Answered: 2031,
-      Unanswered: 1873,
+      "In Content": 2563,
+      "Not In Content": 1341,
       "In Context": 3442,
       "Out Of Context": 462,
       "In Collection": 3692,
@@ -1701,8 +1702,8 @@ function App() {
     {
       year: 2024,
       month: "March",
-      Answered: 3531,
-      Unanswered: 2806,
+      "In Content": 4166,
+      "Not In Content": 2171,
       "In Context": 5901,
       "Out Of Context": 436,
       "In Collection": 6118,
@@ -1711,8 +1712,8 @@ function App() {
     {
       year: 2024,
       month: "April",
-      Answered: 2240,
-      Unanswered: 1994,
+      "In Content": 2616,
+      "Not In Content": 1618,
       "In Context": 3963,
       "Out Of Context": 271,
       "In Collection": 4109,
@@ -1721,8 +1722,8 @@ function App() {
     {
       year: 2024,
       month: "May",
-      Answered: 1016,
-      Unanswered: 415,
+      "In Content": 1145,
+      "Not In Content": 286,
       "In Context": 1337,
       "Out Of Context": 94,
       "In Collection": 1395,
@@ -1834,6 +1835,17 @@ function App() {
           <ClassificationsStackedBarChart />
         </div>
       </div>
+      <div className="chart-container">
+        {/* <h1 className="chart-title">
+            Aggregate Prompt-Based Feedback Analysis{" "}
+          </h1>
+          <h2 className="chart-description">
+            Source: Kenya dataset, Coffee, 09 APR 2024 - 08 MAY 2024, Kenya{" "}
+          </h2> */}
+        <div className="chart">
+          <DifficultyFeedbackStackedBarChart />
+        </div>
+      </div>
 
       <div className="chart-container">
         <h1 className="chart-title">Denial Of Service</h1>
@@ -1878,7 +1890,7 @@ function App() {
       <div className="chart-container">
         <h1 className="chart-title">Topic Classifications </h1>
         <h2 className="chart-description">
-          Source: Kenya dataset, Coffee, 01 APR 2024 - 30 APR 2024, Kenya{" "}
+          Source: Kenya dataset, Coffee, 01 NOV 2023 - 30 MAY 2024, Kenya{" "}
         </h2>
         <div className="chart">
           <BubbleGraph data={wordData} />

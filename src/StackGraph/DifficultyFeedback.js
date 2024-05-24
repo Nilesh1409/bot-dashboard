@@ -8,11 +8,11 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 
-const ClassificationsStackedBarChart = () => {
+const DifficultyFeedbackStackedBarChart = () => {
   const svgRef = useRef();
   const tooltipRef = useRef();
 
-  const [intent, setIntent] = useState("High Relevance");
+  const [intent, setIntent] = useState("Difficult");
 
   const focusStyle = {
     borderColor: "#3f51b5",
@@ -30,171 +30,213 @@ const ClassificationsStackedBarChart = () => {
     {
       year: 2023,
       month: "November",
-      "High Relevance": {
-        good: 54,
-        bad: 5,
-        // //none: 156,
+      Easy: {
+        good: 44,
+        bad: 11,
       },
-      "Low Faithfulness": {
-        good: 20,
-        bad: 4,
-        // //none: 56,
+      Standard: {
+        good: 163,
+        bad: 15,
       },
-      "Medium Faithfulness": {
-        good: 10,
+      Difficult: {
+        good: 177,
+        bad: 15,
+      },
+      "Fairly Difficult": {
+        good: 159,
+        bad: 27,
+      },
+      Unspecified: {
+        good: 31,
+        bad: 34,
+      },
+      "Fairly Easy": {
+        good: 82,
+        bad: 13,
+      },
+      "Very Confusing": {
+        good: 34,
         bad: 1,
-        // //none: 23,
       },
-      "High Faithfulness": {
-        good: 60,
-        bad: 4,
-        // //none: 166,
+      "Very Easy": {
+        good: 8,
+        bad: 0,
       },
-      "Low Relevance": {
-        good: 22,
+    },
+    {
+      year: 2023,
+      month: "December",
+      "Fairly Easy": {
+        good: 42,
+        bad: 8,
+      },
+      "Fairly Difficult": {
+        good: 71,
+        bad: 16,
+      },
+      Standard: {
+        good: 65,
+        bad: 10,
+      },
+      Easy: {
+        good: 17,
         bad: 2,
-        //none: 69,
       },
-      "Medium Relevance": {
-        good: 18,
-        bad: 3,
-        //none: 35,
+      Difficult: {
+        good: 53,
+        bad: 5,
+      },
+      "Very Confusing": {
+        good: 5,
+        bad: 0,
       },
     },
     {
       year: 2024,
       month: "January",
-      "High Faithfulness": {
-        good: 45,
-        bad: 3,
-        //none: 217,
+      Standard: {
+        good: 92,
+        bad: 22,
       },
-      "High Relevance": {
-        good: 53,
-        bad: 3,
-        //none: 218,
+      Difficult: {
+        good: 56,
+        bad: 9,
       },
-      "Medium Relevance": {
-        good: 13,
-        bad: 1,
-        //none: 47,
+      "Fairly Difficult": {
+        good: 86,
+        bad: 15,
       },
-      "Low Faithfulness": {
-        good: 22,
-        bad: 1,
-        //none: 54,
+      "Fairly Easy": {
+        good: 44,
+        bad: 8,
       },
-      "Low Relevance": {
-        good: 22,
+      "Very Confusing": {
+        good: 4,
         bad: 0,
-        //none: 77,
       },
-      "Medium Faithfulness": {
-        good: 17,
-        bad: 0,
-        //none: 43,
+      Easy: {
+        good: 7,
+        bad: 2,
+      },
+    },
+    {
+      year: 2024,
+      month: "February",
+      Standard: {
+        good: 175,
+        bad: 23,
+      },
+      Difficult: {
+        good: 190,
+        bad: 22,
+      },
+      "Fairly Easy": {
+        good: 70,
+        bad: 21,
+      },
+      "Very Confusing": {
+        good: 20,
+        bad: 1,
+      },
+      Easy: {
+        good: 20,
+        bad: 4,
+      },
+      "Fairly Difficult": {
+        good: 186,
+        bad: 27,
+      },
+      "Very Easy": {
+        good: 2,
+        bad: 1,
       },
     },
     {
       year: 2024,
       month: "March",
-      "Medium Faithfulness": {
-        good: 2,
-        bad: 0,
-        //none: 41,
+      Difficult: {
+        good: 195,
+        bad: 31,
       },
-      "Medium Relevance": {
-        good: 2,
-        bad: 0,
-        //none: 80,
+      "Fairly Easy": {
+        good: 75,
+        bad: 24,
       },
-      "High Relevance": {
-        good: 32,
-        bad: 5,
-        //none: 359,
+      "Very Confusing": {
+        good: 41,
+        bad: 7,
       },
-      "High Faithfulness": {
-        good: 32,
-        bad: 5,
-        //none: 388,
+      "Fairly Difficult": {
+        good: 186,
+        bad: 31,
       },
-      "Low Relevance": {
-        good: 8,
-        bad: 2,
-        //none: 72,
+      Standard: {
+        good: 177,
+        bad: 36,
       },
-      "Low Faithfulness": {
-        good: 5,
-        bad: 1,
-        //none: 32,
+      Easy: {
+        good: 59,
+        bad: 33,
       },
     },
     {
       year: 2024,
       month: "April",
-      "Medium Faithfulness": {
-        good: 0,
-        bad: 1,
-        //none: 4,
+      Easy: {
+        good: 96,
+        bad: 64,
       },
-      "High Relevance": {
-        good: 2,
-        bad: 3,
-        //none: 56,
+      Difficult: {
+        good: 140,
+        bad: 20,
       },
-      "High Faithfulness": {
+      Standard: {
+        good: 89,
+        bad: 28,
+      },
+      "Fairly Difficult": {
+        good: 101,
+        bad: 37,
+      },
+      "Very Confusing": {
+        good: 20,
+        bad: 2,
+      },
+      "Fairly Easy": {
+        good: 56,
+        bad: 20,
+      },
+      "Very Easy": {
         good: 1,
-        bad: 5,
-        //none: 110,
-      },
-      "Low Relevance": {
-        good: 0,
-        bad: 0,
-        //none: 14,
-      },
-      "Medium Relevance": {
-        good: 0,
         bad: 1,
-        //none: 20,
-      },
-      "Low Faithfulness": {
-        good: 0,
-        bad: 0,
-        //none: 6,
       },
     },
     {
       year: 2024,
       month: "May",
-      "High Faithfulness": {
-        good: 38,
-        bad: 7,
-        //none: 459,
+      Difficult: {
+        good: 31,
+        bad: 5,
       },
-      "High Relevance": {
-        good: 23,
-        bad: 4,
-        //none: 319,
+      Standard: {
+        good: 28,
+        bad: 6,
       },
-      "Medium Relevance": {
-        good: 5,
+      "Fairly Easy": {
+        good: 12,
+        bad: 8,
+      },
+      Easy: {
+        good: 12,
+        bad: 5,
+      },
+      "Fairly Difficult": {
+        good: 20,
+        bad: 9,
+      },
+      "Very Confusing": {
+        good: 7,
         bad: 1,
-        //none: 69,
-      },
-      "Medium Faithfulness": {
-        good: 2,
-        bad: 0,
-        //none: 28,
-      },
-      "Low Faithfulness": {
-        good: 0,
-        bad: 1,
-        //none: 26,
-      },
-      "Low Relevance": {
-        good: 3,
-        bad: 0,
-        //none: 58,
       },
     },
   ];
@@ -217,7 +259,7 @@ const ClassificationsStackedBarChart = () => {
 
   // Example usage:
   let data = getIntentFeedback(intent);
-  console.log("🚀 ~ IntentFeedbackStackedBarChart234 ~ data:", data);
+  console.log("🚀 ~ DifficultyFeedbackStackedBarChart ~ data:", data);
 
   useEffect(() => {
     const svg = d3.select(svgRef.current);
@@ -238,28 +280,20 @@ const ClassificationsStackedBarChart = () => {
 
     const y = d3
       .scaleLinear()
-      .domain([0, 100])
+      .domain([0, d3.max(data, (d) => d3.sum(Object.values(d.data)))])
       .nice()
       .range([height - margin.bottom, margin.top]);
 
-    const color = d3
-      .scaleOrdinal()
-      .domain(Object.keys(data[0].data).filter((key) => key !== "counts"))
-      .range([
-        // "#4682b4",
-        "#32cd32",
-        "rgb(151, 25, 25)",
+    const color = d3.scaleOrdinal().domain(Object.keys(data[0].data)).range([
+      // "#4682b4",
+      "#32cd32",
+      "rgb(151, 25, 25)",
 
-        // "#158a32",
-        // "#ffb347",
-        // "#87cefa",
-        // "#929693",
-      ]); // Modern color palette
-    console.log(
-      "🚀 ~ useEffect ~ color:",
-      color,
-      Object.keys(data[0].data).filter((key) => key !== "counts")
-    );
+      // "#158a32",
+      // "#ffb347",
+      // "#87cefa",
+      // "#929693",
+    ]); // Modern color palette
 
     const stack = d3
       .stack()
@@ -286,12 +320,20 @@ const ClassificationsStackedBarChart = () => {
       .attr("width", x.bandwidth())
       .attr("class", (d) => `bar bar-${d.key}`)
       .on("mouseover", function (event, d) {
-        console.log("🚀 ~ d:1234", d);
         const total = Object.values(d.data).reduce(
           (sum, value) => sum + value,
           0
         );
         const dataEntries = Object.entries(d.data);
+        const colorScale = d3.scaleOrdinal().domain(Object.keys(d.data)).range([
+          // "#4682b4",
+          "#32cd32",
+          "rgb(151, 25, 25)",
+          // "#158a32",
+          // "#ffb347",
+          // "#87cefa",
+          // "#929693",
+        ]);
 
         const tooltipContent = `<span><strong>Good</strong>: ${
           d.data.counts.good
@@ -339,7 +381,7 @@ const ClassificationsStackedBarChart = () => {
       .attr("text-anchor", "middle")
       .style("font-size", "24px")
       // .style("text-decoration", "underline")
-      .text("Accuracy vs Feedback");
+      .text("Feedback vs Readability");
 
     // Legend container
     const legend = svg
@@ -423,12 +465,13 @@ const ClassificationsStackedBarChart = () => {
       Referring_back: { good: 2, bad: 70 },
       Disappointment: { good: 2, bad: 4 },
       Greeting: { good: 1, bad: 8 }, */}
-          <option value="High Relevance">High Relevance</option>
-          <option value="Medium Relevance">Medium Relevance</option>
-          <option value="Low Relevance">Low Relevance</option>
-          <option value="High Faithfulness">High Faithfulness</option>
-          <option value="Medium Faithfulness">Medium Faithfulness</option>
-          <option value="Low Faithfulness">Low Faithfulness</option>
+          <option value="Difficult">Difficult</option>
+          <option value="Easy">Easy</option>
+          <option value="Standard">Standard</option>
+          <option value="Fairly Difficult">Fairly Difficult</option>
+          <option value="Fairly Easy">Fairly Easy</option>
+          <option value="Very Confusing">Very Confusing</option>
+          <option value="Very Easy">Very Easy</option>
         </select>
       </span>
       <div ref={tooltipRef} className="tooltip-bar"></div>
@@ -436,4 +479,4 @@ const ClassificationsStackedBarChart = () => {
   );
 };
 
-export default ClassificationsStackedBarChart;
+export default DifficultyFeedbackStackedBarChart;

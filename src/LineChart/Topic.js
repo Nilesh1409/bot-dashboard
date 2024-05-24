@@ -186,7 +186,7 @@ const TopicChart = ({ data }) => {
                 text-align: left;
                 line-height: 1.4;
                 font-size: 14px;
-                max-width: 220px;
+                max-width: 320px;
                 border: black;
               ">
                 <div><strong>${hoveredMonth} ${hoveredYear}</strong></div>

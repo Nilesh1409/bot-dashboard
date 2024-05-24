@@ -29,12 +29,19 @@ const DenialOfServiceChart = ({ data }) => {
   // };
 
   const colorMap = {
-    Answered: "#198219",
-    Unanswered: "#6B007B",
-    "In Context": "#799A6B",
-    "Out Of Context": "#C1824A",
-    "In Collection": "#22877f",
+    // Answered: "#198219",
+    // Unanswered: "#6B007B",
+    // "In Context": "#799A6B",
+    // "Out Of Context": "#C1824A",
+    // "In Collection": "#22877f",
+    // "Out of Collection": "#872247",
+    // "In Content": "#872247",
+    "Not In Content": "#198219",
+    // "In Context": "#6B007B",
+    "Out Of Context": "#799A6B",
+    // "In Collection": "#C1824A",
     "Out of Collection": "#872247",
+
     // Answered: "#198219",
 
     // "Not answered": "#971919",
@@ -80,16 +87,14 @@ const DenialOfServiceChart = ({ data }) => {
     const height = 450;
     const margin = { top: 20, right: 120, bottom: 30, left: 60 };
 
-    const stack = d3
-      .stack()
-      .keys([
-        "Answered",
-        "Unanswered",
-        "In Context",
-        "Out Of Context",
-        "In Collection",
-        "Out of Collection",
-      ]);
+    const stack = d3.stack().keys([
+      // "In Content",
+      "Not In Content",
+      // "In Context",
+      "Out Of Context",
+      // "In Collection",
+      "Out of Collection",
+    ]);
     const stackedData = stack(filteredData);
 
     const xExtent = d3.extent(
@@ -174,7 +179,13 @@ const DenialOfServiceChart = ({ data }) => {
           .html(() => {
             let keys = Object.keys(hoveredData || {});
             keys = keys?.filter(
-              (key) => key != "monthInt" && key != "year" && key != "month"
+              (key) =>
+                key != "monthInt" &&
+                key != "year" &&
+                key != "month" &&
+                key != "In Content" &&
+                key != "In Context" &&
+                key != "In Collection"
             );
             return `
               <div style="
@@ -187,7 +198,7 @@ const DenialOfServiceChart = ({ data }) => {
                 text-align: left;
                 line-height: 1.4;
                 font-size: 14px;
-                max-width: 220px;
+                max-width: 320px;
                 border: black;
               ">
                 <div><strong>${hoveredMonth} ${hoveredYear}</strong></div>
