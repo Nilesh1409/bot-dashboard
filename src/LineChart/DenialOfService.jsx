@@ -36,7 +36,7 @@ const DenialOfServiceChart = ({ data }) => {
     // "In Collection": "#22877f",
     // "Out of Collection": "#872247",
     // "In Content": "#872247",
-    "Not In Content": "#198219",
+    "Out Of Content": "#198219",
     // "In Context": "#6B007B",
     "Out Of Context": "#799A6B",
     // "In Collection": "#C1824A",
@@ -89,7 +89,7 @@ const DenialOfServiceChart = ({ data }) => {
 
     const stack = d3.stack().keys([
       // "In Content",
-      "Not In Content",
+      "Out Of Content",
       // "In Context",
       "Out Of Context",
       // "In Collection",

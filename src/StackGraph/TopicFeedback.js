@@ -1,18 +1,363 @@
-// src/components/StackedBarChart.js
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import "./StackedBarChart.css";
-import Box from "@mui/material/Box";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
 
-const ClassificationsStackedBarChart = () => {
+const TopicFeedbackStackedBarChart = () => {
   const svgRef = useRef();
   const tooltipRef = useRef();
+  const masterData = [
+    {
+      year: 2023,
+      month: "November",
+      Sowing: {
+        good: 65,
+        bad: 10,
+      },
+      Harvesting: {
+        good: 25,
+        bad: 4,
+      },
+      Marketing: {
+        good: 12,
+        bad: 5,
+      },
+      Fertilizers: {
+        good: 84,
+        bad: 13,
+      },
+      "Soil Management": {
+        good: 48,
+        bad: 5,
+      },
+      "Pests and Diseases": {
+        good: 192,
+        bad: 23,
+      },
+      "Not related to agriculture": {
+        good: 92,
+        bad: 17,
+      },
+      Varieties: {
+        good: 75,
+        bad: 12,
+      },
+      Unknown: {
+        good: 64,
+        bad: 23,
+      },
+      Unclear: {
+        good: 36,
+        bad: 4,
+      },
+      "Pruning Techniques": {
+        good: 1,
+        bad: 0,
+      },
+      Storage: {
+        good: 4,
+        bad: 0,
+      },
+    },
+    {
+      year: 2023,
+      month: "December",
+      "Pests and Diseases": {
+        good: 71,
+        bad: 10,
+      },
+      Unknown: {
+        good: 41,
+        bad: 12,
+      },
+      Varieties: {
+        good: 17,
+        bad: 2,
+      },
+      Sowing: {
+        good: 18,
+        bad: 0,
+      },
+      Fertilizers: {
+        good: 31,
+        bad: 6,
+      },
+      Harvesting: {
+        good: 9,
+        bad: 1,
+      },
+      "Not related to agriculture": {
+        good: 24,
+        bad: 2,
+      },
+      Marketing: {
+        good: 15,
+        bad: 3,
+      },
+      Unclear: {
+        good: 15,
+        bad: 3,
+      },
+      "Soil Management": {
+        good: 10,
+        bad: 2,
+      },
+      Storage: {
+        good: 1,
+        bad: 0,
+      },
+      "1. Unclear\n2. Not related to agriculture\n3. Not related to agriculture":
+        {
+          good: 1,
+          bad: 0,
+        },
+    },
+    {
+      year: 2024,
+      month: "January",
+      Sowing: {
+        good: 27,
+        bad: 3,
+      },
+      Unclear: {
+        good: 18,
+        bad: 3,
+      },
+      "Not related to agriculture": {
+        good: 29,
+        bad: 8,
+      },
+      Fertilizers: {
+        good: 33,
+        bad: 6,
+      },
+      "Pests and Diseases": {
+        good: 61,
+        bad: 8,
+      },
+      Unknown: {
+        good: 42,
+        bad: 12,
+      },
+      Varieties: {
+        good: 37,
+        bad: 8,
+      },
+      Harvesting: {
+        good: 8,
+        bad: 3,
+      },
+      "Soil Management": {
+        good: 25,
+        bad: 2,
+      },
+      Marketing: {
+        good: 6,
+        bad: 3,
+      },
+      Storage: {
+        good: 3,
+        bad: 0,
+      },
+    },
+    {
+      year: 2024,
+      month: "February",
+      Varieties: {
+        good: 76,
+        bad: 7,
+      },
+      Unknown: {
+        good: 60,
+        bad: 18,
+      },
+      "Pests and Diseases": {
+        good: 144,
+        bad: 15,
+      },
+      Unclear: {
+        good: 25,
+        bad: 7,
+      },
+      "Not related to agriculture": {
+        good: 94,
+        bad: 11,
+      },
+      Marketing: {
+        good: 62,
+        bad: 6,
+      },
+      Fertilizers: {
+        good: 69,
+        bad: 15,
+      },
+      Sowing: {
+        good: 47,
+        bad: 8,
+      },
+      "Soil Management": {
+        good: 70,
+        bad: 8,
+      },
+      Harvesting: {
+        good: 10,
+        bad: 3,
+      },
+      Storage: {
+        good: 6,
+        bad: 1,
+      },
+    },
+    {
+      year: 2024,
+      month: "March",
+      "Pests and Diseases": {
+        good: 201,
+        bad: 48,
+      },
+      Unknown: {
+        good: 48,
+        bad: 20,
+      },
+      Marketing: {
+        good: 50,
+        bad: 10,
+      },
+      "Soil Management": {
+        good: 103,
+        bad: 11,
+      },
+      "Not related to agriculture": {
+        good: 47,
+        bad: 16,
+      },
+      Varieties: {
+        good: 119,
+        bad: 24,
+      },
+      Fertilizers: {
+        good: 59,
+        bad: 5,
+      },
+      Unclear: {
+        good: 18,
+        bad: 5,
+      },
+      Harvesting: {
+        good: 11,
+        bad: 6,
+      },
+      Sowing: {
+        good: 62,
+        bad: 14,
+      },
+      Storage: {
+        good: 14,
+        bad: 3,
+      },
+      "Climate Change": {
+        good: 1,
+        bad: 0,
+      },
+    },
+    {
+      year: 2024,
+      month: "April",
+      Varieties: {
+        good: 60,
+        bad: 11,
+      },
+      "Not related to agriculture": {
+        good: 40,
+        bad: 16,
+      },
+      Fertilizers: {
+        good: 62,
+        bad: 26,
+      },
+      "Soil Management": {
+        good: 73,
+        bad: 11,
+      },
+      "Pests and Diseases": {
+        good: 165,
+        bad: 55,
+      },
+      Unknown: {
+        good: 25,
+        bad: 19,
+      },
+      Marketing: {
+        good: 22,
+        bad: 4,
+      },
+      Sowing: {
+        good: 35,
+        bad: 20,
+      },
+      Unclear: {
+        good: 11,
+        bad: 6,
+      },
+      Harvesting: {
+        good: 6,
+        bad: 2,
+      },
+      Storage: {
+        good: 4,
+        bad: 2,
+      },
+    },
+    {
+      year: 2024,
+      month: "May",
+      "Soil Management": {
+        good: 17,
+        bad: 3,
+      },
+      "Pests and Diseases": {
+        good: 38,
+        bad: 7,
+      },
+      "Not related to agriculture": {
+        good: 16,
+        bad: 3,
+      },
+      Fertilizers: {
+        good: 8,
+        bad: 5,
+      },
+      Unknown: {
+        good: 7,
+        bad: 4,
+      },
+      Varieties: {
+        good: 12,
+        bad: 6,
+      },
+      Marketing: {
+        good: 5,
+        bad: 1,
+      },
+      Pruning: {
+        good: 1,
+        bad: 0,
+      },
+      Harvesting: {
+        good: 2,
+        bad: 2,
+      },
+      Unclear: {
+        good: 2,
+        bad: 1,
+      },
+      Sowing: {
+        good: 2,
+        bad: 2,
+      },
+    },
+  ];
 
-  const [intent, setIntent] = useState("High Relevance");
+  const [intent, setIntent] = useState("Sowing");
 
   const focusStyle = {
     borderColor: "#3f51b5",
@@ -25,247 +370,6 @@ const ClassificationsStackedBarChart = () => {
   };
 
   const [style, setStyle] = React.useState({});
-
-  const masterData = [
-    {
-      year: 2023,
-      month: "November",
-      "High Relevance": {
-        good: 54,
-        bad: 5,
-        // //none: 156,
-      },
-      "Low Faithfulness": {
-        good: 20,
-        bad: 4,
-        // //none: 56,
-      },
-      "Medium Faithfulness": {
-        good: 10,
-        bad: 1,
-        // //none: 23,
-      },
-      "High Faithfulness": {
-        good: 60,
-        bad: 4,
-        // //none: 166,
-      },
-      "Low Relevance": {
-        good: 22,
-        bad: 2,
-        //none: 69,
-      },
-      "Medium Relevance": {
-        good: 18,
-        bad: 3,
-        //none: 35,
-      },
-    },
-    {
-      year: 2023,
-      month: "December",
-      "High Relevance": {
-        good: 0,
-        bad: 0,
-        // //none: 156,
-      },
-      "Low Faithfulness": {
-        good: 0,
-        bad: 0,
-        // //none: 56,
-      },
-      "Medium Faithfulness": {
-        good: 0,
-        bad: 0,
-        // //none: 23,
-      },
-      "High Faithfulness": {
-        good: 0,
-        bad: 0,
-        // //none: 166,
-      },
-      "Low Relevance": {
-        good: 0,
-        bad: 0,
-        //none: 69,
-      },
-      "Medium Relevance": {
-        good: 0,
-        bad: 0,
-        //none: 35,
-      },
-    },
-    {
-      year: 2024,
-      month: "January",
-      "High Faithfulness": {
-        good: 45,
-        bad: 3,
-        //none: 217,
-      },
-      "High Relevance": {
-        good: 53,
-        bad: 3,
-        //none: 218,
-      },
-      "Medium Relevance": {
-        good: 13,
-        bad: 1,
-        //none: 47,
-      },
-      "Low Faithfulness": {
-        good: 22,
-        bad: 1,
-        //none: 54,
-      },
-      "Low Relevance": {
-        good: 22,
-        bad: 0,
-        //none: 77,
-      },
-      "Medium Faithfulness": {
-        good: 17,
-        bad: 0,
-        //none: 43,
-      },
-    },
-    {
-      year: 2023,
-      month: "February",
-      "High Relevance": {
-        good: 0,
-        bad: 0,
-        // //none: 156,
-      },
-      "Low Faithfulness": {
-        good: 0,
-        bad: 0,
-        // //none: 56,
-      },
-      "Medium Faithfulness": {
-        good: 0,
-        bad: 0,
-        // //none: 23,
-      },
-      "High Faithfulness": {
-        good: 0,
-        bad: 0,
-        // //none: 166,
-      },
-      "Low Relevance": {
-        good: 0,
-        bad: 0,
-        //none: 69,
-      },
-      "Medium Relevance": {
-        good: 0,
-        bad: 0,
-        //none: 35,
-      },
-    },
-    {
-      year: 2024,
-      month: "March",
-      "Medium Faithfulness": {
-        good: 2,
-        bad: 0,
-        //none: 41,
-      },
-      "Medium Relevance": {
-        good: 2,
-        bad: 0,
-        //none: 80,
-      },
-      "High Relevance": {
-        good: 32,
-        bad: 5,
-        //none: 359,
-      },
-      "High Faithfulness": {
-        good: 32,
-        bad: 5,
-        //none: 388,
-      },
-      "Low Relevance": {
-        good: 8,
-        bad: 2,
-        //none: 72,
-      },
-      "Low Faithfulness": {
-        good: 5,
-        bad: 1,
-        //none: 32,
-      },
-    },
-    {
-      year: 2024,
-      month: "April",
-      "Medium Faithfulness": {
-        good: 0,
-        bad: 1,
-        //none: 4,
-      },
-      "High Relevance": {
-        good: 2,
-        bad: 3,
-        //none: 56,
-      },
-      "High Faithfulness": {
-        good: 1,
-        bad: 5,
-        //none: 110,
-      },
-      "Low Relevance": {
-        good: 0,
-        bad: 0,
-        //none: 14,
-      },
-      "Medium Relevance": {
-        good: 0,
-        bad: 1,
-        //none: 20,
-      },
-      "Low Faithfulness": {
-        good: 0,
-        bad: 0,
-        //none: 6,
-      },
-    },
-    {
-      year: 2024,
-      month: "May",
-      "High Faithfulness": {
-        good: 38,
-        bad: 7,
-        //none: 459,
-      },
-      "High Relevance": {
-        good: 23,
-        bad: 4,
-        //none: 319,
-      },
-      "Medium Relevance": {
-        good: 5,
-        bad: 1,
-        //none: 69,
-      },
-      "Medium Faithfulness": {
-        good: 2,
-        bad: 0,
-        //none: 28,
-      },
-      "Low Faithfulness": {
-        good: 0,
-        bad: 1,
-        //none: 26,
-      },
-      "Low Relevance": {
-        good: 3,
-        bad: 0,
-        //none: 58,
-      },
-    },
-  ];
 
   function getIntentFeedback(intentName) {
     return masterData.map((entry) => {
@@ -283,9 +387,7 @@ const ClassificationsStackedBarChart = () => {
     });
   }
 
-  // Example usage:
   let data = getIntentFeedback(intent);
-  console.log("🚀 ~ IntentFeedbackStackedBarChart234 ~ data:", data);
 
   useEffect(() => {
     const svg = d3.select(svgRef.current);
@@ -294,7 +396,7 @@ const ClassificationsStackedBarChart = () => {
     const height = 600;
     const margin = { top: 60, right: 150, bottom: 150, left: 50 };
 
-    svg.selectAll("*").remove(); // Clear previous contents
+    svg.selectAll("*").remove();
 
     svg.attr("width", width).attr("height", height);
 
@@ -313,25 +415,11 @@ const ClassificationsStackedBarChart = () => {
     const color = d3
       .scaleOrdinal()
       .domain(Object.keys(data[0].data).filter((key) => key !== "counts"))
-      .range([
-        // "#4682b4",
-        "#32cd32",
-        "rgb(151, 25, 25)",
-
-        // "#158a32",
-        // "#ffb347",
-        // "#87cefa",
-        // "#929693",
-      ]); // Modern color palette
-    console.log(
-      "🚀 ~ useEffect ~ color:",
-      color,
-      Object.keys(data[0].data).filter((key) => key !== "counts")
-    );
+      .range(["#32cd32", "rgb(151, 25, 25)"]);
 
     const stack = d3
       .stack()
-      .keys(Object.keys(data[0].data))
+      .keys(Object.keys(data[0].data).filter((key) => key !== "counts"))
       .order(d3.stackOrderNone)
       .offset(d3.stackOffsetNone);
 
@@ -354,13 +442,9 @@ const ClassificationsStackedBarChart = () => {
       .attr("width", x.bandwidth())
       .attr("class", (d) => `bar bar-${d.key}`)
       .on("mouseover", function (event, d) {
-        console.log("🚀 ~ d:1234", d);
-        const total = Object.values(d.data).reduce(
-          (sum, value) => sum + value,
-          0
-        );
-        const dataEntries = Object.entries(d.data);
-
+        console.log("🚀 ~ d:11", d, data);
+        // const counts = data.find((entry) => entry.month === d.data.month).data
+        // .counts;
         const tooltipContent = `<span><strong>Good</strong>: ${
           d.data.counts.good
         } (${d.data.Good.toFixed(2)}%)</span><br/><span><strong>Bad</strong>: ${
@@ -370,8 +454,8 @@ const ClassificationsStackedBarChart = () => {
         tooltip
           .style("opacity", 1)
           .html(tooltipContent)
-          .style("left", event.pageX + 5 + "px")
-          .style("top", event.pageY - 28 + "px");
+          .style("left", event.offsetX + 5 + "px")
+          .style("top", event.offsetY - 28 + "px");
       })
       .on("mousemove", function (event) {
         tooltip
@@ -387,7 +471,7 @@ const ClassificationsStackedBarChart = () => {
       .attr("transform", `translate(0,${height - margin.bottom})`)
       .call(d3.axisBottom(x).tickSizeOuter(0))
       .selectAll("text")
-      .style("font-size", "16px") // Change x-axis font size
+      .style("font-size", "16px")
       .attr("transform", "rotate(30)")
       .attr("text-anchor", "start")
       .attr("x", 10)
@@ -398,7 +482,7 @@ const ClassificationsStackedBarChart = () => {
       .attr("transform", `translate(${margin.left},0)`)
       .call(d3.axisLeft(y))
       .selectAll("text")
-      .style("font-size", "16px"); // Change y-axis font size
+      .style("font-size", "16px");
 
     svg
       .append("text")
@@ -406,10 +490,8 @@ const ClassificationsStackedBarChart = () => {
       .attr("y", margin.top / 2)
       .attr("text-anchor", "middle")
       .style("font-size", "24px")
-      // .style("text-decoration", "underline")
-      .text("Accuracy vs Feedback");
+      .text("Topic vs Feedback");
 
-    // Legend container
     const legend = svg
       .append("g")
       .attr(
@@ -418,10 +500,9 @@ const ClassificationsStackedBarChart = () => {
       )
       .attr("class", "legend-container");
 
-    // Legend items
     legend
       .selectAll("legend-item")
-      .data(color.domain().filter((key) => key !== "counts"))
+      .data(color.domain())
       .enter()
       .append("g")
       .attr("class", "legend-item")
@@ -444,7 +525,6 @@ const ClassificationsStackedBarChart = () => {
           .style("font-family", "Arial, sans-serif");
       });
 
-    // Add hover interaction
     d3.selectAll(".legend-item")
       .on("mouseover", function (event, d) {
         d3.selectAll(".bar").style("opacity", 0.2);
@@ -453,7 +533,6 @@ const ClassificationsStackedBarChart = () => {
       .on("mouseout", function () {
         d3.selectAll(".bar").style("opacity", 1);
       });
-    console.log("intent", intent);
     svg
       .append("g")
       .selectAll("text")
@@ -473,7 +552,7 @@ const ClassificationsStackedBarChart = () => {
       <svg ref={svgRef}></svg>
       <span style={{ width: "170px" }}>
         <span style={{ marginBottom: "10px", display: "inline-block" }}>
-          <b>Select Classifications:</b>
+          <b>Select Topic:</b>
         </span>
         <select
           style={{
@@ -496,19 +575,18 @@ const ClassificationsStackedBarChart = () => {
           onBlur={() => setStyle(blurStyle)}
           onChange={(e) => setIntent(e.target.value)}
         >
-          {/* Unclear: { good: 25, bad: 168 },
-      Farming_related: { good: 634, bad: 1227 },
-      Change_crop: { good: 34, bad: 136 },
-      Exit: { good: 0, bad: 18 },
-      Referring_back: { good: 2, bad: 70 },
-      Disappointment: { good: 2, bad: 4 },
-      Greeting: { good: 1, bad: 8 }, */}
-          <option value="High Relevance">High Relevance</option>
-          <option value="Medium Relevance">Medium Relevance</option>
-          <option value="Low Relevance">Low Relevance</option>
-          <option value="High Faithfulness">High Faithfulness</option>
-          <option value="Medium Faithfulness">Medium Faithfulness</option>
-          <option value="Low Faithfulness">Low Faithfulness</option>
+          <option value="Sowing">Sowing</option>
+          <option value="Harvesting">Harvesting</option>
+          <option value="Marketing">Marketing</option>
+          <option value="Not related to agriculture">
+            Not related to agriculture
+          </option>
+          <option value="Varieties">Varieties</option>
+          <option value="Fertilizers">Fertilizers</option>
+          <option value="Soil Management">Soil Management</option>
+          <option value="Pests and Diseases">Pests and Diseases</option>
+          <option value="Pruning Techniques">Pruning Techniques</option>
+          <option value="Storage">Storage</option>
         </select>
       </span>
       <div ref={tooltipRef} className="tooltip-bar"></div>
@@ -516,4 +594,4 @@ const ClassificationsStackedBarChart = () => {
   );
 };
 
-export default ClassificationsStackedBarChart;
+export default TopicFeedbackStackedBarChart;

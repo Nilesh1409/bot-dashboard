@@ -1,81 +1,126 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import "./StackedBarChart.css";
-import SimpleLineChart from "../SimpleLineChart/SimpleLineChart";
 
-const IntentFeedbackStackedBarChart = () => {
+const DenialOfServiceFeedbackStackedBarChart = () => {
   const svgRef = useRef();
   const tooltipRef = useRef();
   const masterData = [
     {
       year: 2023,
-      month: "November",
-      Farming_related: { good: 634, bad: 93 },
-      Change_crop: { good: 34, bad: 12 },
-      Unclear: { good: 25, bad: 10 },
-      Disappointment: { good: 2, bad: 1 },
-      Referring_back: { good: 2, bad: 0 },
-      Greeting: { good: 1, bad: 0 },
+      month: "December",
+      "In Content": {
+        good: 253,
+        bad: 41,
+      },
+      "In Context": {
+        good: 253,
+        bad: 41,
+      },
+      "In Collection": {
+        good: 253,
+        bad: 41,
+      },
     },
     {
       year: 2023,
-      month: "December",
-      Farming_related: { good: 212, bad: 29 },
-      Exit: { good: 3, bad: 0 },
-      Unclear: { good: 14, bad: 10 },
-      Change_crop: { good: 20, bad: 2 },
-      Referring_back: { good: 3, bad: 0 },
-      Disappointment: { good: 1, bad: 0 },
-    },
-    {
-      year: 2024,
-      month: "January",
-      Farming_related: { good: 247, bad: 44 },
-      Change_crop: { good: 18, bad: 4 },
-      Unclear: { good: 18, bad: 8 },
-      Referring_back: { good: 5, bad: 0 },
-      Exit: { good: 1, bad: 0 },
-    },
-    {
-      year: 2024,
-      month: "February",
-      Farming_related: { good: 603, bad: 81 },
-      Referring_back: { good: 1, bad: 2 },
-      Unclear: { good: 30, bad: 6 },
-      Change_crop: { good: 24, bad: 9 },
-      Exit: { good: 3, bad: 0 },
-      Greeting: { good: 2, bad: 1 },
-    },
-    {
-      year: 2024,
-      month: "March",
-      Farming_related: { good: 685, bad: 142 },
-      Unclear: { good: 21, bad: 10 },
-      Greeting: { good: 3, bad: 1 },
-      Change_crop: { good: 22, bad: 9 },
-      Exit: { good: 2, bad: 0 },
+      month: "November",
+      "In Content": {
+        good: 698,
+        bad: 116,
+      },
+      "In Context": {
+        good: 698,
+        bad: 116,
+      },
+      "In Collection": {
+        good: 698,
+        bad: 116,
+      },
     },
     {
       year: 2024,
       month: "April",
-      Farming_related: { good: 478, bad: 153 },
-      Change_crop: { good: 17, bad: 13 },
-      Unclear: { good: 5, bad: 6 },
-      Referring_back: { good: 1, bad: 0 },
-      Greeting: { good: 1, bad: 0 },
-      Exit: { good: 1, bad: 0 },
+      "In Content": {
+        good: 503,
+        bad: 172,
+      },
+      "In Context": {
+        good: 503,
+        bad: 172,
+      },
+      "In Collection": {
+        good: 503,
+        bad: 172,
+      },
+    },
+    {
+      year: 2024,
+      month: "February",
+      "In Content": {
+        good: 663,
+        bad: 99,
+      },
+      "In Context": {
+        good: 663,
+        bad: 99,
+      },
+      "In Collection": {
+        good: 663,
+        bad: 99,
+      },
+    },
+    {
+      year: 2024,
+      month: "January",
+      "In Content": {
+        good: 289,
+        bad: 56,
+      },
+      "In Context": {
+        good: 289,
+        bad: 56,
+      },
+      "In Collection": {
+        good: 289,
+        bad: 56,
+      },
+    },
+    {
+      year: 2024,
+      month: "March",
+      "In Content": {
+        good: 733,
+        bad: 162,
+      },
+      "In Context": {
+        good: 733,
+        bad: 162,
+      },
+      "In Collection": {
+        good: 733,
+        bad: 162,
+      },
     },
     {
       year: 2024,
       month: "May",
-      Farming_related: { good: 103, bad: 30 },
-      Change_crop: { good: 4, bad: 2 },
-      Unclear: { good: 3, bad: 2 },
+      "In Content": {
+        good: 110,
+        bad: 34,
+      },
+      "In Context": {
+        good: 110,
+        bad: 34,
+      },
+      "In Collection": {
+        good: 110,
+        bad: 34,
+      },
     },
   ];
 
-  const [intent, setIntent] = useState("Farming_related");
-  const [barChart, setBarChart] = useState(false);
+  const [intent, setIntent] = useState("In Content");
 
   const focusStyle = {
     borderColor: "#3f51b5",
@@ -106,10 +151,9 @@ const IntentFeedbackStackedBarChart = () => {
   }
 
   let data = getIntentFeedback(intent);
-  console.log("🚀 ~ IntentFeedbackStackedBarChart ~ data:", data);
+  console.log("🚀 ~ DenialOfServiceFeedbackStackedBarChart ~ data:", data);
 
   useEffect(() => {
-    if (!barChart) return;
     const svg = d3.select(svgRef.current);
     const tooltip = d3.select(tooltipRef.current);
     const width = 800;
@@ -204,13 +248,13 @@ const IntentFeedbackStackedBarChart = () => {
       .selectAll("text")
       .style("font-size", "16px");
 
-    // svg
-    //   .append("text")
-    //   .attr("x", width / 2)
-    //   .attr("y", margin.top / 2)
-    //   .attr("text-anchor", "middle")
-    //   .style("font-size", "24px")
-    //   .text("User Intent vs Feedback");
+    svg
+      .append("text")
+      .attr("x", width / 2)
+      .attr("y", margin.top / 2)
+      .attr("text-anchor", "middle")
+      .style("font-size", "24px")
+      .text("Denial of Service vs Feedback");
 
     const legend = svg
       .append("g")
@@ -268,95 +312,41 @@ const IntentFeedbackStackedBarChart = () => {
   }, [data, intent]);
 
   return (
-    <>
-      <div className="chart-container flex">
-        <div>
-          <div className="chart-title">User Intent vs Feedback</div>
-          {barChart ? (
-            <svg ref={svgRef}></svg>
-          ) : (
-            <SimpleLineChart data={data} />
-          )}
-        </div>
-        <span style={{ width: "170px", marginLeft: "30px" }}>
-          <div>
-            <span
-              style={{
-                marginBottom: "10px",
-                display: "inline-block",
-              }}
-            >
-              <b>Select Graph Type:</b>
-            </span>
-            <select
-              style={{
-                fontSize: "16px",
-                padding: "10px 24px 10px 12px",
-                border: "1px solid rgba(0, 0, 0, 0.23)",
-                borderRadius: "4px",
-                outline: "none",
-                appearance: "none",
-                width: "100%",
-                maxWidth: "300px",
-                height: "40px",
-                backgroundColor: "white",
-                boxShadow: "none",
-                transition:
-                  "border-color 300ms ease-out, box-shadow 300ms ease-out",
-                ...style,
-              }}
-              onFocus={() => setStyle(focusStyle)}
-              onBlur={() => setStyle(blurStyle)}
-              onChange={(e) => setBarChart(!barChart)}
-            >
-              <option value="line">Line Graph</option>
-              <option value="bar">Bar Graph</option>
-            </select>
-          </div>
-          <div>
-            <span
-              style={{
-                marginBottom: "10px",
-                display: "inline-block",
-                marginTop: "10px",
-              }}
-            >
-              <b>Select intent:</b>
-            </span>
-            <select
-              style={{
-                fontSize: "16px",
-                padding: "10px 24px 10px 12px",
-                border: "1px solid rgba(0, 0, 0, 0.23)",
-                borderRadius: "4px",
-                outline: "none",
-                appearance: "none",
-                width: "100%",
-                maxWidth: "300px",
-                height: "40px",
-                backgroundColor: "white",
-                boxShadow: "none",
-                transition:
-                  "border-color 300ms ease-out, box-shadow 300ms ease-out",
-                ...style,
-              }}
-              onFocus={() => setStyle(focusStyle)}
-              onBlur={() => setStyle(blurStyle)}
-              onChange={(e) => setIntent(e.target.value)}
-            >
-              <option value="Farming_related">Farming related</option>
-              <option value="Unclear">Unclear</option>
-              <option value="Exit">Exit</option>
-              <option value="Referring_back">Referring back</option>
-              <option value="Disappointment">Disappointment</option>
-              <option value="Greeting">Greeting</option>
-            </select>
-          </div>
+    <div className="chart-container flex">
+      <svg ref={svgRef}></svg>
+      <span style={{ width: "170px" }}>
+        <span style={{ marginBottom: "10px", display: "inline-block" }}>
+          <b>Select intent:</b>
         </span>
-        <div ref={tooltipRef} className="tooltip-bar"></div>
-      </div>
-    </>
+        <select
+          style={{
+            fontSize: "16px",
+            padding: "10px 24px 10px 12px",
+            border: "1px solid rgba(0, 0, 0, 0.23)",
+            borderRadius: "4px",
+            outline: "none",
+            appearance: "none",
+            width: "100%",
+            maxWidth: "300px",
+            height: "40px",
+            backgroundColor: "white",
+            boxShadow: "none",
+            transition:
+              "border-color 300ms ease-out, box-shadow 300ms ease-out",
+            ...style,
+          }}
+          onFocus={() => setStyle(focusStyle)}
+          onBlur={() => setStyle(blurStyle)}
+          onChange={(e) => setIntent(e.target.value)}
+        >
+          <option value="In Content">In Content</option>
+          <option value="In Context">In Context</option>
+          <option value="In Collection">In Collection</option>
+        </select>
+      </span>
+      <div ref={tooltipRef} className="tooltip-bar"></div>
+    </div>
   );
 };
 
-export default IntentFeedbackStackedBarChart;
+export default DenialOfServiceFeedbackStackedBarChart;

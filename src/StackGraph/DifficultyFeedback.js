@@ -280,7 +280,7 @@ const DifficultyFeedbackStackedBarChart = () => {
 
     const y = d3
       .scaleLinear()
-      .domain([0, d3.max(data, (d) => d3.sum(Object.values(d.data)))])
+      .domain([0, 100])
       .nice()
       .range([height - margin.bottom, margin.top]);
 
@@ -428,6 +428,18 @@ const DifficultyFeedbackStackedBarChart = () => {
         d3.selectAll(".bar").style("opacity", 1);
       });
     console.log("intent", intent);
+    svg
+      .append("g")
+      .selectAll("text")
+      .data(data)
+      .enter()
+      .append("text")
+      .attr("x", (d) => x(d.month) + x.bandwidth() / 2)
+      .attr("y", (d) => y(d.data.Good + d.data.Bad) - 5)
+      .attr("text-anchor", "middle")
+      .style("font-size", "14px")
+      .style("font-family", "Arial, sans-serif")
+      .text((d) => d.data.counts.good + d.data.counts.bad);
   }, [data, intent]);
 
   return (

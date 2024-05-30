@@ -186,13 +186,20 @@ const TopicChart = ({ data }) => {
                 text-align: left;
                 line-height: 1.4;
                 font-size: 14px;
-                max-width: 320px;
+                max-width: 420px;
                 border: black;
               ">
                 <div><strong>${hoveredMonth} ${hoveredYear}</strong></div>
                 ${keys
-                  .map(
-                    (key) => `
+                  .map((key) => {
+                    console.log(
+                      "hover data",
+                      <strong>
+                        ${hoveredData?.[key] ?? "Unavailable"} ($
+                        {percentage(hoveredData?.[key])})
+                      </strong>
+                    );
+                    return `
                   <div style="
                       margin: 2px 0;
                       display: flex;
@@ -203,8 +210,8 @@ const TopicChart = ({ data }) => {
                         hoveredData?.[key] ?? "Unavailable"
                       } (${percentage(hoveredData?.[key])})</strong>
                   </div>
-                `
-                  )
+                `;
+                  })
                   .join("")}
               </div>
             `;
@@ -263,7 +270,7 @@ const TopicChart = ({ data }) => {
           textAlign: "left",
           lineHeight: "1.4",
           fontSize: "14px",
-          maxWidth: "220px",
+          maxWidth: "320px",
         }}
       ></div>
       <div className="filter_range">

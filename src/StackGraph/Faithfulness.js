@@ -2,15 +2,15 @@ import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import "./StackedBarChart.css";
 
-const StackedBarChart = ({ data }) => {
+const StackedBarChart = ({ data, overall }) => {
   const svgRef = useRef();
   const tooltipRef = useRef();
 
   useEffect(() => {
     const svg = d3.select(svgRef.current);
     const tooltip = d3.select(tooltipRef.current);
-    const width = 550;
-    const height = 550;
+    const width = overall ? 350 : 550;
+    const height = overall ? 450 : 550;
     const margin = { top: 40, right: 150, bottom: 150, left: 50 };
 
     svg.selectAll("*").remove(); // Clear previous contents
@@ -181,7 +181,7 @@ const StackedBarChart = ({ data }) => {
   }, [data]);
 
   return (
-    <div className="chart-container">
+    <div className={`chart-container ${overall ? "inline" : ""}`}>
       <svg ref={svgRef}></svg>
       <div ref={tooltipRef} className="tooltip-bar"></div>
     </div>

@@ -16,8 +16,15 @@ import IntentFeedbackStackedBarChart from "./StackGraph/IntentFeedbackStack";
 import DenialOfServiceChart from "./LineChart/DenialOfService";
 import ClassificationsStackedBarChart from "./StackGraph/Classifications";
 import DifficultyFeedbackStackedBarChart from "./StackGraph/DifficultyFeedback";
+import DenialOfServiceFeedbackStackedBarChart from "./StackGraph/DenialOfServiceFeedback";
+import TopicFeedbackStackedBarChart from "./StackGraph/TopicFeedback";
+import ResponseAnalysis from "./Overview/Overview";
+import OverviewPieChart from "./PieChart/OverviewPieChart";
+import SimpleLineChart from "./SimpleLineChart/SimpleLineChart";
+import { useState } from "react";
 
 function App() {
+  const [simpleBarGraphData, setSimpleBarGraphData] = useState();
   const generateData = () => {
     let countCorrect = 0;
     let countIncorrect = 0;
@@ -1355,12 +1362,27 @@ function App() {
 
   const faithfulnessData = [
     {
+      intent: "Change_crop",
+      faithfulness: {
+        High: 55,
+        Medium: 8,
+        Low: 12,
+      },
+    },
+    {
       intent: "Farming_related",
       faithfulness: {
-        High: 543,
-        Medium: 34,
-        Low: 33,
-        // Undetermined: 123,
+        High: 1372,
+        Medium: 156,
+        Low: 211,
+      },
+    },
+    {
+      intent: "Unclear",
+      faithfulness: {
+        High: 67,
+        Medium: 5,
+        Low: 4,
       },
     },
     {
@@ -1369,55 +1391,57 @@ function App() {
         High: 1,
         Medium: 0,
         Low: 0,
-        // Undetermined: 1,
-      },
-    },
-    {
-      intent: "Unclear",
-      faithfulness: {
-        High: 28,
-        Medium: 0,
-        Low: 0,
-        // Undetermined: 3,
       },
     },
     {
       intent: "Referring_back",
       faithfulness: {
-        High: 18,
+        High: 38,
         Medium: 1,
-        Low: 0,
-        // Undetermined: 1,
-      },
-    },
-    {
-      intent: "Change_crop",
-      faithfulness: {
-        High: 27,
-        Medium: 0,
-        Low: 0,
-        // Undetermined: 0,
+        Low: 1,
       },
     },
     {
       intent: "Exit",
       faithfulness: {
-        High: 3,
+        High: 6,
+        Medium: 2,
+        Low: 0,
+      },
+    },
+    {
+      intent: "Disappointment",
+      faithfulness: {
+        High: 1,
         Medium: 0,
         Low: 0,
-        // Undetermined: 0,
       },
     },
   ];
 
   const relevanceData = [
     {
+      intent: "Change_crop",
+      relevance: {
+        High: 20,
+        Medium: 6,
+        Low: 24,
+      },
+    },
+    {
       intent: "Farming_related",
       relevance: {
-        High: 393,
-        Medium: 91,
-        Low: 73,
-        // Undetermined: 176,
+        High: 1218,
+        Medium: 278,
+        Low: 291,
+      },
+    },
+    {
+      intent: "Unclear",
+      relevance: {
+        High: 27,
+        Medium: 8,
+        Low: 21,
       },
     },
     {
@@ -1426,43 +1450,30 @@ function App() {
         High: 0,
         Medium: 0,
         Low: 0,
-        // Undetermined: 2,
-      },
-    },
-    {
-      intent: "Unclear",
-      relevance: {
-        High: 2,
-        Medium: 2,
-        Low: 0,
-        // Undetermined: 27,
       },
     },
     {
       intent: "Referring_back",
       relevance: {
-        High: 12,
+        High: 25,
         Medium: 3,
-        Low: 2,
-        // Undetermined: 3,
-      },
-    },
-    {
-      intent: "Change_crop",
-      relevance: {
-        High: 0,
-        Medium: 0,
-        Low: 0,
-        // Undetermined: 27,
+        Low: 9,
       },
     },
     {
       intent: "Exit",
       relevance: {
-        High: 0,
+        High: 1,
+        Medium: 0,
+        Low: 4,
+      },
+    },
+    {
+      intent: "Disappointment",
+      relevance: {
+        High: 1,
         Medium: 0,
         Low: 0,
-        // Undetermined: 3,
       },
     },
   ];
@@ -1663,7 +1674,7 @@ function App() {
       year: 2023,
       month: "November",
       "In Content": 1834,
-      "Not In Content": 495,
+      "Out Of Content": 495,
       "In Context": 1933,
       "Out Of Context": 396,
       "In Collection": 2159,
@@ -1673,7 +1684,7 @@ function App() {
       year: 2023,
       month: "December",
       "In Content": 1033,
-      "Not In Content": 276,
+      "Out Of Content": 276,
       "In Context": 1021,
       "Out Of Context": 288,
       "In Collection": 1177,
@@ -1683,7 +1694,7 @@ function App() {
       year: 2024,
       month: "January",
       "In Content": 1450,
-      "Not In Content": 223,
+      "Out Of Content": 223,
       "In Context": 1397,
       "Out Of Context": 276,
       "In Collection": 1535,
@@ -1693,7 +1704,7 @@ function App() {
       year: 2024,
       month: "February",
       "In Content": 2563,
-      "Not In Content": 1341,
+      "Out Of Content": 1341,
       "In Context": 3442,
       "Out Of Context": 462,
       "In Collection": 3692,
@@ -1703,7 +1714,7 @@ function App() {
       year: 2024,
       month: "March",
       "In Content": 4166,
-      "Not In Content": 2171,
+      "Out Of Content": 2171,
       "In Context": 5901,
       "Out Of Context": 436,
       "In Collection": 6118,
@@ -1713,7 +1724,7 @@ function App() {
       year: 2024,
       month: "April",
       "In Content": 2616,
-      "Not In Content": 1618,
+      "Out Of Content": 1618,
       "In Context": 3963,
       "Out Of Context": 271,
       "In Collection": 4109,
@@ -1723,7 +1734,7 @@ function App() {
       year: 2024,
       month: "May",
       "In Content": 1145,
-      "Not In Content": 286,
+      "Out Of Content": 286,
       "In Context": 1337,
       "Out Of Context": 94,
       "In Collection": 1395,
@@ -1731,10 +1742,57 @@ function App() {
     },
   ];
 
+  const faithfulnessOverview = {
+    "Low Faithfulness": 228,
+    "High Faithfulness": 1540,
+    "Medium Faithfulness": 172,
+    // Undetermined: 548,
+  };
+
   // console.log("farmingRelatedData", farmingRelatedData);
 
   return (
     <div className="App">
+      <ResponseAnalysis />
+      <div className="chart-container">
+        <h1 className="chart-title">Intent Classification</h1>
+        <div className="chart">
+          <LineChart data={intentData} />
+        </div>
+      </div>
+      <div className="chart-container">
+        <h1 className="chart-title">Topic Classification Month-wise</h1>
+        <div className="chart">
+          <TopicChart data={topicData} />
+        </div>
+      </div>
+      <div className="chart-container">
+        <h1 className="chart-title">Feedback Classification</h1>
+        <div className="chart">
+          <FeedbackChart data={feedbackData} />
+        </div>
+      </div>
+      <div className="chart-container">
+        <h1 className="chart-title">Answered & Unanswered Questions</h1>
+        <div className="chart">
+          <AnsweredChart data={answeredData} />
+        </div>
+      </div>
+      <div className="chart-container">
+        <h1 className="chart-title">Unanswered</h1>
+        <div className="chart">
+          <DenialOfServiceChart data={denialOfService} />
+        </div>
+      </div>
+      <div className="chart-container">
+        <h1 className="chart-title">Topic Classifications </h1>
+        <h2 className="chart-description">
+          Source: Kenya dataset, Coffee, 01 NOV 2023 - 30 MAY 2024, Kenya{" "}
+        </h2>
+        <div className="chart">
+          <BubbleGraph data={wordData} />
+        </div>
+      </div>
       {/* <div className="chart-container">
       <h1 className="chart-title">Response Context </h1>
       <div className="chart">
@@ -1754,40 +1812,19 @@ function App() {
         <h1>Sankey Diagram Example</h1>
         <SankeyDiagram />
       </div> */}
-      <div className="chart-container">
-        <h1 className="chart-title">
-          Aggregate Prompt Responses User Feedback Analysis{" "}
-        </h1>
-        <h2 className="chart-description">
-          Source: Kenya dataset, Coffee, 09 APR 2024 - 08 MAY 2024, Kenya{" "}
-        </h2>
-        <div className="chart">
-          <SankeyChart data={sankyData} />
-        </div>
-      </div>
 
       <div className="chart-container">
         <h1 className="chart-title">
           Aggregate Prompt-Based Feedback Analysis{" "}
         </h1>
         <h2 className="chart-description">
-          Source: Kenya dataset, Coffee, 09 APR 2024 - 08 MAY 2024, Kenya{" "}
-        </h2>
-        <div className="chart">
-          <SankeyChart feedback={true} data={sankyFeedback} />
-        </div>
-      </div>
-      <div className="chart-container">
-        <h1 className="chart-title">
-          Aggregate Prompt-Based Feedback Analysis{" "}
-        </h1>
-        <h2 className="chart-description">
-          Source: Kenya dataset, Coffee, 09 APR 2024 - 08 MAY 2024, Kenya{" "}
+          Source: Kenya dataset, Coffee, 01 NOV 2023 - 30 MAY 2024, Kenya{" "}
         </h2>
         <div className="chart-main-container">
           <div className="chart-container">
             <div className="chart">
               <StackedBarChart data={faithfulnessData} />
+              {/* <SimpleLineChart data={faithfulnessData} /> */}
             </div>
           </div>
           <div className="chart-container">
@@ -1814,69 +1851,31 @@ function App() {
       </div>
 
       <div className="chart-container">
-        {/* <h1 className="chart-title">
-            Aggregate Prompt-Based Feedback Analysis{" "}
-          </h1>
-          <h2 className="chart-description">
-            Source: Kenya dataset, Coffee, 09 APR 2024 - 08 MAY 2024, Kenya{" "}
-          </h2> */}
         <div className="chart">
-          <IntentFeedbackStackedBarChart />
+          <IntentFeedbackStackedBarChart
+            setSimpleBarGraphData={setSimpleBarGraphData}
+          />
+          {/* <SimpleLineChart data={simpleBarGraphData} /> */}
         </div>
       </div>
       <div className="chart-container">
-        {/* <h1 className="chart-title">
-            Aggregate Prompt-Based Feedback Analysis{" "}
-          </h1>
-          <h2 className="chart-description">
-            Source: Kenya dataset, Coffee, 09 APR 2024 - 08 MAY 2024, Kenya{" "}
-          </h2> */}
         <div className="chart">
           <ClassificationsStackedBarChart />
         </div>
       </div>
       <div className="chart-container">
-        {/* <h1 className="chart-title">
-            Aggregate Prompt-Based Feedback Analysis{" "}
-          </h1>
-          <h2 className="chart-description">
-            Source: Kenya dataset, Coffee, 09 APR 2024 - 08 MAY 2024, Kenya{" "}
-          </h2> */}
         <div className="chart">
           <DifficultyFeedbackStackedBarChart />
         </div>
       </div>
-
-      <div className="chart-container">
-        <h1 className="chart-title">Denial Of Service</h1>
+      {/* <div className="chart-container">
         <div className="chart">
-          <DenialOfServiceChart data={denialOfService} />
+          <DenialOfServiceFeedbackStackedBarChart />
         </div>
-      </div>
-
+      </div> */}
       <div className="chart-container">
-        <h1 className="chart-title">Intent Classification</h1>
         <div className="chart">
-          <LineChart data={intentData} />
-        </div>
-      </div>
-      <div className="chart-container">
-        <h1 className="chart-title">Answered & Unanswered Questions</h1>
-        <div className="chart">
-          <AnsweredChart data={answeredData} />
-        </div>
-      </div>
-      <div className="chart-container">
-        <h1 className="chart-title">Feedback Classification</h1>
-        <div className="chart">
-          <FeedbackChart data={feedbackData} />
-        </div>
-      </div>
-
-      <div className="chart-container">
-        <h1 className="chart-title">Topic Classification Month-wise</h1>
-        <div className="chart">
-          <TopicChart data={topicData} />
+          <TopicFeedbackStackedBarChart />
         </div>
       </div>
 
@@ -1888,12 +1887,26 @@ function App() {
       </div> */}
 
       <div className="chart-container">
-        <h1 className="chart-title">Topic Classifications </h1>
+        <h1 className="chart-title">
+          Aggregate Prompt Responses User Feedback Analysis{" "}
+        </h1>
         <h2 className="chart-description">
-          Source: Kenya dataset, Coffee, 01 NOV 2023 - 30 MAY 2024, Kenya{" "}
+          Source: Kenya dataset, Coffee, 09 APR 2024 - 08 MAY 2024, Kenya{" "}
         </h2>
         <div className="chart">
-          <BubbleGraph data={wordData} />
+          <SankeyChart data={sankyData} />
+        </div>
+      </div>
+
+      <div className="chart-container">
+        <h1 className="chart-title">
+          Aggregate Prompt-Based Feedback Analysis{" "}
+        </h1>
+        <h2 className="chart-description">
+          Source: Kenya dataset, Coffee, 09 APR 2024 - 08 MAY 2024, Kenya{" "}
+        </h2>
+        <div className="chart">
+          <SankeyChart feedback={true} data={sankyFeedback} />
         </div>
       </div>
     </div>
