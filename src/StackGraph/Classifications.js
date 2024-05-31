@@ -7,12 +7,14 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import SimpleLineChart from "../SimpleLineChart/SimpleLineChart";
 
 const ClassificationsStackedBarChart = () => {
   const svgRef = useRef();
   const tooltipRef = useRef();
 
   const [intent, setIntent] = useState("High Relevance");
+  const [barChart, setBarChart] = useState(false);
 
   const focusStyle = {
     borderColor: "#3f51b5",
@@ -400,14 +402,14 @@ const ClassificationsStackedBarChart = () => {
       .selectAll("text")
       .style("font-size", "16px"); // Change y-axis font size
 
-    svg
-      .append("text")
-      .attr("x", width / 2)
-      .attr("y", margin.top / 2)
-      .attr("text-anchor", "middle")
-      .style("font-size", "24px")
-      // .style("text-decoration", "underline")
-      .text("Accuracy vs Feedback");
+    // svg
+    //   .append("text")
+    //   .attr("x", width / 2)
+    //   .attr("y", margin.top / 2)
+    //   .attr("text-anchor", "middle")
+    //   .style("font-size", "24px")
+    //   // .style("text-decoration", "underline")
+    //   .text("Accuracy vs Feedback");
 
     // Legend container
     const legend = svg
@@ -470,47 +472,88 @@ const ClassificationsStackedBarChart = () => {
 
   return (
     <div className="chart-container flex">
-      <svg ref={svgRef}></svg>
-      <span style={{ width: "170px" }}>
-        <span style={{ marginBottom: "10px", display: "inline-block" }}>
-          <b>Select Classifications:</b>
-        </span>
-        <select
-          style={{
-            fontSize: "16px",
-            padding: "10px 24px 10px 12px",
-            border: "1px solid rgba(0, 0, 0, 0.23)",
-            borderRadius: "4px",
-            outline: "none",
-            appearance: "none",
-            width: "100%",
-            maxWidth: "300px",
-            height: "40px",
-            backgroundColor: "white",
-            boxShadow: "none",
-            transition:
-              "border-color 300ms ease-out, box-shadow 300ms ease-out",
-            ...style,
-          }}
-          onFocus={() => setStyle(focusStyle)}
-          onBlur={() => setStyle(blurStyle)}
-          onChange={(e) => setIntent(e.target.value)}
-        >
-          {/* Unclear: { good: 25, bad: 168 },
-      Farming_related: { good: 634, bad: 1227 },
-      Change_crop: { good: 34, bad: 136 },
-      Exit: { good: 0, bad: 18 },
-      Referring_back: { good: 2, bad: 70 },
-      Disappointment: { good: 2, bad: 4 },
-      Greeting: { good: 1, bad: 8 }, */}
-          <option value="High Relevance">High Relevance</option>
-          <option value="Medium Relevance">Medium Relevance</option>
-          <option value="Low Relevance">Low Relevance</option>
-          <option value="High Faithfulness">High Faithfulness</option>
-          <option value="Medium Faithfulness">Medium Faithfulness</option>
-          <option value="Low Faithfulness">Low Faithfulness</option>
-        </select>
+      <div>
+        <div className="chart-title">
+          Accuracy vs Feedback
+          <p>
+            Compares positive and negative feedback for responses across
+            different relevance levels over time.
+          </p>
+        </div>
+        {barChart ? <svg ref={svgRef}></svg> : <SimpleLineChart data={data} />}
+      </div>
+      <span style={{ width: "170px", marginLeft: "30px" }}>
+        <div>
+          <div>
+            <span
+              style={{
+                marginBottom: "10px",
+                display: "inline-block",
+              }}
+            >
+              <b>Select Graph Type:</b>
+            </span>
+            <select
+              style={{
+                fontSize: "16px",
+                padding: "10px 24px 10px 12px",
+                border: "1px solid rgba(0, 0, 0, 0.23)",
+                borderRadius: "4px",
+                outline: "none",
+                appearance: "none",
+                width: "100%",
+                maxWidth: "300px",
+                height: "40px",
+                backgroundColor: "white",
+                boxShadow: "none",
+                transition:
+                  "border-color 300ms ease-out, box-shadow 300ms ease-out",
+                ...style,
+              }}
+              onFocus={() => setStyle(focusStyle)}
+              onBlur={() => setStyle(blurStyle)}
+              onChange={(e) => setBarChart(!barChart)}
+            >
+              <option value="line">Line Graph</option>
+              <option value="bar">Bar Graph</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <span style={{ marginBottom: "10px", display: "inline-block" }}>
+            <b>Select Classifications:</b>
+          </span>
+          <select
+            style={{
+              fontSize: "16px",
+              padding: "10px 24px 10px 12px",
+              border: "1px solid rgba(0, 0, 0, 0.23)",
+              borderRadius: "4px",
+              outline: "none",
+              appearance: "none",
+              width: "100%",
+              maxWidth: "300px",
+              height: "40px",
+              backgroundColor: "white",
+              boxShadow: "none",
+              transition:
+                "border-color 300ms ease-out, box-shadow 300ms ease-out",
+              ...style,
+            }}
+            onFocus={() => setStyle(focusStyle)}
+            onBlur={() => setStyle(blurStyle)}
+            onChange={(e) => setIntent(e.target.value)}
+          >
+            <option value="High Relevance">High Relevance</option>
+            <option value="Medium Relevance">Medium Relevance</option>
+            <option value="Low Relevance">Low Relevance</option>
+            <option value="High Faithfulness">High Faithfulness</option>
+            <option value="Medium Faithfulness">Medium Faithfulness</option>
+            <option value="Low Faithfulness">Low Faithfulness</option>
+          </select>
+        </div>
       </span>
+
       <div ref={tooltipRef} className="tooltip-bar"></div>
     </div>
   );

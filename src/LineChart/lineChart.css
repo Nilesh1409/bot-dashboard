@@ -52,3 +52,7 @@ input[type="range"]::-moz-range-thumb {
 .filter_range > span {
   margin: 0 10px;
 }
+.area-graph-toggle-input {
+  margin: 30px;
+  width: 150px;
+}

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import "./StackedBarChart.css";
+import SimpleLineChart from "../SimpleLineChart/SimpleLineChart";
 
 const TopicFeedbackStackedBarChart = () => {
   const svgRef = useRef();
@@ -357,6 +358,7 @@ const TopicFeedbackStackedBarChart = () => {
     },
   ];
 
+  const [barChart, setBarChart] = useState(false);
   const [intent, setIntent] = useState("Sowing");
 
   const focusStyle = {
@@ -484,13 +486,13 @@ const TopicFeedbackStackedBarChart = () => {
       .selectAll("text")
       .style("font-size", "16px");
 
-    svg
-      .append("text")
-      .attr("x", width / 2)
-      .attr("y", margin.top / 2)
-      .attr("text-anchor", "middle")
-      .style("font-size", "24px")
-      .text("Topic vs Feedback");
+    // svg
+    //   .append("text")
+    //   .attr("x", width / 2)
+    //   .attr("y", margin.top / 2)
+    //   .attr("text-anchor", "middle")
+    //   .style("font-size", "24px")
+    //   .text("Topic vs Feedback");
 
     const legend = svg
       .append("g")
@@ -549,8 +551,19 @@ const TopicFeedbackStackedBarChart = () => {
 
   return (
     <div className="chart-container flex">
-      <svg ref={svgRef}></svg>
-      <span style={{ width: "170px" }}>
+      <div>
+        <div className="chart-title">
+          Topic vs Feedback
+          <p>
+            Compares positive and negative feedback for a specific topic over
+            time.
+          </p>
+        </div>
+
+        {barChart ? <svg ref={svgRef}></svg> : <SimpleLineChart data={data} />}
+      </div>
+
+      <span style={{ width: "170px", marginLeft: "20px" }}>
         <span style={{ marginBottom: "10px", display: "inline-block" }}>
           <b>Select Topic:</b>
         </span>

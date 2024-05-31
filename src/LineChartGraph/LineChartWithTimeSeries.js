@@ -2,18 +2,24 @@ import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import "./LineChart.css";
 
-const LineChart = ({ data }) => {
+const LineChartWithTimeSeries = ({ data }) => {
+  console.log("🚀 ~ LineChartWithTimeSeries ~ data1111:", data);
   const svgRef = useRef();
   const tooltipRef = useRef();
 
   useEffect(() => {
     const svg = d3.select(svgRef.current);
     const tooltip = d3.select(tooltipRef.current);
-    const width = 900;
+    const width = 1100;
     const height = 550;
-    const margin = { top: 20, right: 50, bottom: 50, left: 100 }; // Increase left margin
+    const margin = { top: 20, right: 50, bottom: 50, left: 100 };
 
     svg.attr("width", width).attr("height", height);
+
+    // Extract keys dynamically (excluding month and year keys)
+    const keys = Object.keys(data[0]).filter(
+      (key) => key !== "month" && key !== "year" && key !== "monthInt"
+    );
 
     const x = d3
       .scalePoint()
@@ -22,7 +28,7 @@ const LineChart = ({ data }) => {
 
     const y = d3
       .scaleLinear()
-      .domain([0, 100])
+      .domain([0, d3.max(data, (d) => d3.max(keys, (key) => d[key]))])
       .nice()
       .range([height - margin.bottom, margin.top]);
 
@@ -36,8 +42,8 @@ const LineChart = ({ data }) => {
 
     svg
       .append("g")
-      .attr("transform", `translate(${margin.left},0)`) // Position y-axis within the margin
-      .call(d3.axisLeft(y).tickFormat((d) => `${d}%`))
+      .attr("transform", `translate(${margin.left},0)`)
+      .call(d3.axisLeft(y))
       .selectAll("text")
       .style("font-size", "16px");
 
@@ -48,46 +54,45 @@ const LineChart = ({ data }) => {
       .selectAll("text")
       .style("font-size", "16px");
 
-    const levels = ["Good", "Bad"];
-    const colors = ["#32cd32", "rgb(151, 25, 25)"];
+    const colors = d3.schemeCategory10;
 
-    levels.forEach((level, idx) => {
-      const levelData = data.map((d) => {
+    keys.forEach((key, idx) => {
+      const keyData = data.map((d) => {
         return {
           month: d.month,
-          value: d.data[level],
-          originalValue: d.data[level],
-          count: d.data.counts[level.toLowerCase()],
+          value: d[key],
+          percentage:
+            ((d[key] ?? 0) / keys.reduce((sum, k) => sum + d[k], 0)) * 100,
         };
       });
 
       svg
         .append("path")
-        .datum(levelData)
+        .datum(keyData)
         .attr("fill", "none")
-        .attr("stroke", colors[idx])
+        .attr("stroke", colors[idx % colors.length])
         .attr("stroke-width", 2.5)
         .attr("d", line);
 
       svg
-        .selectAll(`.dot-${level}`)
-        .data(levelData)
+        .selectAll(`.dot-${key}`)
+        .data(keyData)
         .enter()
         .append("circle")
-        .attr("class", `dot-${level}`)
+        .attr("class", `dot-${key}`)
         .attr("cx", (d) => x(d.month))
         .attr("cy", (d) => y(d.value))
         .attr("r", 5)
-        .attr("fill", colors[idx])
+        .attr("fill", colors[idx % colors.length])
         .on("mouseover", (event, d) => {
           tooltip
             .style("display", "block")
             .style("left", `${event.offsetX + 5}px`)
             .style("top", `${event.offsetY - 28}px`)
             .html(
-              `<strong>${d.month}</strong><br>Value: ${d.originalValue.toFixed(
-                2
-              )}%<br>Count: ${d.count}`
+              `<strong>${d.month}</strong><br>${key}: ${
+                d.value
+              } (${d.percentage.toFixed(2)}%)`
             );
         })
         .on("mouseout", () => {
@@ -97,7 +102,7 @@ const LineChart = ({ data }) => {
 
     const legend = svg
       .selectAll(".legend")
-      .data(levels)
+      .data(keys)
       .enter()
       .append("g")
       .attr("class", "legend")
@@ -108,7 +113,7 @@ const LineChart = ({ data }) => {
       .attr("x", width - 18)
       .attr("width", 18)
       .attr("height", 18)
-      .attr("fill", (d, i) => colors[i]);
+      .attr("fill", (d, i) => colors[i % colors.length]);
 
     legend
       .append("text")
@@ -140,4 +145,4 @@ const LineChart = ({ data }) => {
   );
 };
 
-export default LineChart;
+export default LineChartWithTimeSeries;

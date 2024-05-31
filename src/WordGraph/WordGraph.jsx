@@ -5,14 +5,14 @@ const BubbleGraph = ({ data }) => {
   const ref = useRef();
 
   useEffect(() => {
-    const width = 700;
+    const width = 1200;
     const height = 600;
     const svg = d3
       .select(ref.current)
       .attr("width", width)
       .attr("height", height);
 
-    const forceStrength = 100;
+    const forceStrength = -30;
     const simulation = d3
       .forceSimulation(data.nodes)
       .force(
@@ -77,7 +77,7 @@ const BubbleGraph = ({ data }) => {
     }
   }, [data]);
 
-  return <svg style={{ marginLeft: "150px" }} ref={ref}></svg>;
+  return <svg style={{ marginLeft: "0px" }} ref={ref}></svg>;
 };
 
 export default BubbleGraph;

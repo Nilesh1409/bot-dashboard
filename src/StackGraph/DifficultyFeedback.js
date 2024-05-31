@@ -7,12 +7,14 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import SimpleLineChart from "../SimpleLineChart/SimpleLineChart";
 
 const DifficultyFeedbackStackedBarChart = () => {
   const svgRef = useRef();
   const tooltipRef = useRef();
 
   const [intent, setIntent] = useState("Difficult");
+  const [barChart, setBarChart] = useState(false);
 
   const focusStyle = {
     borderColor: "#3f51b5",
@@ -374,14 +376,14 @@ const DifficultyFeedbackStackedBarChart = () => {
       .selectAll("text")
       .style("font-size", "16px"); // Change y-axis font size
 
-    svg
-      .append("text")
-      .attr("x", width / 2)
-      .attr("y", margin.top / 2)
-      .attr("text-anchor", "middle")
-      .style("font-size", "24px")
-      // .style("text-decoration", "underline")
-      .text("Feedback vs Readability");
+    // svg
+    //   .append("text")
+    //   .attr("x", width / 2)
+    //   .attr("y", margin.top / 2)
+    //   .attr("text-anchor", "middle")
+    //   .style("font-size", "24px")
+    //   // .style("text-decoration", "underline")
+    //   .text("Feedback vs Readability");
 
     // Legend container
     const legend = svg
@@ -444,47 +446,92 @@ const DifficultyFeedbackStackedBarChart = () => {
 
   return (
     <div className="chart-container flex">
-      <svg ref={svgRef}></svg>
-      <span style={{ width: "170px" }}>
-        <span style={{ marginBottom: "10px", display: "inline-block" }}>
-          <b>Select Classifications:</b>
-        </span>
-        <select
-          style={{
-            fontSize: "16px",
-            padding: "10px 24px 10px 12px",
-            border: "1px solid rgba(0, 0, 0, 0.23)",
-            borderRadius: "4px",
-            outline: "none",
-            appearance: "none",
-            width: "100%",
-            maxWidth: "300px",
-            height: "40px",
-            backgroundColor: "white",
-            boxShadow: "none",
-            transition:
-              "border-color 300ms ease-out, box-shadow 300ms ease-out",
-            ...style,
-          }}
-          onFocus={() => setStyle(focusStyle)}
-          onBlur={() => setStyle(blurStyle)}
-          onChange={(e) => setIntent(e.target.value)}
-        >
-          {/* Unclear: { good: 25, bad: 168 },
+      <div>
+        <div className="chart-title">
+          Feedback vs Readability
+          <p>
+            Tracks positive and negative feedback based on the readability of
+            responses over time.
+          </p>
+        </div>
+        {barChart ? <svg ref={svgRef}></svg> : <SimpleLineChart data={data} />}
+      </div>
+      <span style={{ width: "170px", marginLeft: "20px" }}>
+        <div>
+          <span
+            style={{
+              marginBottom: "10px",
+              display: "inline-block",
+            }}
+          >
+            <b>Select Graph Type:</b>
+          </span>
+          <select
+            style={{
+              fontSize: "16px",
+              padding: "10px 24px 10px 12px",
+              border: "1px solid rgba(0, 0, 0, 0.23)",
+              borderRadius: "4px",
+              outline: "none",
+              appearance: "none",
+              width: "100%",
+              maxWidth: "300px",
+              height: "40px",
+              backgroundColor: "white",
+              boxShadow: "none",
+              transition:
+                "border-color 300ms ease-out, box-shadow 300ms ease-out",
+              ...style,
+            }}
+            onFocus={() => setStyle(focusStyle)}
+            onBlur={() => setStyle(blurStyle)}
+            onChange={(e) => setBarChart(!barChart)}
+          >
+            <option value="line">Line Graph</option>
+            <option value="bar">Bar Graph</option>
+          </select>
+        </div>
+        <div>
+          <span style={{ marginBottom: "10px", display: "inline-block" }}>
+            <b>Select Classifications:</b>
+          </span>
+          <select
+            style={{
+              fontSize: "16px",
+              padding: "10px 24px 10px 12px",
+              border: "1px solid rgba(0, 0, 0, 0.23)",
+              borderRadius: "4px",
+              outline: "none",
+              appearance: "none",
+              width: "100%",
+              maxWidth: "300px",
+              height: "40px",
+              backgroundColor: "white",
+              boxShadow: "none",
+              transition:
+                "border-color 300ms ease-out, box-shadow 300ms ease-out",
+              ...style,
+            }}
+            onFocus={() => setStyle(focusStyle)}
+            onBlur={() => setStyle(blurStyle)}
+            onChange={(e) => setIntent(e.target.value)}
+          >
+            {/* Unclear: { good: 25, bad: 168 },
       Farming_related: { good: 634, bad: 1227 },
       Change_crop: { good: 34, bad: 136 },
       Exit: { good: 0, bad: 18 },
       Referring_back: { good: 2, bad: 70 },
       Disappointment: { good: 2, bad: 4 },
       Greeting: { good: 1, bad: 8 }, */}
-          <option value="Difficult">Difficult</option>
-          <option value="Easy">Easy</option>
-          <option value="Standard">Standard</option>
-          <option value="Fairly Difficult">Fairly Difficult</option>
-          <option value="Fairly Easy">Fairly Easy</option>
-          <option value="Very Confusing">Very Confusing</option>
-          <option value="Very Easy">Very Easy</option>
-        </select>
+            <option value="Difficult">Difficult</option>
+            <option value="Easy">Easy</option>
+            <option value="Standard">Standard</option>
+            <option value="Fairly Difficult">Fairly Difficult</option>
+            <option value="Fairly Easy">Fairly Easy</option>
+            <option value="Very Confusing">Very Confusing</option>
+            <option value="Very Easy">Very Easy</option>
+          </select>
+        </div>
       </span>
       <div ref={tooltipRef} className="tooltip-bar"></div>
     </div>

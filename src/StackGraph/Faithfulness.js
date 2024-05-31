@@ -32,14 +32,7 @@ const StackedBarChart = ({ data, overall }) => {
     const color = d3
       .scaleOrdinal()
       .domain(Object.keys(data[0].faithfulness))
-      .range([
-        "#4682b4",
-        "#32cd32",
-        "#158a32",
-        "#ffb347",
-        "#87cefa",
-        "#929693",
-      ]); // Modern color palette
+      .range(["rgb(44, 160, 44)", "#FF7F0E", "#d62728"]); // Modern color palette
 
     const stack = d3
       .stack()
@@ -126,13 +119,13 @@ const StackedBarChart = ({ data, overall }) => {
       .selectAll("text")
       .style("font-size", "16px"); // Change y-axis font size
 
-    svg
-      .append("text")
-      .attr("x", width / 2)
-      .attr("y", margin.top / 2)
-      .attr("text-anchor", "middle")
-      .style("font-size", "24px")
-      .text("Faithfulness");
+    // svg
+    //   .append("text")
+    //   .attr("x", width / 2)
+    //   .attr("y", margin.top / 2)
+    //   .attr("text-anchor", "middle")
+    //   .style("font-size", "24px")
+    //   .text("Faithfulness");
 
     // Legend container
     const legend = svg

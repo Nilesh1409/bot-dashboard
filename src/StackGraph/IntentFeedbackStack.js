@@ -271,7 +271,13 @@ const IntentFeedbackStackedBarChart = () => {
     <>
       <div className="chart-container flex">
         <div>
-          <div className="chart-title">User Intent vs Feedback</div>
+          <div className="chart-title">
+            User Intent vs Feedback
+            <p>
+              Compares the percentage of positive and negative feedback for a
+              specific user intent over time.
+            </p>
+          </div>
           {barChart ? (
             <svg ref={svgRef}></svg>
           ) : (

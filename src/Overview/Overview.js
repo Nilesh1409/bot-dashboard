@@ -60,15 +60,15 @@ const ResponseAnalysis = () => {
     },
   ];
   const faithfulnessOverview = {
-    "Low Faithfulness": 228,
     "High Faithfulness": 1540,
     "Medium Faithfulness": 172,
+    "Low Faithfulness": 228,
     // Undetermined: 548,
   };
   const relevanceOverview = {
-    "Low Relevance": 349,
     "High Relevance": 1292,
     "Medium Relevance": 295,
+    "Low Relevance": 349,
   };
   const intentOverview = {
     Change_crop: 139,
@@ -113,6 +113,27 @@ const ResponseAnalysis = () => {
     "Very Confusing": 1016,
   };
 
+  const faithfulnessOverviewColor = {
+    "Low Faithfulness": "#d62728",
+    "High Faithfulness": "rgb(44, 160, 44)",
+    "Medium Faithfulness": "#FF7F0E",
+  };
+  const relevanceOverviewColor = {
+    "Low Relevance": "#d62728",
+    "High Relevance": "rgb(44, 160, 44)",
+    "Medium Relevance": "#FF7F0E",
+    // Undetermined: 548,
+  };
+  const difficultyOverviewColor = {
+    Easy: "#66CDAA", // Medium Aquamarine
+    Standard: "#DAA520", // Goldenrod
+    Difficult: "#FF8C00", // Dark Orange
+    "Fairly Difficult": "#CD5C5C", // Indian Red
+    "Fairly Easy": "#32CD32", // Lime Green
+    "Very Easy": "#006400", // Dark Green
+    "Very Confusing": "#8B0000", // Dark Red
+  };
+
   return (
     <div className="response-analysis">
       <h1>Analysis Overview </h1>
@@ -145,28 +166,60 @@ const ResponseAnalysis = () => {
           </div>
           <div className="pie-charts">
             <div className="pie-chart">
-              <h3>Accuracy: Faithfulness Distribution</h3>
-              <InteractivePieChart data={faithfulnessOverview} />
+              <h3>
+                Accuracy: Faithfulness Distribution
+                <p>
+                  Shows how often the chatbot provides correct and reliable
+                  answers
+                </p>
+              </h3>
+              <InteractivePieChart
+                colorSchema={faithfulnessOverviewColor}
+                data={faithfulnessOverview}
+              />
             </div>
             <div className="pie-chart">
-              <h3>Accuracy: Relevance Distribution</h3>
+              <h3>
+                Accuracy: Relevance Distribution
+                <p>
+                  Shows how relevant the chatbot's responses are to user
+                  questions.
+                </p>
+              </h3>
 
-              <InteractivePieChart data={relevanceOverview} />
+              <InteractivePieChart
+                colorSchema={relevanceOverviewColor}
+                data={relevanceOverview}
+              />
             </div>
             <div className="pie-chart">
-              <h3>User Query Intent</h3>
+              <h3>
+                User Query Intent
+                <p>Main topics or purposes behind users' questions.</p>
+              </h3>
 
               <InteractivePieChart data={intentOverview} />
             </div>
             <div className="pie-chart">
-              <h3>Topic Distribution</h3>
+              <h3>
+                Topic Distribution
+                <p>Distribution of common topics in user interactions.</p>
+              </h3>
 
               <InteractivePieChart data={topicOverview} />
             </div>
             <div className="pie-chart">
-              <h3>Readability Distribution</h3>
+              <h3>
+                Readability Distribution
+                <p>
+                  Measures how easy the chatbot's responses are to understand.
+                </p>
+              </h3>
 
-              <InteractivePieChart data={difficultyOverview} />
+              <InteractivePieChart
+                colorSchema={difficultyOverviewColor}
+                data={difficultyOverview}
+              />
             </div>
             {/* <img
               style={{ height: "350px", width: "500px" }}

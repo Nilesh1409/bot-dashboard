@@ -22,6 +22,7 @@ import ResponseAnalysis from "./Overview/Overview";
 import OverviewPieChart from "./PieChart/OverviewPieChart";
 import SimpleLineChart from "./SimpleLineChart/SimpleLineChart";
 import { useState } from "react";
+import LineChartWithTimeSeries from "./LineChartGraph/LineChartWithTimeSeries";
 
 function App() {
   const [simpleBarGraphData, setSimpleBarGraphData] = useState();
@@ -354,22 +355,23 @@ function App() {
 
   const wordData = {
     nodes: [
-      { topic: "Climate Change", count: 5 },
-      { topic: "Climate Impact", count: 1 },
+      // { topic: "Climate Change", count: 5 },
+      // { topic: "Climate Impact", count: 1 },
       { topic: "Fertilizers", count: 2077 },
       { topic: "Harvesting", count: 466 },
       { topic: "Marketing", count: 1653 },
       { topic: "Not related to agriculture", count: 2107 },
       { topic: "Pests and Diseases", count: 5031 },
-      { topic: "Pests and Diseases\nSoil Management\nMarketing", count: 1 },
-      { topic: "Processing", count: 1 },
-      { topic: "Pruning", count: 5 },
-      { topic: "Pruning Techniques", count: 2 },
+      // { topic: "Pests and Diseases\nSoil Management\nMarketing", count: 1 },
+      // { topic: "Processing", count: 1 },
+      // { topic: "Pruning", count: 5 },
+      // { topic: "Pruning Techniques", count: 2 },
       { topic: "Soil Management", count: 2162 },
       { topic: "Sowing", count: 1415 },
       { topic: "Storage", count: 265 },
       { topic: "Unclear", count: 706 },
       { topic: "Varieties", count: 2307 },
+      { topic: "Others", count: 15 },
     ],
   };
 
@@ -1565,7 +1567,8 @@ function App() {
       Fertilizers: 297,
       "Soil Management": 126,
       "Pests and Diseases": 508,
-      "Pruning Techniques": 1,
+      // "Pruning Techniques": 1,
+      Other: 3,
       Storage: 10,
       // "1. Soil Management\n2. Soil Management\n3. Varieties": 1,
       // "1. Not related to agriculture\n2. Marketing": 1,
@@ -1583,6 +1586,7 @@ function App() {
       Harvesting: 43,
       Marketing: 57,
       Storage: 8,
+      Other: 2,
       // "1. Unclear\n2. Not related to agriculture\n3. Not related to agriculture": 1,
       // "Pests and Diseases\nSoil Management\nMarketing": 1,
     },
@@ -1599,7 +1603,8 @@ function App() {
       Unclear: 93,
       Marketing: 79,
       Storage: 21,
-      "1. Fertilizers\n2. Varieties\n3. Sowing": 1,
+      // "1. Fertilizers\n2. Varieties\n3. Sowing": 1,
+      Other: 1,
     },
     {
       year: 2024,
@@ -1612,11 +1617,12 @@ function App() {
       Sowing: 276,
       "Soil Management": 346,
       Fertilizers: 327,
-      Pruning: 2,
+      // Pruning: 2,
       Marketing: 379,
       Storage: 30,
-      "Pruning Techniques": 1,
-      "1) Soil Management\n2) Soil Management\n3) Soil Management": 1,
+      // "Pruning Techniques": 1,
+      // "1) Soil Management\n2) Soil Management\n3) Soil Management": 1,
+      Other: 4,
     },
     {
       year: 2024,
@@ -1631,9 +1637,10 @@ function App() {
       Storage: 120,
       Unclear: 148,
       Harvesting: 115,
-      "Climate Change": 4,
-      Pruning: 1,
-      "Climate Impact": 1,
+      // "Climate Change": 4,
+      // Pruning: 1,
+      // "Climate Impact": 1,
+      Other: 5,
     },
     {
       year: 2024,
@@ -1648,8 +1655,9 @@ function App() {
       Sowing: 289,
       Harvesting: 89,
       Storage: 60,
-      Pruning: 1,
-      Processing: 1,
+      // Pruning: 1,
+      // Processing: 1,
+      Other: 2,
     },
     {
       year: 2024,
@@ -1663,9 +1671,10 @@ function App() {
       Harvesting: 33,
       Marketing: 165,
       Sowing: 56,
-      Pruning: 1,
+      // Pruning: 1,
       Storage: 16,
-      "Climate Change": 1,
+      // "Climate Change": 1,
+      Other: 2,
     },
   ];
 
@@ -1673,71 +1682,71 @@ function App() {
     {
       year: 2023,
       month: "November",
-      "In Content": 1834,
+      // "In Content": 1834,
       "Out Of Content": 495,
-      "In Context": 1933,
+      // "In Context": 1933,
       "Out Of Context": 396,
-      "In Collection": 2159,
+      // "In Collection": 2159,
       "Out of Collection": 170,
     },
     {
       year: 2023,
       month: "December",
-      "In Content": 1033,
+      // "In Content": 1033,
       "Out Of Content": 276,
-      "In Context": 1021,
+      // "In Context": 1021,
       "Out Of Context": 288,
-      "In Collection": 1177,
+      // "In Collection": 1177,
       "Out of Collection": 132,
     },
     {
       year: 2024,
       month: "January",
-      "In Content": 1450,
+      // "In Content": 1450,
       "Out Of Content": 223,
-      "In Context": 1397,
+      // "In Context": 1397,
       "Out Of Context": 276,
-      "In Collection": 1535,
+      // "In Collection": 1535,
       "Out of Collection": 138,
     },
     {
       year: 2024,
       month: "February",
-      "In Content": 2563,
+      // "In Content": 2563,
       "Out Of Content": 1341,
-      "In Context": 3442,
+      // "In Context": 3442,
       "Out Of Context": 462,
-      "In Collection": 3692,
+      // "In Collection": 3692,
       "Out of Collection": 212,
     },
     {
       year: 2024,
       month: "March",
-      "In Content": 4166,
+      // "In Content": 4166,
       "Out Of Content": 2171,
-      "In Context": 5901,
+      // "In Context": 5901,
       "Out Of Context": 436,
-      "In Collection": 6118,
+      // "In Collection": 6118,
       "Out of Collection": 219,
     },
     {
       year: 2024,
       month: "April",
-      "In Content": 2616,
+      // "In Content": 2616,
       "Out Of Content": 1618,
-      "In Context": 3963,
+      // "In Context": 3963,
       "Out Of Context": 271,
-      "In Collection": 4109,
+      // "In Collection": 4109,
       "Out of Collection": 125,
     },
     {
       year: 2024,
       month: "May",
-      "In Content": 1145,
+      // "In Content": 1145,
       "Out Of Content": 286,
-      "In Context": 1337,
+      // "In Context": 1337,
       "Out Of Context": 94,
-      "In Collection": 1395,
+      // "In Collection": 1395,
       "Out of Collection": 36,
     },
   ];
@@ -1755,37 +1764,66 @@ function App() {
     <div className="App">
       <ResponseAnalysis />
       <div className="chart-container">
-        <h1 className="chart-title">Intent Classification</h1>
+        <h1 className="chart-title">
+          Intent Classification
+          <p>
+            Trends of user intents over time, showing the purposes behind user
+            interactions{" "}
+          </p>
+        </h1>
         <div className="chart">
           <LineChart data={intentData} />
         </div>
       </div>
       <div className="chart-container">
-        <h1 className="chart-title">Topic Classification Month-wise</h1>
+        <h1 className="chart-title">
+          Topic Classification Month-wise
+          <p>Monthly distribution of topics discussed by users.</p>
+        </h1>
         <div className="chart">
           <TopicChart data={topicData} />
         </div>
       </div>
       <div className="chart-container">
-        <h1 className="chart-title">Feedback Classification</h1>
+        <h1 className="chart-title">
+          Feedback Classification
+          <p>User feedback into positive and negative over time.</p>
+        </h1>
         <div className="chart">
           <FeedbackChart data={feedbackData} />
         </div>
       </div>
       <div className="chart-container">
-        <h1 className="chart-title">Answered & Unanswered Questions</h1>
+        <h1 className="chart-title">
+          Answered & Unanswered Questions
+          <p>
+            Shows the count and percentage of answered vs unanswered user
+            questions.
+          </p>
+        </h1>
         <div className="chart">
           <AnsweredChart data={answeredData} />
         </div>
       </div>
       <div className="chart-container">
-        <h1 className="chart-title">Unanswered</h1>
+        <h1 className="chart-title">
+          Unanswered
+          <p>
+            Detailed analysis of why the chatbot couldn't answer user questions.
+          </p>
+        </h1>
         <div className="chart">
           <DenialOfServiceChart data={denialOfService} />
         </div>
       </div>
       <div className="chart-container">
-        <h1 className="chart-title">Topic Classifications </h1>
+        <h1 className="chart-title">
+          Topic Classifications
+          <p>
+            Visualizes the most discussed topics, with bubble size showing
+            frequency.
+          </p>
+        </h1>
         <h2 className="chart-description">
           Source: Kenya dataset, Coffee, 01 NOV 2023 - 30 MAY 2024, Kenya{" "}
         </h2>
@@ -1822,7 +1860,11 @@ function App() {
         </h2>
         <div className="chart-main-container">
           <div className="chart-container">
-            <div className="chart">
+            <div className="chart h550">
+              <h1 className="chart-title m0">
+                Faithfulness
+                <p>Evaluates the accuracy of the chatbot's responses</p>
+              </h1>
               <StackedBarChart data={faithfulnessData} />
               {/* <SimpleLineChart data={faithfulnessData} /> */}
             </div>
@@ -1834,7 +1876,14 @@ function App() {
           <h2 className="chart-description">
             Source: Kenya dataset, Coffee, 09 APR 2024 - 08 MAY 2024, Kenya{" "}
           </h2> */}
-            <div className="chart">
+            <div className="chart h550">
+              <h1 className="chart-title m0">
+                Relevance
+                <p>
+                  Assesses how relevant the chatbot's responses are to the
+                  user's queries
+                </p>
+              </h1>
               <RelevanceStackedBarChart data={relevanceData} />
             </div>
           </div>
@@ -1889,6 +1938,11 @@ function App() {
       <div className="chart-container">
         <h1 className="chart-title">
           Aggregate Prompt Responses User Feedback Analysis{" "}
+          <p>
+            {" "}
+            Visualizes the flow from user prompts to response classifications
+            and their corresponding feedback.
+          </p>
         </h1>
         <h2 className="chart-description">
           Source: Kenya dataset, Coffee, 09 APR 2024 - 08 MAY 2024, Kenya{" "}
@@ -1901,6 +1955,10 @@ function App() {
       <div className="chart-container">
         <h1 className="chart-title">
           Aggregate Prompt-Based Feedback Analysis{" "}
+          <p>
+            Illustrates how different user prompts lead to positive or negative
+            feedback.
+          </p>
         </h1>
         <h2 className="chart-description">
           Source: Kenya dataset, Coffee, 09 APR 2024 - 08 MAY 2024, Kenya{" "}

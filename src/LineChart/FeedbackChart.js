@@ -2,12 +2,25 @@ import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import "./lineChart.css";
 import style from "./style.module.css";
+import LineChartWithTimeSeries from "../LineChartGraph/LineChartWithTimeSeries";
 
 const FeedbackChart = ({ data }) => {
   const ref = useRef();
   const tooltipRef = useRef();
+  const [areaGraph, setAreaGraph] = useState(true);
   const [selectedMonth, setSelectedMonth] = useState(1);
 
+  const focusStyle = {
+    borderColor: "#3f51b5",
+    boxShadow: "0 0 0 0.2rem rgba(63, 81, 181, 0.25)",
+  };
+
+  const blurStyle = {
+    borderColor: "rgba(0, 0, 0, 0.23)",
+    boxShadow: "none",
+  };
+
+  const [style, setStyle] = React.useState({});
   const months = [
     { value: 1, name: "November 2023" },
     { value: 2, name: "December 2023" },
@@ -55,14 +68,14 @@ const FeedbackChart = ({ data }) => {
     return dataDate >= startDate;
   });
   console.log("🚀 ~ filteredData ~ filteredData:", filteredData);
-
+  const width = 1050;
+  const height = 450;
   useEffect(() => {
+    if (!areaGraph) return;
     const svg = d3.select(ref.current);
     const tooltip = d3.select(tooltipRef.current);
     svg.selectAll("*").remove(); // Clear svg content before adding new elements
 
-    const width = 1050;
-    const height = 450;
     const margin = { top: 20, right: 120, bottom: 30, left: 60 };
 
     const stack = d3.stack().keys(["GoodFeedback", "BadFeedback"]);
@@ -202,7 +215,7 @@ const FeedbackChart = ({ data }) => {
     const legend = svg
       .append("g")
       .attr("class", "legend")
-      .attr("transform", `translate(${width - 100}, 50)`);
+      .attr("transform", `translate(${width - 130}, 50)`);
 
     Object.entries(colorMap).forEach(([key, value], index) => {
       const legendItem = legend
@@ -223,37 +236,84 @@ const FeedbackChart = ({ data }) => {
         .style("text-anchor", "start")
         .text(key);
     });
-  }, [data, selectedMonth]);
+  }, [data, selectedMonth, areaGraph]);
 
   return (
     <>
-      <svg ref={ref} className="line-chart" width={1200} height={450}></svg>
-      <div
-        ref={tooltipRef}
-        className="tooltip"
-        style={{
-          position: "absolute",
-          background: "white",
-          color: "black",
-          borderRadius: "5px",
-          border: "1px solid black",
-          display: "none",
-          pointerEvents: "none",
-        }}
-      ></div>
-      <div className="filter_range">
-        <div>
-          <label>Month: </label>
-          <input
-            type="range"
-            min="1"
-            max="6"
-            value={selectedMonth}
-            onChange={(e) => setSelectedMonth(Number(e.target.value))}
-          />
-          <span>
-            {months.find((month) => month.value === selectedMonth).name}
+      <div style={{ display: "flex" }}>
+        {areaGraph ? (
+          <div>
+            <svg
+              ref={ref}
+              className="line-chart"
+              width={width}
+              height={height}
+            ></svg>
+            <div
+              ref={tooltipRef}
+              className="tooltip"
+              style={{
+                position: "absolute",
+                background: "white",
+                color: "black",
+                borderRadius: "5px",
+                border: "1px solid black",
+                display: "none",
+                pointerEvents: "none",
+              }}
+            ></div>
+            <div className="filter_range">
+              <div>
+                <label>Month: </label>
+                <input
+                  type="range"
+                  min="1"
+                  max="6"
+                  value={selectedMonth}
+                  onChange={(e) => setSelectedMonth(Number(e.target.value))}
+                />
+                <span>
+                  {months.find((month) => month.value === selectedMonth).name}
+                </span>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <LineChartWithTimeSeries data={data} />
+        )}
+        <div className="area-graph-toggle-input">
+          <span
+            style={{
+              marginBottom: "10px",
+              display: "inline-block",
+            }}
+          >
+            <b>Select Graph Type:</b>
           </span>
+          <select
+            style={{
+              fontSize: "16px",
+              padding: "10px 24px 10px 12px",
+              border: "1px solid rgba(0, 0, 0, 0.23)",
+              borderRadius: "4px",
+              outline: "none",
+              appearance: "none",
+              width: "100%",
+              maxWidth: "300px",
+              height: "40px",
+              backgroundColor: "white",
+              boxShadow: "none",
+              transition:
+                "border-color 300ms ease-out, box-shadow 300ms ease-out",
+              ...style,
+            }}
+            onFocus={() => setStyle(focusStyle)}
+            onBlur={() => setStyle(blurStyle)}
+            onChange={(e) => setAreaGraph(!areaGraph)}
+          >
+            <option value="line">Line Graph</option>
+            <option value="bar">Bar Graph</option>
+          </select>
         </div>
       </div>
     </>
