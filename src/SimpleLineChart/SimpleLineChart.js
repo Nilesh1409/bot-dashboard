@@ -53,11 +53,12 @@ const LineChart = ({ data }) => {
 
     levels.forEach((level, idx) => {
       const levelData = data.map((d) => {
+        console.log("🚀 ~ levelData ~ d.data.counts:", d.data.counts);
         return {
           month: d.month,
           value: d.data[level],
           originalValue: d.data[level],
-          count: d.data.counts[level.toLowerCase()],
+          count: d.data?.counts?.[level.toLowerCase()] ?? 0,
         };
       });
 

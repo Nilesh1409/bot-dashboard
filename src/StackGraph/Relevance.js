@@ -1,17 +1,18 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
-import "./StackedBarChart.css";
+import "./StackedBarChart.css"; // You can add additional styles here
 
 const RelevanceStackedBarChart = ({ data, overall }) => {
   const svgRef = useRef();
   const tooltipRef = useRef();
+  const [yAxisType, setYAxisType] = useState("percentage");
 
   useEffect(() => {
     const svg = d3.select(svgRef.current);
     const tooltip = d3.select(tooltipRef.current);
     const width = overall ? 350 : 550;
     const height = overall ? 450 : 550;
-    const margin = { top: 40, right: 150, bottom: 150, left: 50 };
+    const margin = { top: 40, right: 150, bottom: 200, left: 50 };
 
     svg.selectAll("*").remove(); // Clear previous contents
 
@@ -23,9 +24,14 @@ const RelevanceStackedBarChart = ({ data, overall }) => {
       .range([margin.left, width - margin.right])
       .padding(0.1);
 
+    const yDomain =
+      yAxisType === "percentage"
+        ? [0, 100]
+        : [0, d3.max(data, (d) => d3.sum(Object.values(d.relevance)))];
+
     const y = d3
       .scaleLinear()
-      .domain([0, 100])
+      .domain(yDomain)
       .nice()
       .range([height - margin.bottom, margin.top]);
 
@@ -44,10 +50,18 @@ const RelevanceStackedBarChart = ({ data, overall }) => {
       data.map((d) => {
         const total = Object.values(d.relevance).reduce((a, b) => a + b, 0);
         return {
-          High: (d.relevance.High / total) * 100,
-          Medium: (d.relevance.Medium / total) * 100,
-          Low: (d.relevance.Low / total) * 100,
-          // Undetermined: (d.relevance.Undetermined / total) * 100,
+          High:
+            yAxisType === "percentage"
+              ? (d.relevance.High / total) * 100
+              : d.relevance.High,
+          Medium:
+            yAxisType === "percentage"
+              ? (d.relevance.Medium / total) * 100
+              : d.relevance.Medium,
+          Low:
+            yAxisType === "percentage"
+              ? (d.relevance.Low / total) * 100
+              : d.relevance.Low,
           count: {
             High: d.relevance.High,
             Medium: d.relevance.Medium,
@@ -76,12 +90,13 @@ const RelevanceStackedBarChart = ({ data, overall }) => {
       .on("mouseover", function (event, d) {
         const dataEntries = Object.entries(d.data);
         dataEntries.pop();
-        console.log("🚀 ~ dataEntries:", dataEntries);
         const tooltipContent = dataEntries
           .map(([key, value]) => {
             return `<span><strong>${key}</strong>: ${
               d.data.count[key]
-            } (${value.toFixed(2)}%)</span>`;
+            } (${value.toFixed(2)}${
+              yAxisType === "percentage" ? "%" : ""
+            })</span>`;
           })
           .join("<br/>");
 
@@ -93,8 +108,8 @@ const RelevanceStackedBarChart = ({ data, overall }) => {
       })
       .on("mousemove", function (event) {
         tooltip
-          .style("left", event.offsetX + 5 + "px")
-          .style("top", event.offsetY - 28 + "px");
+          .style("left", event.pageX + 5 + "px")
+          .style("top", event.pageY - 28 + "px");
       })
       .on("mouseout", function () {
         tooltip.style("opacity", 0);
@@ -117,14 +132,6 @@ const RelevanceStackedBarChart = ({ data, overall }) => {
       .call(d3.axisLeft(y))
       .selectAll("text")
       .style("font-size", "16px"); // Change y-axis font size
-
-    // svg
-    //   .append("text")
-    //   .attr("x", width / 2)
-    //   .attr("y", margin.top / 2)
-    //   .attr("text-anchor", "middle")
-    //   .style("font-size", "24px")
-    //   .text("Relevance");
 
     // Legend container
     const legend = svg
@@ -170,11 +177,42 @@ const RelevanceStackedBarChart = ({ data, overall }) => {
       .on("mouseout", function () {
         d3.selectAll(".bar").style("opacity", 1);
       });
-  }, [data]);
+  }, [data, yAxisType]);
 
   return (
     <div className="chart-container">
-      <svg ref={svgRef}></svg>
+      <div
+        style={{
+          marginLeft: "0",
+          display: "flex",
+          alignItems: "flex-end",
+          alignItems: "center",
+        }}
+      >
+        <label htmlFor="yAxisSelect">Y-Axis Type:</label>
+        <select
+          id="yAxisSelect"
+          onChange={(e) => setYAxisType(e.target.value)}
+          value={yAxisType}
+          style={{
+            fontSize: "16px",
+            padding: "10px",
+            borderRadius: "4px",
+            border: "1px solid #ccc",
+            // boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)",
+            outline: "none",
+            cursor: "pointer",
+            marginTop: "10px",
+            width: "150px",
+          }}
+        >
+          <option value="percentage">Percentage</option>
+          <option value="count">Count</option>
+        </select>
+      </div>
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <svg ref={svgRef}></svg>
+      </div>
       <div ref={tooltipRef} className="tooltip-bar"></div>
     </div>
   );

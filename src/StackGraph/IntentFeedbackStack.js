@@ -166,9 +166,9 @@ const IntentFeedbackStackedBarChart = () => {
         // const counts = data.find((entry) => entry.month === d.data.month).data
         // .counts;
         const tooltipContent = `<span><strong>Good</strong>: ${
-          d.data.counts.good
+          d.data?.counts?.good ?? 0
         } (${d.data.Good.toFixed(2)}%)</span><br/><span><strong>Bad</strong>: ${
-          d.data.counts.bad
+          d.data.counts?.bad ?? 0
         } (${d.data.Bad.toFixed(2)}%)</span>`;
 
         tooltip
@@ -264,7 +264,7 @@ const IntentFeedbackStackedBarChart = () => {
       .attr("text-anchor", "middle")
       .style("font-size", "14px")
       .style("font-family", "Arial, sans-serif")
-      .text((d) => d.data.counts.good + d.data.counts.bad);
+      .text((d) => (d.data.counts?.good ?? 0) + (d.data.counts?.bad ?? 0));
   }, [data, intent]);
 
   return (

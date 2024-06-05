@@ -519,7 +519,7 @@ const ClassificationsStackedBarChart = () => {
             </select>
           </div>
         </div>
-        <div>
+        <div style={{ marginTop: "10px" }}>
           <span style={{ marginBottom: "10px", display: "inline-block" }}>
             <b>Select Classifications:</b>
           </span>

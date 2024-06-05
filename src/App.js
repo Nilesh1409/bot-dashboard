@@ -23,6 +23,7 @@ import OverviewPieChart from "./PieChart/OverviewPieChart";
 import SimpleLineChart from "./SimpleLineChart/SimpleLineChart";
 import { useState } from "react";
 import LineChartWithTimeSeries from "./LineChartGraph/LineChartWithTimeSeries";
+import Heatmap from "./Heatmap/Heatmap";
 
 function App() {
   const [simpleBarGraphData, setSimpleBarGraphData] = useState();
@@ -1758,6 +1759,129 @@ function App() {
     // Undetermined: 548,
   };
 
+  const heatmapData = [
+    {
+      year: 2023,
+      month: "November",
+      Sowing: 171,
+      Unclear: 118,
+      Harvesting: 55,
+      Marketing: 43,
+      "Not related to agriculture": 292,
+      Varieties: 238,
+      Fertilizers: 297,
+      "Soil Management": 126,
+      "Pests and Diseases": 508,
+      // "Pruning Techniques": 1,
+      Storage: 10,
+      Others: 3,
+      // "1. Soil Management\n2. Soil Management\n3. Varieties": 1,
+      // "1. Not related to agriculture\n2. Marketing": 1,
+    },
+    {
+      year: 2023,
+      month: "December",
+      Unclear: 71,
+      "Pests and Diseases": 260,
+      Sowing: 79,
+      Fertilizers: 140,
+      Varieties: 106,
+      "Not related to agriculture": 146,
+      "Soil Management": 52,
+      Harvesting: 43,
+      Marketing: 57,
+      Storage: 8,
+      Others: 2,
+      // "1. Unclear\n2. Not related to agriculture\n3. Not related to agriculture": 1,
+      // "Pests and Diseases\nSoil Management\nMarketing": 1,
+    },
+    {
+      year: 2024,
+      month: "January",
+      Fertilizers: 147,
+      "Pests and Diseases": 298,
+      Sowing: 176,
+      "Soil Management": 111,
+      "Not related to agriculture": 161,
+      Harvesting: 51,
+      Varieties: 166,
+      Unclear: 93,
+      Marketing: 79,
+      Storage: 21,
+      Others: 1,
+      // "1. Fertilizers\n2. Varieties\n3. Sowing": 1,
+    },
+    {
+      year: 2024,
+      month: "February",
+      Harvesting: 80,
+      Unclear: 140,
+      Varieties: 359,
+      "Not related to agriculture": 438,
+      "Pests and Diseases": 894,
+      Sowing: 276,
+      "Soil Management": 346,
+      Fertilizers: 327,
+      // Pruning: 2,
+      Marketing: 379,
+      Storage: 30,
+      Others: 4,
+      // "Pruning Techniques": 1,
+      // "1) Soil Management\n2) Soil Management\n3) Soil Management": 1,
+    },
+    {
+      year: 2024,
+      month: "March",
+      Varieties: 790,
+      "Pests and Diseases": 1555,
+      "Soil Management": 874,
+      "Not related to agriculture": 566,
+      Fertilizers: 488,
+      Sowing: 368,
+      Marketing: 643,
+      Storage: 120,
+      Unclear: 148,
+      Harvesting: 115,
+      // "Climate Change": 4,
+      Others: 6,
+      // Pruning: 1,
+      // "Climate Impact": 1,
+    },
+    {
+      year: 2024,
+      month: "April",
+      Varieties: 495,
+      "Not related to agriculture": 345,
+      Fertilizers: 564,
+      Unclear: 101,
+      "Soil Management": 513,
+      "Pests and Diseases": 1098,
+      Marketing: 287,
+      Sowing: 289,
+      Harvesting: 89,
+      Storage: 60,
+      // Pruning: 1,
+      // Processing: 1,
+      Others: 2,
+    },
+    {
+      year: 2024,
+      month: "May",
+      Unclear: 35,
+      "Not related to agriculture": 159,
+      "Pests and Diseases": 418,
+      Fertilizers: 114,
+      "Soil Management": 140,
+      Varieties: 153,
+      Harvesting: 33,
+      Marketing: 165,
+      Sowing: 56,
+      // Pruning: 1,
+      Storage: 16,
+      Others: 2,
+    },
+  ];
+
   // console.log("farmingRelatedData", farmingRelatedData);
 
   return (
@@ -1927,13 +2051,17 @@ function App() {
           <TopicFeedbackStackedBarChart />
         </div>
       </div>
+      <div className="chart-container">
+        <div className="chart">
+          <Heatmap data={heatmapData} />
+        </div>
+      </div>
 
-      {/* <div className="chart-container">
+      {/* < className="chart-container">
         <h1 className="chart-title">Feedback Classification</h1>
         <div className="chart">
           <ResponseChart data={responseData} />
-        </div>
-      </div> */}
+        </div> */}
 
       <div className="chart-container">
         <h1 className="chart-title">

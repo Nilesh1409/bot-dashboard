@@ -564,43 +564,79 @@ const TopicFeedbackStackedBarChart = () => {
       </div>
 
       <span style={{ width: "170px", marginLeft: "20px" }}>
-        <span style={{ marginBottom: "10px", display: "inline-block" }}>
-          <b>Select Topic:</b>
-        </span>
-        <select
-          style={{
-            fontSize: "16px",
-            padding: "10px 24px 10px 12px",
-            border: "1px solid rgba(0, 0, 0, 0.23)",
-            borderRadius: "4px",
-            outline: "none",
-            appearance: "none",
-            width: "100%",
-            maxWidth: "300px",
-            height: "40px",
-            backgroundColor: "white",
-            boxShadow: "none",
-            transition:
-              "border-color 300ms ease-out, box-shadow 300ms ease-out",
-            ...style,
-          }}
-          onFocus={() => setStyle(focusStyle)}
-          onBlur={() => setStyle(blurStyle)}
-          onChange={(e) => setIntent(e.target.value)}
-        >
-          <option value="Sowing">Sowing</option>
-          <option value="Harvesting">Harvesting</option>
-          <option value="Marketing">Marketing</option>
-          <option value="Not related to agriculture">
-            Not related to agriculture
-          </option>
-          <option value="Varieties">Varieties</option>
-          <option value="Fertilizers">Fertilizers</option>
-          <option value="Soil Management">Soil Management</option>
-          <option value="Pests and Diseases">Pests and Diseases</option>
-          <option value="Pruning Techniques">Pruning Techniques</option>
-          <option value="Storage">Storage</option>
-        </select>
+        <div>
+          <span
+            style={{
+              marginBottom: "10px",
+              display: "inline-block",
+            }}
+          >
+            <b>Select Graph Type:</b>
+          </span>
+          <select
+            style={{
+              fontSize: "16px",
+              padding: "10px 24px 10px 12px",
+              border: "1px solid rgba(0, 0, 0, 0.23)",
+              borderRadius: "4px",
+              outline: "none",
+              appearance: "none",
+              width: "100%",
+              maxWidth: "300px",
+              height: "40px",
+              backgroundColor: "white",
+              boxShadow: "none",
+              transition:
+                "border-color 300ms ease-out, box-shadow 300ms ease-out",
+              ...style,
+            }}
+            onFocus={() => setStyle(focusStyle)}
+            onBlur={() => setStyle(blurStyle)}
+            onChange={(e) => setBarChart(!barChart)}
+          >
+            <option value="line">Line Graph</option>
+            <option value="bar">Bar Graph</option>
+          </select>
+        </div>
+        <div style={{ marginTop: "10px" }}>
+          <span style={{ marginBottom: "10px", display: "inline-block" }}>
+            <b>Select Topic:</b>
+          </span>
+          <select
+            style={{
+              fontSize: "16px",
+              padding: "10px 24px 10px 12px",
+              border: "1px solid rgba(0, 0, 0, 0.23)",
+              borderRadius: "4px",
+              outline: "none",
+              appearance: "none",
+              width: "100%",
+              maxWidth: "300px",
+              height: "40px",
+              backgroundColor: "white",
+              boxShadow: "none",
+              transition:
+                "border-color 300ms ease-out, box-shadow 300ms ease-out",
+              ...style,
+            }}
+            onFocus={() => setStyle(focusStyle)}
+            onBlur={() => setStyle(blurStyle)}
+            onChange={(e) => setIntent(e.target.value)}
+          >
+            <option value="Sowing">Sowing</option>
+            <option value="Harvesting">Harvesting</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Not related to agriculture">
+              Not related to agriculture
+            </option>
+            <option value="Varieties">Varieties</option>
+            <option value="Fertilizers">Fertilizers</option>
+            <option value="Soil Management">Soil Management</option>
+            <option value="Pests and Diseases">Pests and Diseases</option>
+            <option value="Pruning Techniques">Pruning Techniques</option>
+            <option value="Storage">Storage</option>
+          </select>
+        </div>
       </span>
       <div ref={tooltipRef} className="tooltip-bar"></div>
     </div>

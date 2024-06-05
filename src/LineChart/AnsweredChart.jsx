@@ -319,8 +319,8 @@ const AnsweredChart = ({ data }) => {
             onBlur={() => setStyle(blurStyle)}
             onChange={(e) => setAreaGraph(!areaGraph)}
           >
+            <option value="area">Area Graph</option>
             <option value="line">Line Graph</option>
-            <option value="bar">Bar Graph</option>
           </select>
         </div>
       </div>

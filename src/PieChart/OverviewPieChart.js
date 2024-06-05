@@ -72,7 +72,9 @@ const InteractivePieChart = ({ data, colorSchema }) => {
           .style("left", `${event.pageX + 10}px`);
 
         d3.select(
-          `#label-${d.data.key.replace(/\s+/g, "").split(" ").join("-")}`
+          `#label-${d.data.key.replace(/\s+/g, "").split(" ").join("-")}-${
+            d.index
+          }`
         )
           .style("font-size", "14px")
           .style("font-weight", "700");
@@ -88,41 +90,62 @@ const InteractivePieChart = ({ data, colorSchema }) => {
         tooltip.style("visibility", "hidden");
 
         d3.select(
-          `#label-${d.data.key.replace(/\s+/g, "").split(" ").join("-")}`
+          `#label-${d.data.key.replace(/\s+/g, "").split(" ").join("-")}-${
+            d.index
+          }`
         )
           .style("font-size", "12px")
           .style("font-weight", "500");
       });
 
     // Adding Legend
-    const legendG = svg
+    const legendContainer = d3
+      .select(ref.current)
+      .append("foreignObject")
+      .attr("width", 200)
+      .attr("height", height)
+      .attr("x", width - 200)
+      .attr("y", 0)
+      .append("xhtml:div")
+      .style("height", `${height}px`)
+      .style("overflow-y", "scroll");
+
+    const legendG = legendContainer
+      .append("div")
       .selectAll(".legend")
       .data(data_ready)
       .enter()
-      .append("g")
+      .append("div")
       .attr(
-        "transform",
-        (d, i) =>
-          `translate(${radius + 50}, ${i * 30 - data_ready.length * 15})`
+        "class",
+        (d) =>
+          `legend legend-${d.data.key.replace(/\s+/g, "").split(" ").join("-")}`
       )
-      .attr("class", "legend");
+      .style("display", "flex")
+      .style("align-items", "center")
+      .style("margin", "5px 0");
 
     legendG
-      .append("rect")
-      .attr("width", 18)
-      .attr("height", 18)
-      .attr("fill", (d) => colorSchema?.[d.data.key] ?? color(d.data.key));
+      .append("div")
+      .style("width", "18px")
+      .style("height", "18px")
+      .style(
+        "background-color",
+        (d) => colorSchema?.[d.data.key] ?? color(d.data.key)
+      )
+      .style("margin-right", "10px");
 
     legendG
-      .append("text")
+      .append("div")
       .text((d) => d.data.key)
-      .attr("x", 24)
-      .attr("y", 9)
-      .attr("dy", "0.35em")
-      .style("text-anchor", "start")
+      .style("font-size", "12px")
+      .style("font-weight", "500")
       .attr(
         "id",
-        (d) => `label-${d.data.key.replace(/\s+/g, "").split(" ").join("-")}`
+        (d) =>
+          `label-${d.data.key.replace(/\s+/g, "").split(" ").join("-")}-${
+            d.index
+          }`
       );
   }, [data]);
 
