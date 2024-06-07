@@ -180,7 +180,7 @@ const RelevanceStackedBarChart = ({ data, overall }) => {
   }, [data, yAxisType]);
 
   return (
-    <div className="chart-container">
+    <div className="inner-chart-container">
       <div
         style={{
           marginLeft: "0",

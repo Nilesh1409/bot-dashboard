@@ -11,6 +11,10 @@
 .chart-container {
   flex: 1;
   margin: 10px;
+  width: 90%;
+  margin: 20px auto;
+  border: 1px solid rgb(191, 190, 190);
+  border-radius: 5px;
 }
 
 .chart-title {
@@ -23,8 +27,6 @@
 }
 
 .chart {
-  border: 1px solid #ccc;
-  border-radius: 5px;
   padding: 10px;
   height: 600px;
 }
@@ -86,5 +88,10 @@
 }
 .h550 {
   height: 550px !important;
-  width: 650px;
+  width: 600px;
+}
+
+.heading > .title {
+  align-items: center;
+  font-size: 26px;
 }

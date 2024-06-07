@@ -550,7 +550,7 @@ const TopicFeedbackStackedBarChart = () => {
   }, [data, intent]);
 
   return (
-    <div className="chart-container flex">
+    <div className="inner-chart-container flex">
       <div>
         <div className="chart-title">
           Topic vs Feedback

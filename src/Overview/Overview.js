@@ -10,13 +10,36 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import IconButton from "../Components/IconButton/IconButton";
 import InteractivePieChart from "../PieChart/OverviewPieChart";
 import StackedBarChart from "../StackGraph/Faithfulness";
 import RelevanceStackedBarChart from "../StackGraph/Relevance";
+import BubbleGraph from "../WordGraph/WordGraph";
 import "./ResponseAnalysis.css";
 
 const ResponseAnalysis = () => {
   const circularData = 66; // Example data
+  const wordData = {
+    nodes: [
+      // { topic: "Climate Change", count: 5 },
+      // { topic: "Climate Impact", count: 1 },
+      { topic: "Fertilizers", count: 2077 },
+      { topic: "Harvesting", count: 466 },
+      { topic: "Marketing", count: 1653 },
+      { topic: "Not related to agriculture", count: 2107 },
+      { topic: "Pests and Diseases", count: 5031 },
+      // { topic: "Pests and Diseases\nSoil Management\nMarketing", count: 1 },
+      // { topic: "Processing", count: 1 },
+      // { topic: "Pruning", count: 5 },
+      // { topic: "Pruning Techniques", count: 2 },
+      { topic: "Soil Management", count: 2162 },
+      { topic: "Sowing", count: 1415 },
+      { topic: "Storage", count: 265 },
+      { topic: "Unclear", count: 706 },
+      { topic: "Varieties", count: 2307 },
+      { topic: "Others", count: 15 },
+    ],
+  };
   const barData = [
     { name: "High", value: 40 },
     { name: "Medium", value: 30 },
@@ -139,20 +162,49 @@ const ResponseAnalysis = () => {
       <h1>Analysis Overview </h1>
       <div className="overview-section">
         <div className="card">
-          <h2>Response Accuracy</h2>
+          {/* section 1: Aggregate Response Analysis: */}
+          <h2>Aggregate Response Analysis:</h2>
           <div className="metrics">
             <div className="metric">
-              <span>Faithfulness</span>
+              <span className="title">RAG Accuracy</span>
               <span>
                 {" "}
-                Average Faithfulness : <b>0.83</b>
+                Faithfulness : <b>83%</b>{" "}
+                <IconButton
+                  hoverText={
+                    "% of factual information in the responses that is based on the documents uploaded"
+                  }
+                />
               </span>
               <span>
                 {" "}
-                Percentage Complete Faithful : <b>67%</b>
+                Completely Faithful: <b>67%</b>
+                <IconButton
+                  hoverText={
+                    "% of answers which have zero factual statements that are not based on the documents"
+                  }
+                />
+              </span>
+              <span>
+                {" "}
+                Relevance : <b>75%</b>
+                <IconButton
+                  hoverText={
+                    "% of factual statements that are relevant to the user query"
+                  }
+                />
+              </span>
+              <span>
+                {" "}
+                Complete Relevant : <b>56%</b>
+                <IconButton
+                  hoverText={
+                    "% of answers which have zero non-relevant statements to the user query"
+                  }
+                />
               </span>
             </div>
-            <div className="metric">
+            {/* <div className="metric">
               <span>Relevance</span>
               <span>
                 {" "}
@@ -162,7 +214,7 @@ const ResponseAnalysis = () => {
                 {" "}
                 Percentage Complete Relevant : <b>56%</b>
               </span>
-            </div>
+            </div> */}
           </div>
           <div className="pie-charts">
             <div className="pie-chart">
@@ -194,6 +246,30 @@ const ResponseAnalysis = () => {
             </div>
             <div className="pie-chart">
               <h3>
+                Readability Distribution
+                <p>
+                  Measures how easy the chatbot's responses are to understand.
+                </p>
+              </h3>
+
+              <InteractivePieChart
+                colorSchema={difficultyOverviewColor}
+                data={difficultyOverview}
+              />
+            </div>
+          </div>
+          {/* <div>
+            <StackedBarChart overall={true} data={faithfulnessData} />
+            <RelevanceStackedBarChart overall={true} data={relevanceData} />
+          </div> */}
+        </div>
+        <div className="card">
+          {/* section 2: Aggregate Prompt Analysis: */}
+          <h2>Aggregate Prompt Analysis:</h2>
+
+          <div className="pie-charts">
+            <div className="pie-chart">
+              <h3>
                 User Query Intent
                 <p>Main topics or purposes behind users' questions.</p>
               </h3>
@@ -208,39 +284,21 @@ const ResponseAnalysis = () => {
 
               <InteractivePieChart data={topicOverview} />
             </div>
-            <div className="pie-chart">
-              <h3>
-                Readability Distribution
-                <p>
-                  Measures how easy the chatbot's responses are to understand.
-                </p>
-              </h3>
-
-              <InteractivePieChart
-                colorSchema={difficultyOverviewColor}
-                data={difficultyOverview}
-              />
+          </div>
+          <div className="chart-container word-chart-container">
+            <h3 className="chart-title">
+              Topic Classifications
+              <p>
+                Visualizes the most discussed topics, with bubble size showing
+                frequency.
+              </p>
+            </h3>
+            {/* <h2 className="chart-description">
+              Source: Kenya dataset, Coffee, 01 NOV 2023 - 30 MAY 2024, Kenya{" "}
+            </h2> */}
+            <div className="chart">
+              <BubbleGraph data={wordData} />
             </div>
-            {/* <img
-              style={{ height: "350px", width: "500px" }}
-              src={"image20.png"}
-            />
-            <img
-              style={{ height: "350px", width: "500px" }}
-              src={"image (21).png"}
-            /> */}
-            {/* <img
-              style={{ height: "350px", width: "500px" }}
-              src={"image10.png"}
-            /> */}
-            {/* <img
-              style={{ height: "350px", width: "500px" }}
-              src={"image (11).png"}
-            />
-            <img
-              style={{ height: "350px", width: "500px" }}
-              src={"image (2).png"}
-            /> */}
           </div>
           {/* <div>
             <StackedBarChart overall={true} data={faithfulnessData} />

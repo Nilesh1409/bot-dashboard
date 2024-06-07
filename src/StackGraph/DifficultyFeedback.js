@@ -445,10 +445,10 @@ const DifficultyFeedbackStackedBarChart = () => {
   }, [data, intent]);
 
   return (
-    <div className="chart-container flex">
+    <div className="inner-chart-container flex">
       <div>
         <div className="chart-title">
-          Feedback vs Readability
+          Readability vs Feedback
           <p>
             Tracks positive and negative feedback based on the readability of
             responses over time.

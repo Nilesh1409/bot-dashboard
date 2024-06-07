@@ -269,7 +269,7 @@ const IntentFeedbackStackedBarChart = () => {
 
   return (
     <>
-      <div className="chart-container flex">
+      <div className="inner-chart-container flex">
         <div>
           <div className="chart-title">
             User Intent vs Feedback

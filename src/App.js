@@ -1887,35 +1887,9 @@ function App() {
   return (
     <div className="App">
       <ResponseAnalysis />
-      <div className="chart-container">
-        <h1 className="chart-title">
-          Intent Classification
-          <p>
-            Trends of user intents over time, showing the purposes behind user
-            interactions{" "}
-          </p>
-        </h1>
-        <div className="chart">
-          <LineChart data={intentData} />
-        </div>
-      </div>
-      <div className="chart-container">
-        <h1 className="chart-title">
-          Topic Classification Month-wise
-          <p>Monthly distribution of topics discussed by users.</p>
-        </h1>
-        <div className="chart">
-          <TopicChart data={topicData} />
-        </div>
-      </div>
-      <div className="chart-container">
-        <h1 className="chart-title">
-          Feedback Classification
-          <p>User feedback into positive and negative over time.</p>
-        </h1>
-        <div className="chart">
-          <FeedbackChart data={feedbackData} />
-        </div>
+      {/* section 3: Time series response analysis */}
+      <div className="heading">
+        <h1 className="title">Time Series Response Analysis:</h1>
       </div>
       <div className="chart-container">
         <h1 className="chart-title">
@@ -1940,48 +1914,56 @@ function App() {
           <DenialOfServiceChart data={denialOfService} />
         </div>
       </div>
+      {/* section 4: Aggregate Prompt Analysis: */}
+      <div className="heading">
+        <h1 className="title">Time Series Prompt Analysis:</h1>
+      </div>
       <div className="chart-container">
         <h1 className="chart-title">
-          Topic Classifications
+          Intent Classification
           <p>
-            Visualizes the most discussed topics, with bubble size showing
-            frequency.
+            Trends of user intents over time, showing the purposes behind user
+            interactions{" "}
           </p>
         </h1>
-        <h2 className="chart-description">
-          Source: Kenya dataset, Coffee, 01 NOV 2023 - 30 MAY 2024, Kenya{" "}
-        </h2>
         <div className="chart">
-          <BubbleGraph data={wordData} />
+          <LineChart data={intentData} />
         </div>
       </div>
-      {/* <div className="chart-container">
-      <h1 className="chart-title">Response Context </h1>
-      <div className="chart">
-        <PieChart data={data} />
-      </div>
-    </div> */}
-      {/* <div className="chart-container">
-        <h1 className="chart-title">Topic Classifications </h1>
-        <h2 className="chart-description">
-          Source: Kenya dataset, Coffee, 01 APR 2024 - 30 APR 2024, Kenya{" "}
-        </h2>
-        <div className="chart">
-          <SankeyDiagram data={sankeyTest} />
-        </div>
-      </div> */}
-      {/* <div>
-        <h1>Sankey Diagram Example</h1>
-        <SankeyDiagram />
-      </div> */}
-
       <div className="chart-container">
         <h1 className="chart-title">
-          Aggregate Prompt-Based Feedback Analysis{" "}
+          Topic Classification Month-wise
+          <p>Monthly distribution of topics discussed by users.</p>
         </h1>
-        <h2 className="chart-description">
-          Source: Kenya dataset, Coffee, 01 NOV 2023 - 30 MAY 2024, Kenya{" "}
-        </h2>
+        <div className="chart">
+          <TopicChart data={topicData} />
+        </div>
+      </div>
+      <div className="chart-container">
+        <div className="chart">
+          <Heatmap data={heatmapData} />
+        </div>
+      </div>
+
+      {/* section 5: Time series FEEDBACK analysis */}
+      <div className="heading">
+        <h1 className="title">Time Series Feedback Analysis</h1>
+      </div>
+      <div className="chart-container">
+        <h1 className="chart-title">
+          Feedback Classification
+          <p>User feedback into positive and negative over time.</p>
+        </h1>
+        <div className="chart">
+          <FeedbackChart data={feedbackData} />
+        </div>
+      </div>
+      {/* section 6:Prompt - Response analysis */}
+
+      <div className="heading">
+        <h1 className="title">Prompt - Response analysis:</h1>
+      </div>
+      <div className="chart-container">
         <div className="chart-main-container">
           <div className="chart-container">
             <div className="chart h550">
@@ -1994,12 +1976,6 @@ function App() {
             </div>
           </div>
           <div className="chart-container">
-            {/* <h1 className="chart-title">
-            Aggregate Prompt-Based Feedback Analysis{" "}
-          </h1>
-          <h2 className="chart-description">
-            Source: Kenya dataset, Coffee, 09 APR 2024 - 08 MAY 2024, Kenya{" "}
-          </h2> */}
             <div className="chart h550">
               <h1 className="chart-title m0">
                 Relevance
@@ -2011,16 +1987,11 @@ function App() {
               <RelevanceStackedBarChart data={relevanceData} />
             </div>
           </div>
-          <div className="chart-container">
-            {/* <h1 className="chart-title">Difficulty </h1> */}
-            {/* <h2 className="chart-description">
-            Source: Kenya dataset, Coffee, 09 APR 2024 - 08 MAY 2024, Kenya{" "}
-          </h2> */}
-            {/* <div className="chart">
-              <DifficultyStackedBarChart data={difficultyData} />
-            </div> */}
-          </div>
         </div>
+      </div>
+      {/* section 7:Prompt - feedback analysis */}
+      <div className="heading">
+        <h1 className="title">Prompt - Feedback analysis:</h1>
       </div>
 
       <div className="chart-container">
@@ -2031,40 +2002,59 @@ function App() {
           {/* <SimpleLineChart data={simpleBarGraphData} /> */}
         </div>
       </div>
-      <div className="chart-container">
-        <div className="chart">
-          <ClassificationsStackedBarChart />
-        </div>
-      </div>
-      <div className="chart-container">
-        <div className="chart">
-          <DifficultyFeedbackStackedBarChart />
-        </div>
-      </div>
-      {/* <div className="chart-container">
-        <div className="chart">
-          <DenialOfServiceFeedbackStackedBarChart />
-        </div>
-      </div> */}
+
       <div className="chart-container">
         <div className="chart">
           <TopicFeedbackStackedBarChart />
         </div>
       </div>
       <div className="chart-container">
+        <h1 className="chart-title">
+          Prompt - Feedback Analysis{" "}
+          <p>
+            Illustrates how different user prompts lead to positive or negative
+            feedback.
+          </p>
+        </h1>
         <div className="chart">
-          <Heatmap data={heatmapData} />
+          <SankeyChart feedback={true} data={sankyFeedback} />
         </div>
       </div>
+
+      {/* section 8:Response - feedback analysis */}
+      <div className="heading">
+        <h1 className="title">Response - Feedback analysis:</h1>
+      </div>
+
+      <div className="chart-container">
+        <div className="chart">
+          <ClassificationsStackedBarChart />
+        </div>
+      </div>
+
+      <div className="chart-container">
+        <div className="chart">
+          <DifficultyFeedbackStackedBarChart />
+        </div>
+      </div>
+
+      {/* <div className="chart-container">
+        <div className="chart">
+          <DenialOfServiceFeedbackStackedBarChart />
+        </div>
+      </div> */}
 
       {/* < className="chart-container">
         <h1 className="chart-title">Feedback Classification</h1>
         <div className="chart">
           <ResponseChart data={responseData} />
         </div> */}
-
+      {/* section 9:Prompt - response analysis */}
+      <div className="heading">
+        <h1 className="title">Prompt - Response - Feedback analysis:</h1>
+      </div>
       <div className="chart-container">
-        <h1 className="chart-title">
+        {/* <h1 className="chart-title">
           Aggregate Prompt Responses User Feedback Analysis{" "}
           <p>
             {" "}
@@ -2074,13 +2064,13 @@ function App() {
         </h1>
         <h2 className="chart-description">
           Source: Kenya dataset, Coffee, 09 APR 2024 - 08 MAY 2024, Kenya{" "}
-        </h2>
+        </h2> */}
         <div className="chart">
           <SankeyChart data={sankyData} />
         </div>
       </div>
 
-      <div className="chart-container">
+      {/* <div className="chart-container">
         <h1 className="chart-title">
           Aggregate Prompt-Based Feedback Analysis{" "}
           <p>
@@ -2094,7 +2084,7 @@ function App() {
         <div className="chart">
           <SankeyChart feedback={true} data={sankyFeedback} />
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

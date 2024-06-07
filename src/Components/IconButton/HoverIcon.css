@@ -1,0 +1,36 @@
+.hover-icon-container {
+  position: relative;
+  display: inline-flex;
+  /* align-items: center; */
+  justify-content: center;
+  margin-left: 3px;
+}
+
+.hover-icon {
+  font-size: 24px;
+  color: #4caf50;
+  cursor: pointer;
+}
+
+.hover-text {
+  visibility: visible;
+  max-width: 500px;
+  min-width: 200px;
+  word-wrap: break-word;
+  padding: 5px 10px !important;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; /* Position the tooltip above the icon */
+  left: 50%;
+  opacity: 1;
+  /* transition: opacity 0.3s; */
+  display: flex;
+}
+
+.hover-icon-container:hover .hover-text {
+  opacity: 1;
+}

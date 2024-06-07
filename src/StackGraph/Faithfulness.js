@@ -179,7 +179,7 @@ const StackedBarChart = ({ data, overall }) => {
   }, [data, yAxisType]);
 
   return (
-    <div className={`chart-container ${overall ? "inline" : ""}`}>
+    <div className={`inner-chart-container ${overall ? "inline" : ""}`}>
       <div
         style={{
           marginLeft: "0",

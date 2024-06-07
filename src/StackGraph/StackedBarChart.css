@@ -1,5 +1,5 @@
 /* src/components/StackedBarChart.css */
-.chart-container {
+.inner-chart-container {
   position: relative;
   /* display: flex; */
   justify-content: center;
