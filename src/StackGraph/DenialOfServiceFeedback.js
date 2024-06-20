@@ -308,6 +308,16 @@ const DenialOfServiceFeedbackStackedBarChart = () => {
       .attr("text-anchor", "middle")
       .style("font-size", "14px")
       .style("font-family", "Arial, sans-serif")
+      .append("g")
+      .selectAll("text")
+      .data(data)
+      .enter()
+      .append("text")
+      .attr("x", (d) => x(d.month) + x.bandwidth() / 2)
+      .attr("y", (d) => y(d.data.Good + d.data.Bad) - 5)
+      .attr("text-anchor", "middle")
+      .style("font-size", "14px")
+      .style("font-family", "Arial, sans-serif")
       .text((d) => d.data.counts.good + d.data.counts.bad);
   }, [data, intent]);
 

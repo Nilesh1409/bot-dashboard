@@ -43,6 +43,7 @@ input[type="range"]::-moz-range-thumb {
 .legend text {
   font-size: 12px;
   font-family: Arial, sans-serif;
+  color: #fff !important;
 }
 
 .legend rect {

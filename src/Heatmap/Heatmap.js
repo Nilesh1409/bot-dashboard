@@ -133,14 +133,14 @@ const Heatmap = ({ data }) => {
       .call(legendAxis);
 
     // Add title to the axes
-    svg
-      .append("text")
-      .attr("x", width / 2)
-      .attr("y", -20)
-      .attr("text-anchor", "middle")
-      .style("font-size", "22px")
-      .style("font-weight", "700")
-      .text("Topic Count Month Wise");
+    // svg
+    //   .append("text")
+    //   .attr("x", width / 2)
+    //   .attr("y", -20)
+    //   .attr("text-anchor", "middle")
+    //   .style("font-size", "22px")
+    //   .style("font-weight", "700")
+    //   .text("Topic Count Month Wise");
 
     // svg
     //   .append("text")

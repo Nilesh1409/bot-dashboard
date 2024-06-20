@@ -23,9 +23,15 @@ const InteractivePieChart = ({ data, colorSchema }) => {
 
     const pie = d3.pie().value((d) => d.value);
 
-    const data_ready = pie(
+    let data_ready = pie(
       Object.entries(data).map(([key, value]) => ({ key, value }))
     );
+
+    // data_ready = data_ready.sort((a, b) => {
+    //   if (a.data.key === "Very Confusing") return -1;
+    //   if (b.data.key === "Very Confusing") return 1;
+    //   return 0;
+    // });
 
     const arc = d3.arc().innerRadius(0).outerRadius(radius);
 
@@ -57,7 +63,7 @@ const InteractivePieChart = ({ data, colorSchema }) => {
       .attr("fill", (d) => colorSchema?.[d.data.key] ?? color(d.data.key))
       .attr("stroke", "white")
       .style("stroke-width", "2px")
-      .style("opacity", 0.8)
+      // .style("opacity", 0.8)
       .on("mouseover", function (event, d) {
         d3.select(this).transition().duration(200).attr("d", arcOver);
 
@@ -99,13 +105,14 @@ const InteractivePieChart = ({ data, colorSchema }) => {
       });
 
     // Adding Legend
+    const legendHeight = data_ready.length * 30;
     const legendContainer = d3
       .select(ref.current)
       .append("foreignObject")
       .attr("width", 200)
       .attr("height", height)
       .attr("x", width - 200)
-      .attr("y", 0)
+      .attr("y", (height - legendHeight) / 2)
       .append("xhtml:div")
       .style("height", `${height}px`)
       .style("overflow-y", "scroll");

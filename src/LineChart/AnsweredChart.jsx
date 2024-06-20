@@ -4,7 +4,7 @@ import "./lineChart.css";
 import style from "./style.module.css";
 import LineChartWithTimeSeries from "../LineChartGraph/LineChartWithTimeSeries";
 
-const AnsweredChart = ({ data }) => {
+const AnsweredChart = ({ data, darkTheme }) => {
   const ref = useRef();
   const tooltipRef = useRef();
   const [selectedMonth, setSelectedMonth] = useState(1);
@@ -242,7 +242,8 @@ const AnsweredChart = ({ data }) => {
         .attr("y", 9)
         .attr("dy", ".35em")
         .style("text-anchor", "start")
-        .text(key);
+        .text(key)
+        .style("color", `${darkTheme ? "black" : "white"}`);
     });
   }, [data, selectedMonth, areaGraph]);
 

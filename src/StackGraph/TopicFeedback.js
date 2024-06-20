@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import "./StackedBarChart.css";
 import SimpleLineChart from "../SimpleLineChart/SimpleLineChart";
+import HoverIcon from "../Components/IconButton/IconButton";
 
 const TopicFeedbackStackedBarChart = () => {
   const svgRef = useRef();
@@ -358,7 +359,7 @@ const TopicFeedbackStackedBarChart = () => {
     },
   ];
 
-  const [barChart, setBarChart] = useState(false);
+  const [barChart, setBarChart] = useState(true);
   const [intent, setIntent] = useState("Sowing");
 
   const focusStyle = {
@@ -444,9 +445,6 @@ const TopicFeedbackStackedBarChart = () => {
       .attr("width", x.bandwidth())
       .attr("class", (d) => `bar bar-${d.key}`)
       .on("mouseover", function (event, d) {
-        console.log("🚀 ~ d:11", d, data);
-        // const counts = data.find((entry) => entry.month === d.data.month).data
-        // .counts;
         const tooltipContent = `<span><strong>Good</strong>: ${
           d.data.counts.good
         } (${d.data.Good.toFixed(2)}%)</span><br/><span><strong>Bad</strong>: ${
@@ -485,14 +483,6 @@ const TopicFeedbackStackedBarChart = () => {
       .call(d3.axisLeft(y))
       .selectAll("text")
       .style("font-size", "16px");
-
-    // svg
-    //   .append("text")
-    //   .attr("x", width / 2)
-    //   .attr("y", margin.top / 2)
-    //   .attr("text-anchor", "middle")
-    //   .style("font-size", "24px")
-    //   .text("Topic vs Feedback");
 
     const legend = svg
       .append("g")
@@ -535,6 +525,7 @@ const TopicFeedbackStackedBarChart = () => {
       .on("mouseout", function () {
         d3.selectAll(".bar").style("opacity", 1);
       });
+
     svg
       .append("g")
       .selectAll("text")
@@ -545,8 +536,96 @@ const TopicFeedbackStackedBarChart = () => {
       .attr("y", (d) => y(d.data.Good + d.data.Bad) - 5)
       .attr("text-anchor", "middle")
       .style("font-size", "14px")
-      .style("font-family", "Arial, sans-serif")
-      .text((d) => d.data.counts.good + d.data.counts.bad);
+      .style("font-family", "Arial, sans-serif");
+    //   .append("g")
+    //   .selectAll("text")
+    //   .data(data)
+    //   .enter()
+    //   .append("text")
+    //   .attr("x", (d) => x(d.month) + x.bandwidth() / 2)
+    //   .attr("y", (d) => y(d.data.Good + d.data.Bad) - 5)
+    //   .attr("text-anchor", "middle")
+    //   .style("font-size", "14px")
+    //   .style("font-family", "Arial, sans-serif")
+    //   .text((d) => d.data.counts.good + d.data.counts.bad);
+    // Draw line chart
+    const levels = ["Good", "Bad"];
+    const colors = ["#252f86", "#252f86"];
+
+    levels.forEach((level, idx) => {
+      const levelData = data.map((d) => ({
+        month: d.month,
+        value: d.data[level],
+        originalValue: d.data[level],
+        count: d.data?.counts?.[level.toLowerCase()] ?? 0,
+      }));
+
+      const line = d3
+        .line()
+        .x((d) => x(d.month) + x.bandwidth() / 2)
+        .y((d) => y(d.value))
+        .curve(d3.curveMonotoneX);
+
+      // Draw main line
+      svg
+        .append("path")
+        .datum(levelData)
+        .attr("fill", "none")
+        .attr("stroke", colors[idx])
+        .attr("stroke-width", 4)
+        .attr("d", line)
+        .attr("class", `line-${level}`);
+
+      // Draw border line
+      svg
+        .append("path")
+        .datum(levelData)
+        .attr("fill", "none")
+        .attr("stroke", "black")
+        .attr("stroke-width", 1)
+        .attr("d", line)
+        .attr("class", `line-border-${level}`);
+
+      svg
+        .selectAll(`.dot-${level}`)
+        .data(levelData)
+        .enter()
+        .append("circle")
+        .attr("class", `dot-${level}`)
+        .attr("cx", (d) => x(d.month) + x.bandwidth() / 2)
+        .attr("cy", (d) => y(d.value))
+        .attr("r", 5)
+        .attr("fill", colors[idx])
+        .on("mouseover", (event, d) => {
+          tooltip
+            .style("display", "block")
+            .style("left", `${event.offsetX + 5}px`)
+            .style("top", `${event.offsetY - 28}px`)
+            .html(
+              `<strong>${d.month}</strong><br>Value: ${d.originalValue.toFixed(
+                2
+              )}%<br>Count: ${d.count}`
+            );
+        })
+        .on("mouseout", () => {
+          tooltip.style("display", "none");
+        });
+
+      // Add count text to each dot
+      svg
+        .selectAll(`.dot-text-${level}`)
+        .data(levelData)
+        .enter()
+        .append("text")
+        .attr("class", `dot-text-${level}`)
+        .attr("x", (d) => x(d.month) + x.bandwidth() / 2)
+        .attr("y", (d) => y(d.value) - 10)
+        .attr("text-anchor", "middle")
+        .style("font-size", "14px")
+        .style("font-weight", "600")
+        .style("font-family", "Arial, sans-serif")
+        .text((d) => d.count);
+    });
   }, [data, intent]);
 
   return (
@@ -554,6 +633,13 @@ const TopicFeedbackStackedBarChart = () => {
       <div>
         <div className="chart-title">
           Topic vs Feedback
+          <HoverIcon
+            hoverText={`This bar chart compares positive and negative feedback for the topic "Sowing" over time:
+
+Good Feedback: Dominates each month, indicating high user satisfaction.
+Bad Feedback: Varies, showing some dissatisfaction but generally low.
+Overall, positive feedback remains high, reflecting general user satisfaction with responses related to sowing.`}
+          />
           <p>
             Compares positive and negative feedback for a specific topic over
             time.
@@ -564,7 +650,7 @@ const TopicFeedbackStackedBarChart = () => {
       </div>
 
       <span style={{ width: "170px", marginLeft: "20px" }}>
-        <div>
+        {/* <div>
           <span
             style={{
               marginBottom: "10px",
@@ -597,7 +683,7 @@ const TopicFeedbackStackedBarChart = () => {
             <option value="line">Line Graph</option>
             <option value="bar">Bar Graph</option>
           </select>
-        </div>
+        </div> */}
         <div style={{ marginTop: "10px" }}>
           <span style={{ marginBottom: "10px", display: "inline-block" }}>
             <b>Select Topic:</b>

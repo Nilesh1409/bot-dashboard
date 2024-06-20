@@ -13,9 +13,14 @@
 }
 
 .hover-text {
+  font-size: 16px !important;
+  font-weight: 400;
   visibility: visible;
   max-width: 500px;
   min-width: 200px;
+  min-height: 200px;
+  max-height: 500px;
+  text-align: left;
   word-wrap: break-word;
   padding: 5px 10px !important;
   background-color: black;
@@ -24,13 +29,15 @@
   border-radius: 6px;
   position: absolute;
   z-index: 1;
-  bottom: 125%; /* Position the tooltip above the icon */
+  top: 10%;
+  bottom: -500%; /* Position the tooltip above the icon */
   left: 50%;
   opacity: 1;
   /* transition: opacity 0.3s; */
   display: flex;
+  overflow: scroll;
 }
 
-.hover-icon-container:hover .hover-text {
+.hover-text {
   opacity: 1;
 }

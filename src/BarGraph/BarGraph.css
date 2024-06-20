@@ -1,0 +1,51 @@
+.bar {
+  /* fill: #00a94f; */
+  transition: fill 0.3s ease;
+}
+
+.bar:hover {
+  /* fill: #00873b; */
+}
+
+.x-axis path,
+.x-axis line {
+  stroke: #000;
+}
+
+.y-axis path,
+.y-axis line {
+  stroke: #000;
+}
+
+.tooltip {
+  position: absolute;
+  text-align: center;
+  width: auto;
+  max-width: 200px;
+  padding: 10px;
+  font: 12px sans-serif;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.tooltip-content {
+  text-align: left;
+}
+
+.tooltip-content h3 {
+  margin: 0;
+  font-size: 14px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
+
+.tooltip-content p {
+  margin: 0;
+  font-size: 12px;
+}

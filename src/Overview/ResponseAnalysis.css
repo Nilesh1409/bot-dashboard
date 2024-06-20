@@ -26,10 +26,14 @@
   width: 90%;
   min-width: 300px;
 }
+.darkCard {
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+  background-color: rgb(14, 14, 14);
+}
 
 .card h2 {
   font-size: 26px;
-  color: rgb(0, 0, 0);
+  /* color: rgb(0, 0, 0); */
   margin-bottom: 20px;
   margin: 0 10px;
 }
@@ -71,43 +75,96 @@
   display: grid;
   grid-template-columns: auto auto;
 }
+.pie-charts-flex {
+  display: flex;
+  flex-direction: column;
+}
+.pie-charts > div {
+  /* display: flex; */
+}
+.pie-charts-flex > div {
+  display: flex;
+}
+
 .pie-charts > img {
   border: 1px solid gray;
   border-radius: 5px;
   margin: 10px;
 }
+.pie-left-text {
+  width: 50%;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  padding: 0 5%;
+  line-height: 27px;
+}
 .pie-chart {
   border: 1px solid rgb(191, 190, 190);
   border-radius: 5px;
   margin: 10px;
+  /* width: 50%; */
 }
+.pie-charts-flex .pie-chart {
+  width: 62%;
+}
+
 .pie-chart > h3 {
   margin-left: 20px;
   color: #444;
+}
+.dark-pie-chart > h3 {
+  color: #fff;
 }
 .pie-chart > h3 > p {
   font-size: 14px;
   margin-top: 5px;
   font-weight: 400;
 }
+.metrics {
+  /* display: grid;
+  grid-template-columns: auto auto auto auto; */
+  display: flex;
+}
 
 .metric {
-  background-color: #ffffff;
-  border-radius: 15px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-left: 1px solid rgb(196, 196, 196);
+  width: 19%;
+  border-radius: 0;
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
   padding: 20px 0;
   max-width: 400px;
   margin: 20px 10px;
   font-family: Arial, sans-serif;
+}
+.metrics :first-child {
+  width: 25% !important;
+  border: none;
+}
+.lightMatic {
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   color: #333;
 }
+.darkMatic {
+  background-color: #212121;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
 
+  color: rgb(235, 235, 235);
+}
+.dark {
+  background-color: #212121 !important;
+  color: #fff !important;
+}
 .metric .title {
   font-size: 18px;
   font-weight: bold;
   margin-bottom: 15px;
-  color: #000000;
+  /* color: #000000; */
   text-align: center;
+  width: 100% !important;
+  text-align: left;
 }
 
 .metric span {
@@ -121,6 +178,9 @@
   font-weight: bold;
   color: #000;
 }
+.dark-metric b {
+  color: #fff;
+}
 .metric span:nth-child(2) {
   border-top: 1px solid #e0e0e0;
   border-radius: 10px;
@@ -131,4 +191,28 @@
 }
 .word-chart-container {
   width: 100%;
+}
+.subtitle {
+  margin-left: 20px;
+}
+.subtitle > h2 {
+  margin: 10px 0;
+}
+.subtitle-text {
+  margin: 0 20px;
+}
+.blue-score-img {
+  height: 400px;
+}
+.model-explain {
+  display: flex;
+}
+.flex {
+  display: flex !important;
+}
+.model-explain .metric {
+  width: 33%;
+}
+.bold {
+  font-weight: bold;
 }

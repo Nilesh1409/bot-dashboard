@@ -8,13 +8,14 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import SimpleLineChart from "../SimpleLineChart/SimpleLineChart";
+import HoverIcon from "../Components/IconButton/IconButton";
 
 const DifficultyFeedbackStackedBarChart = () => {
   const svgRef = useRef();
   const tooltipRef = useRef();
 
   const [intent, setIntent] = useState("Difficult");
-  const [barChart, setBarChart] = useState(false);
+  const [barChart, setBarChart] = useState(true);
 
   const focusStyle = {
     borderColor: "#3f51b5",
@@ -286,16 +287,10 @@ const DifficultyFeedbackStackedBarChart = () => {
       .nice()
       .range([height - margin.bottom, margin.top]);
 
-    const color = d3.scaleOrdinal().domain(Object.keys(data[0].data)).range([
-      // "#4682b4",
-      "#32cd32",
-      "rgb(151, 25, 25)",
-
-      // "#158a32",
-      // "#ffb347",
-      // "#87cefa",
-      // "#929693",
-    ]); // Modern color palette
+    const color = d3
+      .scaleOrdinal()
+      .domain(Object.keys(data[0].data).filter((key) => key !== "counts"))
+      .range(["#32cd32", "rgb(151, 25, 25)"]);
 
     const stack = d3
       .stack()
@@ -322,21 +317,6 @@ const DifficultyFeedbackStackedBarChart = () => {
       .attr("width", x.bandwidth())
       .attr("class", (d) => `bar bar-${d.key}`)
       .on("mouseover", function (event, d) {
-        const total = Object.values(d.data).reduce(
-          (sum, value) => sum + value,
-          0
-        );
-        const dataEntries = Object.entries(d.data);
-        const colorScale = d3.scaleOrdinal().domain(Object.keys(d.data)).range([
-          // "#4682b4",
-          "#32cd32",
-          "rgb(151, 25, 25)",
-          // "#158a32",
-          // "#ffb347",
-          // "#87cefa",
-          // "#929693",
-        ]);
-
         const tooltipContent = `<span><strong>Good</strong>: ${
           d.data.counts.good
         } (${d.data.Good.toFixed(2)}%)</span><br/><span><strong>Bad</strong>: ${
@@ -351,8 +331,8 @@ const DifficultyFeedbackStackedBarChart = () => {
       })
       .on("mousemove", function (event) {
         tooltip
-          .style("left", event.offsetX + 5 + "px")
-          .style("top", event.offsetY - 28 + "px");
+          .style("left", event.pageX + 5 + "px")
+          .style("top", event.pageY - 28 + "px");
       })
       .on("mouseout", function () {
         tooltip.style("opacity", 0);
@@ -375,15 +355,6 @@ const DifficultyFeedbackStackedBarChart = () => {
       .call(d3.axisLeft(y))
       .selectAll("text")
       .style("font-size", "16px"); // Change y-axis font size
-
-    // svg
-    //   .append("text")
-    //   .attr("x", width / 2)
-    //   .attr("y", margin.top / 2)
-    //   .attr("text-anchor", "middle")
-    //   .style("font-size", "24px")
-    //   // .style("text-decoration", "underline")
-    //   .text("Feedback vs Readability");
 
     // Legend container
     const legend = svg
@@ -429,7 +400,7 @@ const DifficultyFeedbackStackedBarChart = () => {
       .on("mouseout", function () {
         d3.selectAll(".bar").style("opacity", 1);
       });
-    console.log("intent", intent);
+
     svg
       .append("g")
       .selectAll("text")
@@ -440,15 +411,117 @@ const DifficultyFeedbackStackedBarChart = () => {
       .attr("y", (d) => y(d.data.Good + d.data.Bad) - 5)
       .attr("text-anchor", "middle")
       .style("font-size", "14px")
-      .style("font-family", "Arial, sans-serif")
-      .text((d) => d.data.counts.good + d.data.counts.bad);
+      .style("font-family", "Arial, sans-serif");
+    //   .append("g")
+    //   .selectAll("text")
+    //   .data(data)
+    //   .enter()
+    //   .append("text")
+    //   .attr("x", (d) => x(d.month) + x.bandwidth() / 2)
+    //   .attr("y", (d) => y(d.data.Good + d.data.Bad) - 5)
+    //   .attr("text-anchor", "middle")
+    //   .style("font-size", "14px")
+    //   .style("font-family", "Arial, sans-serif")
+    //   .text((d) => d.data.counts.good + d.data.counts.bad);
+    // Draw line chart
+    const levels = ["Good", "Bad"];
+    const colors = ["#252f86", "#252f86"];
+
+    levels.forEach((level, idx) => {
+      const levelData = data.map((d) => ({
+        month: d.month,
+        value: d.data[level],
+        originalValue: d.data[level],
+        count: d.data?.counts?.[level.toLowerCase()] ?? 0,
+      }));
+
+      const line = d3
+        .line()
+        .x((d) => x(d.month) + x.bandwidth() / 2)
+        .y((d) => y(d.value))
+        .curve(d3.curveMonotoneX);
+
+      // Draw main line
+      svg
+        .append("path")
+        .datum(levelData)
+        .attr("fill", "none")
+        .attr("stroke", colors[idx])
+        .attr("stroke-width", 4)
+        .attr("d", line)
+        .attr("class", `line-${level}`);
+
+      // Draw border line
+      // svg
+      //   .append("path")
+      //   .datum(levelData)
+      //   .attr("fill", "none")
+      //   .attr("stroke", "black")
+      //   .attr("stroke-width", 1)
+      //   .attr("d", line)
+      //   .attr("class", `line-border-${level}`);
+
+      svg
+        .selectAll(`.dot-${level}`)
+        .data(levelData)
+        .enter()
+        .append("circle")
+        .attr("class", `dot-${level}`)
+        .attr("cx", (d) => x(d.month) + x.bandwidth() / 2)
+        .attr("cy", (d) => y(d.value))
+        .attr("r", 5)
+        .attr("fill", colors[idx])
+        .on("mouseover", (event, d) => {
+          tooltip
+            .style("display", "block")
+            .style("left", `${event.pageX + 5}px`)
+            .style("top", `${event.pageY - 28}px`)
+            .html(
+              `<strong>${d.month}</strong><br>Value: ${d.originalValue.toFixed(
+                2
+              )}%<br>Count: ${d.count}`
+            );
+        })
+        .on("mouseout", () => {
+          tooltip.style("display", "none");
+        });
+
+      // Add count text to each dot
+      svg
+        .selectAll(`.dot-text-${level}`)
+        .data(levelData)
+        .enter()
+        .append("text")
+        .attr("class", `dot-text-${level}`)
+        .attr("x", (d) => x(d.month) + x.bandwidth() / 2)
+        .attr("y", (d) => y(d.value) - 10)
+        .attr("text-anchor", "middle")
+        .style("font-size", "14px")
+        .style("font-weight", "600")
+        .style("font-family", "Arial, sans-serif")
+        .text((d) => d.count);
+    });
   }, [data, intent]);
 
   return (
     <div className="inner-chart-container flex">
       <div>
         <div className="chart-title">
-          Readability vs Feedback
+          Readability vs Feedback{" "}
+          <HoverIcon
+            hoverText={`This bar chart tracks positive and negative feedback for responses classified as "Difficult" readability over time:
+
+Good Feedback: Predominantly high each month, indicating user satisfaction despite difficult readability.
+Bad Feedback: Consistently low, showing some dissatisfaction but not significant.
+Overall, even responses that are difficult to read receive mostly positive feedback, suggesting that users find value in the information provided.
+
+
+
+
+
+
+`}
+          />
           <p>
             Tracks positive and negative feedback based on the readability of
             responses over time.
@@ -457,7 +530,7 @@ const DifficultyFeedbackStackedBarChart = () => {
         {barChart ? <svg ref={svgRef}></svg> : <SimpleLineChart data={data} />}
       </div>
       <span style={{ width: "170px", marginLeft: "20px" }}>
-        <div>
+        {/* <div>
           <span
             style={{
               marginBottom: "10px",
@@ -490,7 +563,7 @@ const DifficultyFeedbackStackedBarChart = () => {
             <option value="line">Line Graph</option>
             <option value="bar">Bar Graph</option>
           </select>
-        </div>
+        </div> */}
         <div style={{ marginTop: "10px" }}>
           <span style={{ marginBottom: "10px", display: "inline-block" }}>
             <b>Select Classifications:</b>
@@ -516,13 +589,6 @@ const DifficultyFeedbackStackedBarChart = () => {
             onBlur={() => setStyle(blurStyle)}
             onChange={(e) => setIntent(e.target.value)}
           >
-            {/* Unclear: { good: 25, bad: 168 },
-      Farming_related: { good: 634, bad: 1227 },
-      Change_crop: { good: 34, bad: 136 },
-      Exit: { good: 0, bad: 18 },
-      Referring_back: { good: 2, bad: 70 },
-      Disappointment: { good: 2, bad: 4 },
-      Greeting: { good: 1, bad: 8 }, */}
             <option value="Difficult">Difficult</option>
             <option value="Easy">Easy</option>
             <option value="Standard">Standard</option>

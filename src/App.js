@@ -24,9 +24,24 @@ import SimpleLineChart from "./SimpleLineChart/SimpleLineChart";
 import { useState } from "react";
 import LineChartWithTimeSeries from "./LineChartGraph/LineChartWithTimeSeries";
 import Heatmap from "./Heatmap/Heatmap";
+import Switch from "@mui/material/Switch";
+import AuthStatus from "./AuthStatus";
+import SignIn from "./SignIn";
+import SignOut from "./SignOut";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import HoverIcon from "./Components/IconButton/IconButton";
+import TopicVsFaithfulnessBarChart from "./StackGraph/TopicVsFaithfulness";
+import TopicVsRelevanceBarChart from "./StackGraph/TopicVsRelevance";
+import chartBarGraphData from "./data/coffee_msg_count.json";
+import BarGraph from "./BarGraph/BarGraph";
 
 function App() {
+  console.log("🚀 ~ chartBarGraphData:", chartBarGraphData);
   const [simpleBarGraphData, setSimpleBarGraphData] = useState();
+  const [darkTheme, setDarkTheme] = useState(false);
+
+  const label = { inputProps: { "aria-label": "Switch demo" } };
   const generateData = () => {
     let countCorrect = 0;
     let countIncorrect = 0;
@@ -313,44 +328,44 @@ function App() {
     {
       year: 2023,
       month: "November",
-      Answered: 1466,
-      "Not answered": 863,
+      Answered: 1713,
+      "Not answered": 616,
     },
     {
       year: 2023,
       month: "December",
-      Answered: 756,
-      "Not answered": 553,
+      Answered: 928,
+      "Not answered": 381,
     },
     {
       year: 2024,
       month: "January",
-      Answered: 1163,
-      "Not answered": 510,
+      Answered: 1339,
+      "Not answered": 334,
     },
     {
       year: 2024,
       month: "February",
-      Answered: 2031,
-      "Not answered": 1873,
+      Answered: 2937,
+      "Not answered": 967,
     },
     {
       year: 2024,
       month: "March",
-      Answered: 3531,
-      "Not answered": 2806,
+      Answered: 4861,
+      "Not answered": 1476,
     },
     {
       year: 2024,
       month: "April",
-      Answered: 2240,
-      "Not answered": 1994,
+      Answered: 2863,
+      "Not answered": 1371,
     },
     {
       year: 2024,
       month: "May",
-      Answered: 1016,
-      "Not answered": 415,
+      Answered: 1226,
+      "Not answered": 205,
     },
   ];
 
@@ -1421,6 +1436,103 @@ function App() {
       },
     },
   ];
+  const topicAndFaithfulnessData = [
+    {
+      topic: "Unknown",
+      faithfulness: {
+        "High Faithfulness": 168,
+        "Medium Faithfulness": 16,
+        "Low Faithfulness": 17,
+      },
+    },
+    {
+      topic: "Fertilizers",
+      faithfulness: {
+        "High Faithfulness": 133,
+        "Medium Faithfulness": 18,
+        "Low Faithfulness": 38,
+      },
+    },
+    {
+      topic: "Soil Management",
+      faithfulness: {
+        "High Faithfulness": 190,
+        "Medium Faithfulness": 23,
+        "Low Faithfulness": 23,
+      },
+    },
+    {
+      topic: "Not related to agriculture",
+      faithfulness: {
+        "High Faithfulness": 141,
+        "Medium Faithfulness": 14,
+        "Low Faithfulness": 32,
+      },
+    },
+    {
+      topic: "Harvesting",
+      faithfulness: {
+        "High Faithfulness": 35,
+        "Medium Faithfulness": 3,
+        "Low Faithfulness": 12,
+      },
+    },
+    {
+      topic: "Sowing",
+      faithfulness: {
+        "High Faithfulness": 125,
+        "Medium Faithfulness": 14,
+        "Low Faithfulness": 15,
+      },
+    },
+    {
+      topic: "Marketing",
+      faithfulness: {
+        "High Faithfulness": 107,
+        "Medium Faithfulness": 11,
+        "Low Faithfulness": 16,
+      },
+    },
+    {
+      topic: "Varieties",
+      faithfulness: {
+        "High Faithfulness": 171,
+        "Medium Faithfulness": 34,
+        "Low Faithfulness": 24,
+      },
+    },
+    {
+      topic: "Pests and Diseases",
+      faithfulness: {
+        "High Faithfulness": 388,
+        "Medium Faithfulness": 32,
+        "Low Faithfulness": 41,
+      },
+    },
+    {
+      topic: "Unclear",
+      faithfulness: {
+        "High Faithfulness": 49,
+        "Medium Faithfulness": 4,
+        "Low Faithfulness": 5,
+      },
+    },
+    {
+      topic: "Storage",
+      faithfulness: {
+        "High Faithfulness": 31,
+        "Medium Faithfulness": 2,
+        "Low Faithfulness": 5,
+      },
+    },
+    {
+      topic: "Others",
+      faithfulness: {
+        "High Faithfulness": 2,
+        "Medium Faithfulness": 1,
+      },
+    },
+  ];
 
   const relevanceData = [
     {
@@ -1477,6 +1589,96 @@ function App() {
         High: 1,
         Medium: 0,
         Low: 0,
+      },
+    },
+  ];
+  const topicVsRelevanceData = [
+    {
+      topic: "Unknown",
+      relevance: {
+        "High Relevance": 74,
+        "Medium Relevance": 17,
+        "Low Relevance": 58,
+      },
+    },
+    {
+      topic: "Fertilizers",
+      relevance: {
+        "High Relevance": 127,
+        "Medium Relevance": 25,
+        "Low Relevance": 31,
+      },
+    },
+    {
+      topic: "Soil Management",
+      relevance: {
+        "High Relevance": 165,
+        "Medium Relevance": 45,
+        "Low Relevance": 31,
+      },
+    },
+    {
+      topic: "Not related to agriculture",
+      relevance: {
+        "High Relevance": 123,
+        "Medium Relevance": 16,
+        "Low Relevance": 37,
+      },
+    },
+    {
+      topic: "Harvesting",
+      relevance: {
+        "High Relevance": 36,
+        "Medium Relevance": 4,
+        "Low Relevance": 8,
+      },
+    },
+    {
+      topic: "Sowing",
+      relevance: {
+        "High Relevance": 101,
+        "Medium Relevance": 20,
+        "Low Relevance": 33,
+      },
+    },
+    {
+      topic: "Marketing",
+      relevance: {
+        "High Relevance": 98,
+        "Medium Relevance": 29,
+        "Low Relevance": 12,
+      },
+    },
+    {
+      topic: "Varieties",
+      relevance: {
+        "High Relevance": 145,
+        "Medium Relevance": 48,
+        "Low Relevance": 58,
+      },
+    },
+    {
+      topic: "Pests and Diseases",
+      relevance: {
+        "High Relevance": 361,
+        "Medium Relevance": 75,
+        "Low Relevance": 65,
+      },
+    },
+    {
+      topic: "Unclear",
+      relevance: {
+        "High Relevance": 35,
+        "Medium Relevance": 12,
+        "Low Relevance": 12,
+      },
+    },
+    {
+      topic: "Storage",
+      relevance: {
+        "High Relevance": 27,
+        "Medium Relevance": 4,
+        "Low Relevance": 4,
       },
     },
   ];
@@ -1683,71 +1885,50 @@ function App() {
     {
       year: 2023,
       month: "November",
-      // "In Content": 1834,
       "Out Of Content": 495,
-      // "In Context": 1933,
       "Out Of Context": 396,
-      // "In Collection": 2159,
       "Out of Collection": 170,
     },
     {
       year: 2023,
       month: "December",
-      // "In Content": 1033,
       "Out Of Content": 276,
-      // "In Context": 1021,
       "Out Of Context": 288,
-      // "In Collection": 1177,
       "Out of Collection": 132,
     },
     {
       year: 2024,
       month: "January",
-      // "In Content": 1450,
       "Out Of Content": 223,
-      // "In Context": 1397,
       "Out Of Context": 276,
-      // "In Collection": 1535,
       "Out of Collection": 138,
     },
     {
       year: 2024,
       month: "February",
-      // "In Content": 2563,
       "Out Of Content": 1341,
-      // "In Context": 3442,
       "Out Of Context": 462,
-      // "In Collection": 3692,
       "Out of Collection": 212,
     },
     {
       year: 2024,
       month: "March",
-      // "In Content": 4166,
       "Out Of Content": 2171,
-      // "In Context": 5901,
       "Out Of Context": 436,
-      // "In Collection": 6118,
       "Out of Collection": 219,
     },
     {
       year: 2024,
       month: "April",
-      // "In Content": 2616,
       "Out Of Content": 1618,
-      // "In Context": 3963,
       "Out Of Context": 271,
-      // "In Collection": 4109,
       "Out of Collection": 125,
     },
     {
       year: 2024,
       month: "May",
-      // "In Content": 1145,
       "Out Of Content": 286,
-      // "In Context": 1337,
       "Out Of Context": 94,
-      // "In Collection": 1395,
       "Out of Collection": 36,
     },
   ];
@@ -1885,27 +2066,89 @@ function App() {
   // console.log("farmingRelatedData", farmingRelatedData);
 
   return (
-    <div className="App">
-      <ResponseAnalysis />
+    <div className={`App ${darkTheme ? "dark" : "light"}`}>
+      {/* <div>
+        <h1>Firebase Google Authentication</h1>
+        <AuthStatus />
+        <SignIn />
+        <SignOut />
+      </div> */}
+
+      <div class="theme-contianer">
+        <img src="digitalgreen_logo.jpeg" />
+        <span className="themeSpan">
+          Theme:
+          <Switch onClick={(e) => setDarkTheme(!darkTheme)} {...label} />{" "}
+          {darkTheme ? (
+            <DarkModeIcon />
+          ) : (
+            <Brightness4Icon style={{ color: "#bcc729" }} />
+          )}
+        </span>
+      </div>
+      <ResponseAnalysis darkTheme={darkTheme} />
       {/* section 3: Time series response analysis */}
       <div className="heading">
         <h1 className="title">Time Series Response Analysis:</h1>
       </div>
+      <div className="chart-subtitle mlr-50">
+        <p>
+          In our ongoing efforts to enhance the chatbot's performance, we have
+          closely monitored its ability to answer questions over time. An area
+          chart tracking this performance from November to May provides valuable
+          insights into how the bot's response capabilities have evolved.
+        </p>
+      </div>
+
       <div className="chart-container">
         <h1 className="chart-title">
           Answered & Unanswered Questions
+          <HoverIcon
+            hoverText={`This area graph shows the count of answered versus unanswered user questions over time.
+
+Answered (Green): Represents answered questions, peaking around March 2024, indicating high engagement and effective responses.
+Not Answered (Red): Represents unanswered questions, decreasing as the green area grows, suggesting improved response accuracy.
+The timeline spans from November 2023 to May 2024, showing fluctuations in the number of questions and responses, helping track the chatbot's performance.`}
+          />
           <p>
             Shows the count and percentage of answered vs unanswered user
             questions.
           </p>
         </h1>
         <div className="chart">
-          <AnsweredChart data={answeredData} />
+          <AnsweredChart data={answeredData} darkTheme={darkTheme} />
         </div>
+      </div>
+      <div className="chart-subtitle">
+        <p>
+          We've also analyzed the reasons for unanswered questions using an area
+          graph from November to May. This graph tracks the trends in issues
+          like "Out of Content," "Out of Context," and "Out of Collection" over
+          time.
+          <br />
+          <br />
+          <b>Out of Content:</b> This means that the necessary information to
+          answer the question does not exist in the bot's database.
+          <br />
+          <b>Out of Context:</b> This indicates that the bot struggled to
+          understand the user's query due to context issues, making it unable to
+          provide a relevant answer.
+          <br />
+          <b>Out of Collection:</b> This refers to difficulties the bot faced in
+          gathering or retrieving the necessary data to respond to the query.
+        </p>
       </div>
       <div className="chart-container">
         <h1 className="chart-title">
           Unanswered
+          <HoverIcon
+            hoverText={`This area graph provides a detailed analysis of why the chatbot couldn't answer user questions, broken down into three categories:
+
+Out Of Content (Green): Questions that couldn't be answered due to a lack of relevant content.
+Out Of Context (Gray): Questions that were outside the context the chatbot could handle.
+Out Of Collection (Maroon): Questions that were beyond the chatbot's knowledge base.
+The timeline spans from November 2023 to May 2024, showing the fluctuation in unanswered questions, peaking around March 2024. This helps in identifying the main reasons for unanswered queries and areas for improvement.`}
+          />
           <p>
             Detailed analysis of why the chatbot couldn't answer user questions.
           </p>
@@ -1918,9 +2161,38 @@ function App() {
       <div className="heading">
         <h1 className="title">Time Series Prompt Analysis:</h1>
       </div>
+      <div className="chart-subtitle">
+        <p>
+          Using advanced Language Learning Models (LLMs), we analyze user
+          queries to determine their intent and visualize these trends in an
+          area graph. Showing how different intents fluctuate month by month.
+          This helps us understand what users are looking for over time,
+          allowing us to adapt and improve the chatbot's responses to better
+          meet their needs.
+        </p>
+      </div>
       <div className="chart-container">
         <h1 className="chart-title">
-          Intent Classification
+          Intent Classification{" "}
+          <HoverIcon
+            hoverText={`This area graph shows the trends of user intents over time, highlighting the purposes behind user interactions:
+
+Farming_related (Green): The dominant intent, showing consistent high volume, peaking around March 2024.
+Change_crop (Purple): Users asking about changing crops.
+Referring_back (Brown): Users referring back to previous conversations.
+Unclear (Blue): Ambiguous queries.
+Greeting (Maroon): Simple greetings from users.
+Exit (Tan): Users indicating they want to exit the conversation.
+Disappointment (Teal): Users expressing dissatisfaction.
+This graph spans from November 2023 to May 2024, providing insight into the changing trends and user needs over time.
+
+
+
+
+
+
+`}
+          />
           <p>
             Trends of user intents over time, showing the purposes behind user
             interactions{" "}
@@ -1930,16 +2202,51 @@ function App() {
           <LineChart data={intentData} />
         </div>
       </div>
+      <div className="chart-subtitle">
+        <p>
+          Here we focus on topics within the farming-related intent from
+          November to May. By running advanced Language Learning Models (LLMs)
+          on user queries specifically categorized under farming-related intent,
+          we have identified and visualized these topics over time. This area
+          graph reveals how different farming topics fluctuate month by month,
+          providing insights into what specific aspects of farming users are
+          most interested in at various times.
+        </p>
+      </div>
       <div className="chart-container">
         <h1 className="chart-title">
           Topic Classification Month-wise
+          <HoverIcon
+            hoverText={`This area graph shows the monthly distribution of topics discussed by users from November 2023 to May 2024. The graph highlights trends in user interactions, with notable peaks around March 2024. Key topics include pests and diseases, soil management, marketing, and more, reflecting users' varying interests and concerns over time.`}
+          />
           <p>Monthly distribution of topics discussed by users.</p>
         </h1>
         <div className="chart">
           <TopicChart data={topicData} />
         </div>
       </div>
+      <div className="chart-subtitle">
+        <p>
+          Our heat map graph provides a detailed look at the frequency of
+          various topics over time, from November to May. By analyzing user
+          queries, we can see which topics are asked most often during this
+          period. The heat map uses color intensity to represent the count of
+          queries related to each topic, making it easy to identify trends and
+          patterns.
+        </p>
+      </div>
       <div className="chart-container">
+        <h1 className="chart-title">
+          Topic Count Month Wise
+          <HoverIcon
+            hoverText={`This heatmap shows the monthly distribution of topics discussed by users from November 2023 to May 2024. The intensity of the color represents the frequency of discussions on each topic.
+
+            Pests and Diseases: Most discussed topic, especially in February and March.
+            Soil Management: High discussion levels in the early months of 2024.
+            Fertilizers, Varieties, Marketing: Steady interest throughout the period.
+            The heatmap helps identify which topics are most frequently discussed each month, highlighting user interests and concerns.`}
+          />{" "}
+        </h1>
         <div className="chart">
           <Heatmap data={heatmapData} />
         </div>
@@ -1949,9 +2256,29 @@ function App() {
       <div className="heading">
         <h1 className="title">Time Series Feedback Analysis</h1>
       </div>
+      <div className="chart-subtitle">
+        <p>
+          We have also been monitoring user feedback over time, from November to
+          May, using an area graph to display trends in both positive and
+          negative feedback. This area graph allows us to visualize how user
+          satisfaction has fluctuated month by month.
+          <br />
+          By analyzing these trends, we can identify specific periods where
+          changes or updates had a significant impact on user satisfaction. This
+          helps us understand the effectiveness of our enhancements and guides
+          us in making further improvements.
+        </p>
+      </div>
       <div className="chart-container">
         <h1 className="chart-title">
           Feedback Classification
+          <HoverIcon
+            hoverText={`This area graph shows the classification of user feedback into positive and negative over time, from November 2023 to May 2024.
+
+Good Feedback (Green): Represents positive feedback, which peaks around March 2024, indicating a period of high user satisfaction.
+Bad Feedback (Red): Represents negative feedback, which also increases during the same period but is significantly less than the positive feedback.
+Overall, the graph illustrates that positive feedback outweighs negative feedback throughout the timeline, indicating general user satisfaction.`}
+          />
           <p>User feedback into positive and negative over time.</p>
         </h1>
         <div className="chart">
@@ -1963,22 +2290,97 @@ function App() {
       <div className="heading">
         <h1 className="title">Prompt - Response analysis:</h1>
       </div>
+      <div className="chart-subtitle">
+        <p>
+          Here we delving into prompt response analysis. We use user prompts to
+          identify the topics and then analyze the type of responses the bot
+          provides based on these topics. The responses are classified into
+          three categories: High Faithful, Medium Faithful, and Low Faithful.
+          Additionally, we evaluate the relevance of the responses, categorizing
+          them into high, medium, and low relevance.
+        </p>
+      </div>
       <div className="chart-container">
         <div className="chart-main-container">
           <div className="chart-container">
             <div className="chart h550">
               <h1 className="chart-title m0">
-                Faithfulness
-                <p>Evaluates the accuracy of the chatbot's responses</p>
+                Topic - Faithfulness{" "}
+                <p>
+                  Shows faithfulness levels (high, medium, low) as percentages
+                  across various agricultural topics.
+                </p>
               </h1>
-              <StackedBarChart data={faithfulnessData} />
+              <TopicVsFaithfulnessBarChart
+                keys={[
+                  "High Faithfulness",
+                  "Low Faithfulness",
+                  "Medium Faithfulness",
+                ]}
+                data={topicAndFaithfulnessData}
+              />
+              {/* <StackedBarChart data={topicAndFaithfulnessData} /> */}
               {/* <SimpleLineChart data={faithfulnessData} /> */}
             </div>
           </div>
           <div className="chart-container">
             <div className="chart h550">
               <h1 className="chart-title m0">
-                Relevance
+                Topic - Relevance{" "}
+                <p>
+                  Shows the relevance levels (high, medium, low) as percentages
+                  across various agricultural topics.
+                </p>
+              </h1>
+              <TopicVsRelevanceBarChart
+                keys={["High Relevance", "Low Relevance", "Medium Relevance"]}
+                data={topicVsRelevanceData}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="chart-subtitle">
+        We perform a similar analysis focusing on user intent and response
+        relevance. By analyzing user prompts, we determine the intent behind
+        each query and evaluate how the bot's responses align with these
+        intents. The responses are classified based on their relevance into
+        high, medium, and low categories.
+      </div>
+      <div className="chart-container">
+        <div className="chart-main-container">
+          <div className="chart-container">
+            <div className="chart h550">
+              <h1 className="chart-title m0">
+                Intent - Faithfulness{" "}
+                <HoverIcon
+                  hoverText={`This bar chart evaluates the chatbot's response accuracy across different query intents:
+
+High (Green): Most responses are highly accurate.
+Medium (Orange): Some responses are moderately accurate.
+Low (Red): Few responses are inaccurate.
+Overall, the chatbot performs well, with most intents showing high faithfulness. Some areas, like "Change_crop" and "Farming_related," need improvement.
+`}
+                />
+                <p>Evaluates the accuracy of the chatbot's responses</p>
+              </h1>
+              <StackedBarChart data={faithfulnessData} />
+              {/* <StackedBarChart data={topicAndFaithfulnessData} /> */}
+              {/* <SimpleLineChart data={faithfulnessData} /> */}
+            </div>
+          </div>
+          <div className="chart-container">
+            <div className="chart h550">
+              <h1 className="chart-title m0">
+                Intent - Relevance{" "}
+                <HoverIcon
+                  hoverText={`This bar chart shows the relevance of the chatbot's responses:
+
+High: Most responses are highly relevant.
+Medium: Some responses are moderately relevant.
+Low: Some responses are not relevant.
+Overall, the chatbot generally provides relevant responses across different query typ`}
+                />
                 <p>
                   Assesses how relevant the chatbot's responses are to the
                   user's queries
@@ -1993,7 +2395,15 @@ function App() {
       <div className="heading">
         <h1 className="title">Prompt - Feedback analysis:</h1>
       </div>
-
+      <div className="chart-subtitle">
+        <p>
+          We analyze user intent versus feedback over time. This visualization
+          uses a stacked bar graph to show the distribution of good and bad
+          feedback for different user intents on a monthly basis.By analyzing
+          this data, we can identify patterns and correlations between user
+          intents and the feedback received.
+        </p>
+      </div>
       <div className="chart-container">
         <div className="chart">
           <IntentFeedbackStackedBarChart
@@ -2002,22 +2412,19 @@ function App() {
           {/* <SimpleLineChart data={simpleBarGraphData} /> */}
         </div>
       </div>
-
+      <div className="chart-subtitle">
+        <p>
+          We examine the relationship between specific topics and user feedback
+          over time. This analysis is visualized using a stacked bar graph,
+          where the x-axis represents the months from November to May. The bars
+          are stacked to show the proportions of good and bad feedback for each
+          topic. Users can select different topics from a dropdown menu to view
+          the feedback trends and distributions for those specific topics.
+        </p>
+      </div>
       <div className="chart-container">
         <div className="chart">
           <TopicFeedbackStackedBarChart />
-        </div>
-      </div>
-      <div className="chart-container">
-        <h1 className="chart-title">
-          Prompt - Feedback Analysis{" "}
-          <p>
-            Illustrates how different user prompts lead to positive or negative
-            feedback.
-          </p>
-        </h1>
-        <div className="chart">
-          <SankeyChart feedback={true} data={sankyFeedback} />
         </div>
       </div>
 
@@ -2025,16 +2432,40 @@ function App() {
       <div className="heading">
         <h1 className="title">Response - Feedback analysis:</h1>
       </div>
-
+      <div className="chart-subtitle">
+        <p>
+          We are analyzing the relationship between the accuracy of the bot's
+          responses and user feedback over time. This is visualized using a
+          stacked bar graph, where the x-axis represents the months from
+          November to May. Users can select accuracy level from a dropdown menu
+          High, Medium, and Low faithfulness and relevance.
+        </p>
+      </div>
       <div className="chart-container">
         <div className="chart">
           <ClassificationsStackedBarChart />
         </div>
       </div>
-
+      <div className="chart-subtitle">
+        <p>
+          We are analyzing the relationship between the readability of the bot's
+          responses and user feedback over time.
+          <br />
+          Users can select the readability level from a dropdown menu, with
+          options including:
+          <br />
+          Easy, Standard, Fairly Easy, Fairly Difficult, Difficult, Very Easy,
+          Very Confusing
+        </p>
+      </div>
       <div className="chart-container">
         <div className="chart">
           <DifficultyFeedbackStackedBarChart />
+        </div>
+      </div>
+      <div className="chart-container">
+        <div className="chart">
+          <BarGraph data={chartBarGraphData} />
         </div>
       </div>
 
@@ -2051,7 +2482,12 @@ function App() {
         </div> */}
       {/* section 9:Prompt - response analysis */}
       <div className="heading">
-        <h1 className="title">Prompt - Response - Feedback analysis:</h1>
+        <h1 className="title">
+          Prompt - Response - Feedback analysis{" "}
+          <HoverIcon
+            hoverText={`This Sankey diagram illustrates the flow from user prompts to response classifications and then to feedback. It shows how different types of user queries (prompts) are processed into various response categories (classification), and how these responses receive positive or negative feedback. This visualization helps in understanding the relationship between the quality of responses and user satisfaction.`}
+          />
+        </h1>
       </div>
       <div className="chart-container">
         {/* <h1 className="chart-title">
@@ -2069,7 +2505,21 @@ function App() {
           <SankeyChart data={sankyData} />
         </div>
       </div>
-
+      <div className="chart-container">
+        <h1 className="chart-title">
+          Prompt - Feedback Analysis{" "}
+          <HoverIcon
+            hoverText={`This Sankey diagram illustrates how different user prompts lead to positive or negative feedback. The chart shows the flow from user queries, mainly "Farming_related" and "Change_crop," to the resulting feedback, categorized as good or bad. This visualization helps in understanding the effectiveness of responses based on user feedback.`}
+          />
+          <p>
+            Illustrates how different user prompts lead to positive or negative
+            feedback.
+          </p>
+        </h1>
+        <div className="chart">
+          <SankeyChart feedback={true} data={sankyFeedback} />
+        </div>
+      </div>
       {/* <div className="chart-container">
         <h1 className="chart-title">
           Aggregate Prompt-Based Feedback Analysis{" "}
