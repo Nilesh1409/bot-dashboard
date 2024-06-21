@@ -35,6 +35,9 @@ import TopicVsFaithfulnessBarChart from "./StackGraph/TopicVsFaithfulness";
 import TopicVsRelevanceBarChart from "./StackGraph/TopicVsRelevance";
 import chartBarGraphData from "./data/coffee_msg_count.json";
 import BarGraph from "./BarGraph/BarGraph";
+import StandardStackBarGraph from "./StackGraph/StandardStackBarGraph";
+import top10UserHeatMapData from "./top10UserHeatMapData.json";
+import top10GroupData from "./top10GroupData.json";
 
 function App() {
   console.log("🚀 ~ chartBarGraphData:", chartBarGraphData);
@@ -2248,9 +2251,28 @@ This graph spans from November 2023 to May 2024, providing insight into the chan
           />{" "}
         </h1>
         <div className="chart">
-          <Heatmap data={heatmapData} />
+          <Heatmap customHeight={500} data={heatmapData} />
         </div>
       </div>
+
+      <div className="chart-container">
+        <h1 className="chart-title">
+          Top 10% Users
+          <HoverIcon
+            hoverText={`This heatmap shows the monthly distribution of topics discussed by users from November 2023 to May 2024. The intensity of the color represents the frequency of discussions on each topic.
+
+            Pests and Diseases: Most discussed topic, especially in February and March.
+            Soil Management: High discussion levels in the early months of 2024.
+            Fertilizers, Varieties, Marketing: Steady interest throughout the period.
+            The heatmap helps identify which topics are most frequently discussed each month, highlighting user interests and concerns.`}
+          />{" "}
+        </h1>
+        <div className="chart">
+          <Heatmap customHeight={500} data={top10GroupData} />
+        </div>
+      </div>
+
+      {/* <Heatmap yAxis={false} customHeight={500} data={top10GroupData} /> */}
 
       {/* section 5: Time series FEEDBACK analysis */}
       <div className="heading">
@@ -2464,8 +2486,17 @@ Overall, the chatbot generally provides relevant responses across different quer
         </div>
       </div>
       <div className="chart-container">
+        <h1 className="chart-title">
+          Cumulative Question Frequency Across Different User Group
+        </h1>
         <div className="chart">
           <BarGraph data={chartBarGraphData} />
+        </div>
+      </div>
+      <div className="chart-container">
+        <h1 className="chart-title">Top 10% Users</h1>
+        <div className="chart">
+          <StandardStackBarGraph />
         </div>
       </div>
 

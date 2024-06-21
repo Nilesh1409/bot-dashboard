@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 
-const Heatmap = ({ data }) => {
+const Heatmap = ({ yAxis, customHeight, data }) => {
   const ref = useRef();
 
   useEffect(() => {
     const margin = { top: 50, right: 80, bottom: 30, left: 200 };
     const width = 1000 - margin.left - margin.right;
-    const height = 500 - margin.top - margin.bottom;
+    const height = customHeight ?? 1500 - margin.top - margin.bottom;
 
     // Clear the previous SVG
     d3.select(ref.current).select("svg").remove();
